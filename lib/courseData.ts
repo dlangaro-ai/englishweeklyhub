@@ -12,6 +12,7 @@ export type Week = {
   unit: string;
   summary: string;
   books: string[];
+  image?: string;
   homework: string[];
   published: boolean;
   extraActivities: ExtraActivity[];
