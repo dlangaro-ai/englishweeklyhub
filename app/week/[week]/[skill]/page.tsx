@@ -1,19 +1,16 @@
 import { notFound } from "next/navigation";
-import SkillView from "@/components/SkillView";
-import { getWeek, skillMeta, SkillKey } from "@/lib/courseData";
+import ExtraActivitiesView from "@/components/ExtraActivitiesView";
+import { getWeek } from "@/lib/courseData";
 
-export default async function SkillPage({
+export default async function SkillsPage({
   params
 }: {
   params: Promise<{ week: string; skill: string }>
 }) {
-  const { week: weekParam, skill: skillParam } = await params;
+  const { week: weekParam, skill } = await params;
   const week = getWeek(Number(weekParam));
 
-  if (!week || !week.published || !(skillParam in skillMeta)) notFound();
+  if (!week || !week.published || skill !== "skills") notFound();
 
-  const skill = skillParam as SkillKey;
-  if (!(week.skills[skill]?.length)) notFound();
-
-  return <SkillView week={week} skill={skill} />;
+  return <ExtraActivitiesView week={week} />;
 }

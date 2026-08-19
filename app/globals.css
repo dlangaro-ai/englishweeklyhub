@@ -434,3 +434,86 @@ h1 {
     grid-column: 1 / -1;
   }
 }
+
+
+.simpleWeekHero { align-items: center; }
+
+.unitLabel {
+  display: inline-block;
+  margin: 18px 0 0;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.weekInfoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.infoCard {
+  display: flex;
+  gap: 18px;
+  min-height: 210px;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--card);
+  box-shadow: 0 10px 28px rgba(28, 36, 67, 0.05);
+}
+
+.summaryCard {
+  grid-column: 1 / -1;
+  min-height: 180px;
+}
+
+.infoIcon { flex: 0 0 auto; font-size: 34px; }
+
+.infoLabel {
+  margin: 0 0 7px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+}
+
+.infoCard h2 { margin: 0 0 10px; font-size: 23px; }
+
+.infoText, .simpleList {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.simpleList { margin: 10px 0 0; padding-left: 20px; }
+
+.skillsFolder {
+  background: linear-gradient(145deg, #ffffff, #f4f1ff);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.skillsFolder:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(28, 36, 67, 0.09);
+}
+
+.emptyState.compact {
+  margin-top: 20px;
+  padding: 36px;
+}
+
+.emptyState.compact h2 {
+  margin: 12px 0 0;
+  font-size: 28px;
+}
+
+@media (max-width: 700px) {
+  .weekInfoGrid { grid-template-columns: 1fr; }
+  .summaryCard { grid-column: auto; }
+}
