@@ -35,7 +35,9 @@ const starterWeeks: Week[] = [
     title: "Wordwall Practice",
     description: "Practice this week's English.",
     href: "https://wordwall.net/resource/97750997?wwmethod=link",
-    resourceType: "link"]
+    resourceType: "link"
+  }
+]
       {
         id: "w1-extra-1",
         title: "Welcome Activity",
