@@ -27,6 +27,7 @@ const starterWeeks: Week[] = [
       "This week we have started our new school year! Please follow this page for more information.",
     books: ["Add your Week 1 book information here"],
     homework: ["No homework information added yet"],
+    image: "/pupils book cover.png",
     published: true,
     extraActivities: [
       {
