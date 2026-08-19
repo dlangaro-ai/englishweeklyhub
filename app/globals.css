@@ -1,0 +1,436 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --ink: #172033;
+  --muted: #697386;
+  --paper: #f7f8fc;
+  --card: #ffffff;
+  --line: #e7e9f0;
+  --accent: #6c63ff;
+  --accent-soft: #eeedff;
+  --success: #1f9d68;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top right, #ecebff 0, transparent 28rem),
+    var(--paper);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+.shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 56px 0 80px;
+}
+
+.narrow {
+  width: min(860px, calc(100% - 32px));
+}
+
+.hero,
+.weekHero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 38px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 18px 60px rgba(28, 36, 67, 0.07);
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.heroText {
+  max-width: 640px;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.heroBadge {
+  flex: 0 0 auto;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.termSection {
+  margin-top: 48px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sectionHeading h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.sectionHeading span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.weekGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.weekCard {
+  min-height: 190px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.weekCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(28, 36, 67, 0.09);
+}
+
+.weekCardMuted {
+  opacity: 0.48;
+  cursor: default;
+}
+
+.weekCardMuted:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.weekTop,
+.skillTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.weekTop {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.weekNumber {
+  color: var(--accent);
+}
+
+.weekCard h3 {
+  margin: 26px 0 8px;
+  font-size: 19px;
+}
+
+.weekCard p,
+.skillCard p,
+.activityCard p,
+.emptyState p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.progressTrack {
+  height: 8px;
+  margin-top: 22px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eceef4;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), #9c7cff);
+  transition: width 250ms ease;
+}
+
+.backLink {
+  display: inline-block;
+  margin-bottom: 22px;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.progressCircle {
+  width: 112px;
+  aspect-ratio: 1;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.progressCircle strong {
+  font-size: 28px;
+}
+
+.progressCircle span {
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.skillGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.skillCard {
+  min-height: 220px;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--card);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.skillCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(28, 36, 67, 0.09);
+}
+
+.skillCardMuted {
+  opacity: 0.45;
+}
+
+.skillCardMuted:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.skillIcon {
+  font-size: 34px;
+}
+
+.skillIcon.large {
+  font-size: 52px;
+}
+
+.skillCard h2 {
+  margin: 20px 0 0;
+}
+
+.skillTitleRow h2 {
+  margin-bottom: 0;
+}
+
+.openLabel {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.skillHero {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 0 8px;
+}
+
+.skillProgress {
+  margin: 28px 0 20px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+}
+
+.skillProgress > span {
+  color: var(--muted);
+}
+
+.skillProgress > strong {
+  float: right;
+}
+
+.progressTrack.full {
+  clear: both;
+  margin-top: 14px;
+}
+
+.activityList {
+  display: grid;
+  gap: 14px;
+}
+
+.activityCard {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+}
+
+.activityDone {
+  border-color: #ccebdd;
+  background: #f8fffb;
+}
+
+.activityIndex {
+  width: 42px;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.activityDone .activityIndex {
+  background: #ddf5e9;
+  color: var(--success);
+}
+
+.activityType {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.activityBody h2 {
+  margin: 5px 0 0;
+  font-size: 20px;
+}
+
+.activityBody p {
+  margin-bottom: 0;
+}
+
+.completeButton,
+.primaryButton {
+  border: 0;
+  border-radius: 12px;
+  background: var(--ink);
+  color: white;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 12px 14px;
+}
+
+.activityDone .completeButton {
+  background: var(--success);
+}
+
+.textLink {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.emptyState {
+  margin-top: 80px;
+  padding: 50px;
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--card);
+}
+
+.emptyIcon {
+  font-size: 48px;
+}
+
+.emptyState h1 {
+  margin-top: 18px;
+  font-size: 38px;
+}
+
+.primaryButton {
+  display: inline-block;
+  margin-top: 16px;
+}
+
+@media (max-width: 960px) {
+  .weekGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .skillGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .shell {
+    padding-top: 24px;
+  }
+
+  .hero,
+  .weekHero {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 26px;
+  }
+
+  .heroBadge {
+    display: none;
+  }
+
+  .weekGrid,
+  .skillGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .activityCard {
+    grid-template-columns: 42px 1fr;
+  }
+
+  .completeButton {
+    grid-column: 1 / -1;
+  }
+}
