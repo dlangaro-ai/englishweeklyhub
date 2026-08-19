@@ -30,19 +30,12 @@ const starterWeeks: Week[] = [
     homework: ["No homework information added yet"],
     published: true,
     extraActivities: [
-  {
-    id: "w1-extra-1",
-    title: "Wordwall Practice",
-    description: "Practice this week's English.",
-    href: "https://wordwall.net/resource/97750997?wwmethod=link",
-    resourceType: "link"
-  }
-]
       {
         id: "w1-extra-1",
-        title: "Welcome Activity",
-        description: "Optional extra activity for Week 1.",
-        resourceType: "activity"
+        title: "Wordwall Practice",
+        description: "Click below to practice this week's English.",
+        href: "https://wordwall.net/resource/97750997?wwmethod=link",
+        resourceType: "link"
       }
     ]
   },
@@ -83,6 +76,7 @@ const starterWeeks: Week[] = [
 
 const placeholders: Week[] = Array.from({ length: 37 }, (_, index) => {
   const number = index + 4;
+
   return {
     number,
     title: `Week ${number}`,
