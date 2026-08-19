@@ -29,7 +29,7 @@ const starterWeeks: Week[] = [
     bookImage: "/images/curious-kids-6.png",
     homework: ["No homework information added yet"],
     published: true,
-    extraActivities: [
+    extraActivities: [https://wordwall.net/resource/97750997?wwmethod=link]
       {
         id: "w1-extra-1",
         title: "Welcome Activity",
