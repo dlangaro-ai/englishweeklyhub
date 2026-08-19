@@ -31,6 +31,13 @@ export default function WeekView({ week }: { week: Week }) {
           <div>
             <p className="infoLabel">BOOKS USED</p>
             <h2>Books & Pages</h2>
+            {week.bookImage && (
+              <img
+                src={week.bookImage}
+                alt="Book used this week"
+                className="bookCover"
+              />
+            )}
             {week.books.length ? (
               <ul className="simpleList">
                 {week.books.map((book) => <li key={book}>{book}</li>)}

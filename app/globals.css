@@ -517,3 +517,13 @@ h1 {
   .weekInfoGrid { grid-template-columns: 1fr; }
   .summaryCard { grid-column: auto; }
 }
+
+
+.bookCover {
+  width: 150px;
+  height: auto;
+  display: block;
+  margin: 16px 0;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(28, 36, 67, 0.12);
+}

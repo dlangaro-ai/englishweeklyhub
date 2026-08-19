@@ -12,7 +12,7 @@ export type Week = {
   unit: string;
   summary: string;
   books: string[];
-  image?: string;
+  bookImage?: string;
   homework: string[];
   published: boolean;
   extraActivities: ExtraActivity[];
@@ -25,9 +25,9 @@ const starterWeeks: Week[] = [
     unit: "Getting Started",
     summary:
       "This week we have started our new school year! Please follow this page for more information.",
-    books: ["Add your Week 1 book information here"],
+    books: ["Curious Kids 6 — Pupil's Book"],
+    bookImage: "/images/curious-kids-6.png",
     homework: ["No homework information added yet"],
-    image: "/pupils book cover.png",
     published: true,
     extraActivities: [
       {
