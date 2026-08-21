@@ -1,19 +1,19 @@
-// ── HOW TO EDIT THIS FILE ──────────────────────────────────────────────────
-// This is the ONLY file you need to touch to update the site each week.
-// Find the week you want to change below (look for `number: X`) and edit
-// its text. When you're done: save, commit in GitHub Desktop, push to main,
-// and Vercel will redeploy automatically.
+// ── HOW THIS WORKS ──────────────────────────────────────────────────────────
+// This file only holds the STARTING content for each week. Once you use the
+// "✏️ Edit" buttons on the live site to change something, your edits are
+// saved to Vercel Blob storage and take over as the real content from then
+// on — editing this file after that point will no longer change what
+// students see. Think of the data below as the factory-reset defaults.
 //
 // Field cheat sheet:
 //   title      -> short, friendly week title students see on their card
 //   unit       -> the topic/unit name shown under the title
-//   summary    -> a few sentences telling students what's happening this week
-//   books      -> list of books/pages, e.g. "Unlock pages 14-18"
-//   bookImage  -> optional path to a cover image, e.g. "/images/my-book.png"
-//                 (drop image files into the /public/images folder)
-//   homework   -> list of homework items, e.g. "Workbook page 7"
+//   summary      / summaryImage  -> "This week" text + optional picture
+//   books        / bookImage     -> "Books used" list + optional picture
+//   homework     / homeworkImage -> "Homework" list + optional picture
+//   bonusText    / bonusImage    -> "Bonus" teaser text + optional picture
 //   published  -> true = students can open this week, false = shows "Soon"
-//   extraActivities -> optional bonus links/videos/PDFs for this week
+//   extraActivities -> bonus links/videos/PDFs, shown on the Bonus sub-page
 // ────────────────────────────────────────────────────────────────────────────
 
 export type ExtraActivity = {
@@ -29,12 +29,18 @@ export type Week = {
   title: string;
   unit: string;
   summary: string;
+  summaryImage?: string;
   books: string[];
   bookImage?: string;
   homework: string[];
+  homeworkImage?: string;
+  bonusText: string;
+  bonusImage?: string;
   published: boolean;
   extraActivities: ExtraActivity[];
 };
+
+const defaultBonusText = "Fun optional practice, links, videos and PDFs for this week.";
 
 const starterWeeks: Week[] = [
   {
@@ -46,6 +52,7 @@ const starterWeeks: Week[] = [
     books: ["Curious Kids 6 — Pupil's Book"],
     bookImage: "/images/curious-kids-6.png",
     homework: ["No homework information added yet"],
+    bonusText: defaultBonusText,
     published: true,
     extraActivities: [
       {
@@ -65,6 +72,7 @@ const starterWeeks: Week[] = [
     summary: "Weekly information will be added here.",
     books: ["Book pages coming soon"],
     homework: ["Homework coming soon"],
+    bonusText: defaultBonusText,
     published: true,
     extraActivities: []
   },
@@ -76,6 +84,7 @@ const starterWeeks: Week[] = [
     summary: "This week we are learning about our school community.",
     books: ["Unlock pages 14–18"],
     homework: ["Workbook page 7"],
+    bonusText: defaultBonusText,
     published: true,
     extraActivities: [
       {
@@ -104,6 +113,7 @@ const placeholders: Week[] = Array.from({ length: 37 }, (_, index) => {
     summary: "Weekly information will be added here.",
     books: [],
     homework: [],
+    bonusText: defaultBonusText,
     published: false,
     extraActivities: []
   };

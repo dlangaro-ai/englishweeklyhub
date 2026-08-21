@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Week } from "@/lib/courseData";
+import EditModeToggle from "./EditModeToggle";
 
 const terms = [
   { start: 0, name: "Term 1", emoji: "🌱" },
@@ -10,7 +11,7 @@ const terms = [
   { start: 30, name: "Term 4", emoji: "❄️" }
 ];
 
-export default function CourseDashboard({ weeks }: { weeks: Week[] }) {
+export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
   const readyCount = weeks.filter((week) => week.published).length;
 
   return (
@@ -23,7 +24,10 @@ export default function CourseDashboard({ weeks }: { weeks: Week[] }) {
             Pick your week below to find this week&apos;s topic, books, homework and fun extra activities.
           </p>
         </div>
-        <div className="heroBadge">🚀 {readyCount} of {weeks.length} weeks ready</div>
+        <div className="heroRight">
+          <div className="heroBadge">🚀 {readyCount} of {weeks.length} weeks ready</div>
+          <EditModeToggle isEditor={isEditor} />
+        </div>
       </header>
 
       {terms.map(({ start, name, emoji }) => (
@@ -34,12 +38,16 @@ export default function CourseDashboard({ weeks }: { weeks: Week[] }) {
           </div>
 
           <div className="weekGrid">
-            {weeks.slice(start, start + 10).map((week) =>
-              week.published ? (
+            {weeks.slice(start, start + 10).map((week) => {
+              const clickable = week.published || isEditor;
+
+              return clickable ? (
                 <Link className="weekCard" href={`/week/${week.number}`} key={week.number}>
                   <div className="weekTop">
                     <span className="weekNumber">WEEK {week.number}</span>
-                    <span className="weekStatus weekStatusReady">Open ✓</span>
+                    <span className={`weekStatus ${week.published ? "weekStatusReady" : ""}`}>
+                      {week.published ? "Open ✓" : "Soon 🔒"}
+                    </span>
                   </div>
                   <h3>{week.title}</h3>
                   <p>{week.unit}</p>
@@ -53,8 +61,8 @@ export default function CourseDashboard({ weeks }: { weeks: Week[] }) {
                   <h3>{week.title}</h3>
                   <p>{week.unit}</p>
                 </div>
-              )
-            )}
+              );
+            })}
           </div>
         </section>
       ))}

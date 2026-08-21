@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import ExtraActivitiesView from "@/components/ExtraActivitiesView";
-import { getWeek } from "@/lib/courseData";
+import { getWeekByNumber } from "@/lib/getWeeks";
+
+export const dynamic = "force-dynamic";
 
 export default async function SkillsPage({
   params
@@ -8,7 +10,7 @@ export default async function SkillsPage({
   params: Promise<{ week: string; skill: string }>
 }) {
   const { week: weekParam, skill } = await params;
-  const week = getWeek(Number(weekParam));
+  const week = await getWeekByNumber(Number(weekParam));
 
   if (!week || !week.published || skill !== "skills") notFound();
 

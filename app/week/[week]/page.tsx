@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import WeekView from "@/components/WeekView";
-import { getWeek } from "@/lib/courseData";
+import { getWeekByNumber } from "@/lib/getWeeks";
+import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
+
+export const dynamic = "force-dynamic";
 
 export default async function WeekPage({
   params
@@ -9,9 +13,12 @@ export default async function WeekPage({
 }) {
   const { week: weekParam } = await params;
   const weekNumber = Number(weekParam);
-  const week = getWeek(weekNumber);
+  const week = await getWeekByNumber(weekNumber);
 
-  if (!week || !week.published) notFound();
+  const cookieStore = await cookies();
+  const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
 
-  return <WeekView week={week} />;
+  if (!week || (!week.published && !isEditor)) notFound();
+
+  return <WeekView week={week} isEditor={isEditor} />;
 }

@@ -1,9 +1,10 @@
-"use client";
-
 import Link from "next/link";
 import { Week } from "@/lib/courseData";
+import EditableSection from "./EditableSection";
+import BonusCard from "./BonusCard";
+import PublishToggle from "./PublishToggle";
 
-export default function WeekView({ week }: { week: Week }) {
+export default function WeekView({ week, isEditor }: { week: Week; isEditor: boolean }) {
   return (
     <main className="shell narrow">
       <Link href="/" className="backLink">← All weeks</Link>
@@ -13,71 +14,62 @@ export default function WeekView({ week }: { week: Week }) {
           <p className="eyebrow">WEEK {week.number}</p>
           <h1>{week.title}</h1>
           <p className="unitLabel">{week.unit}</p>
+          <PublishToggle weekNumber={week.number} published={week.published} isEditor={isEditor} />
         </div>
       </header>
 
       <section className="weekInfoGrid">
-        <article className="infoCard summaryCard">
-          <span className="infoIcon">✨</span>
-          <div>
-            <p className="infoLabel">THIS WEEK</p>
-            <h2>What we're doing</h2>
-            <p className="infoText">{week.summary}</p>
-          </div>
-        </article>
+        <EditableSection
+          weekNumber={week.number}
+          icon="✨"
+          label="THIS WEEK"
+          heading="What we're doing"
+          field="summary"
+          imageField="summaryImage"
+          isList={false}
+          value={week.summary}
+          image={week.summaryImage}
+          emptyText="Nothing added yet."
+          isEditor={isEditor}
+          cardClassName="summaryCard"
+        />
 
-        <article className="infoCard infoCardBooks">
-          <span className="infoIcon">📚</span>
-          <div>
-            <p className="infoLabel">BOOKS USED</p>
-            <h2>Books & Pages</h2>
-            {week.books.length ? (
-              <ul className="simpleList">
-                {week.books.map((book) => <li key={book}>{book}</li>)}
-              </ul>
-            ) : (
-              <p className="infoText">No book information added yet.</p>
-            )}
-            {week.bookImage && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                className="bookImage"
-                src={week.bookImage}
-                alt={week.books[0] ?? "Book cover"}
-                onError={(event) => {
-                  event.currentTarget.style.display = "none";
-                }}
-              />
-            )}
-          </div>
-        </article>
+        <EditableSection
+          weekNumber={week.number}
+          icon="📚"
+          label="BOOKS USED"
+          heading="Books & Pages"
+          field="books"
+          imageField="bookImage"
+          isList={true}
+          value={week.books}
+          image={week.bookImage}
+          emptyText="No book information added yet."
+          isEditor={isEditor}
+          cardClassName="infoCardBooks"
+        />
 
-        <article className="infoCard infoCardHomework">
-          <span className="infoIcon">🏠</span>
-          <div>
-            <p className="infoLabel">HOMEWORK</p>
-            <h2>Homework Pages</h2>
-            {week.homework.length ? (
-              <ul className="simpleList">
-                {week.homework.map((item) => <li key={item}>{item}</li>)}
-              </ul>
-            ) : (
-              <p className="infoText">No homework this week — enjoy the break!</p>
-            )}
-          </div>
-        </article>
+        <EditableSection
+          weekNumber={week.number}
+          icon="🏠"
+          label="HOMEWORK"
+          heading="Homework Pages"
+          field="homework"
+          imageField="homeworkImage"
+          isList={true}
+          value={week.homework}
+          image={week.homeworkImage}
+          emptyText="No homework this week — enjoy the break!"
+          isEditor={isEditor}
+          cardClassName="infoCardHomework"
+        />
 
-        <Link href={`/week/${week.number}/skills`} className="infoCard skillsFolder">
-          <span className="infoIcon">🎁</span>
-          <div>
-            <p className="infoLabel">BONUS</p>
-            <h2>Extra Activities</h2>
-            <p className="infoText">
-              Fun optional practice, links, videos and PDFs for this week.
-            </p>
-            <span className="openLabel">Open folder →</span>
-          </div>
-        </Link>
+        <BonusCard
+          weekNumber={week.number}
+          text={week.bonusText}
+          image={week.bonusImage}
+          isEditor={isEditor}
+        />
       </section>
     </main>
   );

@@ -520,6 +520,179 @@ h1 {
   display: block;
 }
 
+.infoCardBody { flex: 1; min-width: 0; }
+
+.infoCardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.editButton {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.editButton:hover { background: var(--accent-soft); }
+
+.editForm {
+  margin-top: 10px;
+  display: grid;
+  gap: 12px;
+}
+
+.editTextarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.editImageRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.editImagePreview {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+
+.editImageButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.editImageButtons button {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.hiddenFileInput { display: none; }
+
+.editActions {
+  display: flex;
+  gap: 10px;
+}
+
+.cancelButton {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 12px 14px;
+}
+
+.skillsFolderLink { display: block; }
+
+.heroRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.editModeLink {
+  font-size: 20px;
+  opacity: 0.5;
+}
+
+.editModeLink:hover { opacity: 1; }
+
+.editModeBadge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #ddf5e9;
+  color: var(--success);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.editModeLogout {
+  border: 0;
+  background: none;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+}
+
+.publishToggle {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff4e5;
+  color: #b06a00;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.publishToggleOn {
+  background: #ddf5e9;
+  color: var(--success);
+}
+
+.loginCard {
+  margin-top: 60px;
+  padding: 40px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--card);
+  text-align: center;
+}
+
+.loginForm {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.loginForm input {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+}
+
+.loginError {
+  margin-top: 14px;
+  color: #d33;
+  font-weight: 700;
+}
+
 .skillsFolder {
   background: linear-gradient(145deg, #ffffff, #f4f1ff);
   transition: transform 160ms ease, box-shadow 160ms ease;
