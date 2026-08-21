@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { loadWeeks, saveWeeks } from "@/lib/blob";
-import { Week } from "@/lib/courseData";
+import { ExtraActivity, Week } from "@/lib/courseData";
 
 const EDITABLE_FIELDS = [
   "summary",
@@ -13,8 +13,34 @@ const EDITABLE_FIELDS = [
   "homeworkImage",
   "bonusText",
   "bonusImage",
-  "published"
+  "published",
+  "extraActivities"
 ] as const;
+
+const MAX_BY_TYPE: Partial<Record<NonNullable<ExtraActivity["resourceType"]>, number>> = {
+  image: 3,
+  link: 3,
+  pdf: 2
+};
+
+function validateExtraActivities(activities: unknown): string | null {
+  if (!Array.isArray(activities)) return "extraActivities must be a list.";
+
+  const counts: Record<string, number> = {};
+  for (const activity of activities) {
+    const type = (activity as ExtraActivity)?.resourceType;
+    if (!type) continue;
+    counts[type] = (counts[type] ?? 0) + 1;
+  }
+
+  for (const [type, max] of Object.entries(MAX_BY_TYPE)) {
+    if ((counts[type] ?? 0) > max) {
+      return `You can only have up to ${max} ${type} activities per week.`;
+    }
+  }
+
+  return null;
+}
 
 async function isEditor() {
   const cookieStore = await cookies();
@@ -36,6 +62,13 @@ export async function PATCH(
   const updates: Record<string, unknown> = {};
   for (const key of EDITABLE_FIELDS) {
     if (key in body) updates[key] = body[key];
+  }
+
+  if ("extraActivities" in updates) {
+    const validationError = validateExtraActivities(updates.extraActivities);
+    if (validationError) {
+      return NextResponse.json({ error: validationError }, { status: 400 });
+    }
   }
 
   try {

@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import ExtraActivitiesView from "@/components/ExtraActivitiesView";
 import { getWeekByNumber } from "@/lib/getWeeks";
+import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +14,10 @@ export default async function SkillsPage({
   const { week: weekParam, skill } = await params;
   const week = await getWeekByNumber(Number(weekParam));
 
-  if (!week || !week.published || skill !== "skills") notFound();
+  const cookieStore = await cookies();
+  const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
 
-  return <ExtraActivitiesView week={week} />;
+  if (!week || (!week.published && !isEditor) || skill !== "skills") notFound();
+
+  return <ExtraActivitiesView week={week} isEditor={isEditor} />;
 }

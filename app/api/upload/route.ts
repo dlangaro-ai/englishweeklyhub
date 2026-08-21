@@ -16,16 +16,19 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "No file provided" }, { status: 400 });
   }
 
-  if (!file.type.startsWith("image/")) {
-    return NextResponse.json({ error: "Only image files are allowed" }, { status: 400 });
+  const isImage = file.type.startsWith("image/");
+  const isPdf = file.type === "application/pdf";
+
+  if (!isImage && !isPdf) {
+    return NextResponse.json({ error: "Only image or PDF files are allowed" }, { status: 400 });
   }
 
   try {
     const url = await uploadImage(file);
     return NextResponse.json({ url });
   } catch (error) {
-    console.error("Image upload failed:", error);
-    const message = error instanceof Error ? error.message : "Could not upload image.";
+    console.error("File upload failed:", error);
+    const message = error instanceof Error ? error.message : "Could not upload file.";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

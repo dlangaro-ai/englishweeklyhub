@@ -329,6 +329,75 @@ h1 {
   background: #f8fffb;
 }
 
+.addActivityBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.addActivityButton {
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.addActivityButton:hover:not(:disabled) { background: var(--accent-soft); }
+
+.addActivityButton:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.addActivityForm {
+  margin: 16px 0 0;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+}
+
+.addActivityForm input[type="text"],
+.addActivityForm input:not([type]),
+.addActivityForm input[type="file"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+}
+
+.activityThumbnail {
+  display: block;
+  max-width: 160px;
+  margin-top: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+}
+
+.activityActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.removeButton {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: #c0392b;
+  cursor: pointer;
+  font-weight: 700;
+  padding: 10px 14px;
+  font-size: 13px;
+}
+
 .activityIndex {
   width: 42px;
   aspect-ratio: 1;
@@ -442,8 +511,13 @@ h1 {
     grid-template-columns: 42px 1fr;
   }
 
-  .completeButton {
+  .completeButton,
+  .activityActions {
     grid-column: 1 / -1;
+  }
+
+  .activityActions {
+    flex-direction: row;
   }
 }
 

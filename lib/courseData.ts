@@ -21,7 +21,7 @@ export type ExtraActivity = {
   title: string;
   description?: string;
   href?: string;
-  resourceType?: "link" | "video" | "pdf" | "activity";
+  resourceType?: "link" | "video" | "pdf" | "activity" | "image";
 };
 
 export type Week = {
