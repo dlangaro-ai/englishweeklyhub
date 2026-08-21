@@ -10,6 +10,7 @@ type UseEditableFieldArgs = {
   isList: boolean;
   initialText: string;
   initialImage?: string;
+  maxWords?: number;
 };
 
 export function useEditableField({
@@ -18,7 +19,8 @@ export function useEditableField({
   imageField,
   isList,
   initialText,
-  initialImage
+  initialImage,
+  maxWords
 }: UseEditableFieldArgs) {
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(initialText);
@@ -56,6 +58,15 @@ export function useEditableField({
   }
 
   async function save() {
+    if (maxWords) {
+      const plainText = text.replace(/<[^>]+>/g, " ");
+      const words = plainText.trim() ? plainText.trim().split(/\s+/).length : 0;
+      if (words > maxWords) {
+        alert(`Please shorten this to ${maxWords} words or fewer (currently ${words}).`);
+        return;
+      }
+    }
+
     setSaving(true);
 
     try {

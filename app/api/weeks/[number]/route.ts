@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { loadWeeks, saveWeeks } from "@/lib/blob";
 import { ExtraActivity, Week } from "@/lib/courseData";
+import { sanitizeRichText } from "@/lib/sanitizeHtml";
 
 const EDITABLE_FIELDS = [
   "summary",
@@ -69,6 +70,10 @@ export async function PATCH(
     if (validationError) {
       return NextResponse.json({ error: validationError }, { status: 400 });
     }
+  }
+
+  if (typeof updates.summary === "string") {
+    updates.summary = sanitizeRichText(updates.summary);
   }
 
   try {

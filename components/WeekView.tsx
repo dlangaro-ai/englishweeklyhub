@@ -32,6 +32,8 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           emptyText="Nothing added yet."
           isEditor={isEditor}
           cardClassName="summaryCard"
+          richText
+          maxWords={300}
         />
 
         <EditableSection

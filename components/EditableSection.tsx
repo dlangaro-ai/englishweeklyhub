@@ -2,6 +2,8 @@
 
 import { useEditableField } from "./useEditableField";
 import EditFormBody from "./EditFormBody";
+import RichTextEditor from "./RichTextEditor";
+import { sanitizeRichText } from "@/lib/sanitizeHtml";
 
 type EditableSectionProps = {
   weekNumber: number;
@@ -16,6 +18,8 @@ type EditableSectionProps = {
   emptyText: string;
   isEditor: boolean;
   cardClassName?: string;
+  richText?: boolean;
+  maxWords?: number;
 };
 
 export default function EditableSection({
@@ -30,7 +34,9 @@ export default function EditableSection({
   image,
   emptyText,
   isEditor,
-  cardClassName
+  cardClassName,
+  richText,
+  maxWords
 }: EditableSectionProps) {
   const initialText = isList ? (value as string[]).join("\n") : (value as string);
   const editable = useEditableField({
@@ -39,7 +45,8 @@ export default function EditableSection({
     imageField,
     isList,
     initialText,
-    initialImage: image
+    initialImage: image,
+    maxWords: richText ? maxWords : undefined
   });
   const listValue = Array.isArray(value) ? value : [];
 
@@ -58,7 +65,44 @@ export default function EditableSection({
         <h2>{heading}</h2>
 
         {editable.editing ? (
-          <EditFormBody editable={editable} isList={isList} />
+          richText ? (
+            <div className="editForm">
+              <RichTextEditor value={editable.text} onChange={editable.setText} maxWords={maxWords} />
+              <div className="editImageRow">
+                {editable.imagePreview && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={editable.imagePreview} alt="" className="editImagePreview" />
+                )}
+                <div className="editImageButtons">
+                  <button type="button" onClick={() => editable.fileInputRef.current?.click()}>
+                    📷 {editable.imagePreview ? "Change image" : "Add image"}
+                  </button>
+                  {editable.imagePreview && (
+                    <button type="button" onClick={editable.handleRemoveImage}>
+                      Remove image
+                    </button>
+                  )}
+                </div>
+                <input
+                  ref={editable.fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hiddenFileInput"
+                  onChange={editable.handleFileChange}
+                />
+              </div>
+              <div className="editActions">
+                <button className="primaryButton" type="button" onClick={editable.save} disabled={editable.saving}>
+                  {editable.saving ? "Saving…" : "Save"}
+                </button>
+                <button className="cancelButton" type="button" onClick={editable.cancelEdit} disabled={editable.saving}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <EditFormBody editable={editable} isList={isList} />
+          )
         ) : (
           <>
             {isList ? (
@@ -68,6 +112,15 @@ export default function EditableSection({
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
+              ) : (
+                <p className="infoText">{emptyText}</p>
+              )
+            ) : richText ? (
+              value ? (
+                <div
+                  className="infoText richTextDisplay"
+                  dangerouslySetInnerHTML={{ __html: sanitizeRichText(value as string) }}
+                />
               ) : (
                 <p className="infoText">{emptyText}</p>
               )

@@ -22,6 +22,9 @@ export default function EditModeToggle({ isEditor }: { isEditor: boolean }) {
   return (
     <div className="editModeBadge">
       <span>✏️ Edit mode on</span>
+      <Link href="/admin/completions" className="editModeLogout">
+        📊 Completions
+      </Link>
       <button className="editModeLogout" type="button" onClick={handleLogout}>
         Log out
       </button>

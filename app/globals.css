@@ -329,6 +329,38 @@ h1 {
   background: #f8fffb;
 }
 
+.nameGate {
+  margin-top: 20px;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--accent-soft);
+}
+
+.nameGate label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.nameGateRow {
+  display: flex;
+  gap: 10px;
+}
+
+.nameGateRow .editTextarea {
+  background: var(--card);
+}
+
+.nameGateHint {
+  margin: 10px 0 0;
+  color: var(--success);
+  font-weight: 700;
+  font-size: 13px;
+}
+
 .addActivityBar {
   display: flex;
   flex-wrap: wrap;
@@ -429,6 +461,77 @@ h1 {
 
 .activityBody p {
   margin-bottom: 0;
+}
+
+.richTextEditor {
+  display: grid;
+  gap: 10px;
+}
+
+.richTextToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.richTextToolbar select,
+.richTextToolbar button {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.richTextColorLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.richTextColorLabel input[type="color"] {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.richTextArea {
+  min-height: 140px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--card);
+}
+
+.richTextArea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.richTextWordCount {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.richTextWordCountOver {
+  color: #c0392b;
+}
+
+.richTextDisplay {
+  line-height: 1.65;
 }
 
 .completeButton,
@@ -541,6 +644,21 @@ h1 {
   grid-template-columns: 1fr 1fr;
   gap: 18px;
   margin-top: 24px;
+}
+
+.completionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.completedAt {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .completionsGrid { grid-template-columns: 1fr; }
 }
 
 .infoCard {
