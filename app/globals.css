@@ -627,6 +627,49 @@ h1 {
 
 .simpleWeekHero { align-items: center; }
 
+.inlineEditDisplay {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.inlineEditButton {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  font-size: 13px;
+  padding: 4px 8px;
+  cursor: pointer;
+  align-self: center;
+}
+
+.inlineEditRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.inlineEditInput {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 18px;
+  min-width: 260px;
+}
+
+.inlineEditSave,
+.inlineEditCancel {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  cursor: pointer;
+  font-weight: 700;
+}
+
 .unitLabel {
   display: inline-block;
   margin: 18px 0 0;

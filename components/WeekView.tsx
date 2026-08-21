@@ -3,6 +3,7 @@ import { Week } from "@/lib/courseData";
 import EditableSection from "./EditableSection";
 import BonusCard from "./BonusCard";
 import PublishToggle from "./PublishToggle";
+import InlineTextField from "./InlineTextField";
 
 export default function WeekView({ week, isEditor }: { week: Week; isEditor: boolean }) {
   return (
@@ -12,8 +13,15 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
       <header className="weekHero simpleWeekHero">
         <div>
           <p className="eyebrow">WEEK {week.number}</p>
-          <h1>{week.title}</h1>
-          <p className="unitLabel">{week.unit}</p>
+          <InlineTextField weekNumber={week.number} field="title" value={week.title} isEditor={isEditor} tag="h1" />
+          <InlineTextField
+            weekNumber={week.number}
+            field="unit"
+            value={week.unit}
+            isEditor={isEditor}
+            tag="p"
+            className="unitLabel"
+          />
           <PublishToggle weekNumber={week.number} published={week.published} isEditor={isEditor} />
         </div>
       </header>

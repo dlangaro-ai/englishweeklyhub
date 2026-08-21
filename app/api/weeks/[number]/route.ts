@@ -6,6 +6,8 @@ import { ExtraActivity, Week } from "@/lib/courseData";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 
 const EDITABLE_FIELDS = [
+  "title",
+  "unit",
   "summary",
   "summaryImage",
   "books",
