@@ -1,4 +1,4 @@
-const ALLOWED_TAGS = new Set(["span", "br", "b", "i", "u", "mark"]);
+const ALLOWED_TAGS = new Set(["span", "br", "b", "i", "u", "mark", "div", "p"]);
 const ALLOWED_STYLE_PROPS = new Set(["font-family", "font-size", "background-color", "color"]);
 
 // Minimal allowlist sanitizer for the rich-text summary field. Only the
