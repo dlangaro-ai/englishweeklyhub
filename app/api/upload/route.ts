@@ -23,7 +23,9 @@ export async function POST(request: NextRequest) {
   try {
     const url = await uploadImage(file);
     return NextResponse.json({ url });
-  } catch {
-    return NextResponse.json({ error: "Could not upload image." }, { status: 500 });
+  } catch (error) {
+    console.error("Image upload failed:", error);
+    const message = error instanceof Error ? error.message : "Could not upload image.";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

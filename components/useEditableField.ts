@@ -65,7 +65,10 @@ export function useEditableField({
         const formData = new FormData();
         formData.append("file", imageFile);
         const uploadResponse = await fetch("/api/upload", { method: "POST", body: formData });
-        if (!uploadResponse.ok) throw new Error("upload failed");
+        if (!uploadResponse.ok) {
+          const result = await uploadResponse.json().catch(() => ({}));
+          throw new Error(result.error ?? "Image upload failed.");
+        }
         uploadedUrl = (await uploadResponse.json()).url;
       }
 
@@ -84,12 +87,16 @@ export function useEditableField({
         body: JSON.stringify(payload)
       });
 
-      if (!response.ok) throw new Error("save failed");
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({}));
+        throw new Error(result.error ?? "Save failed.");
+      }
 
       setEditing(false);
       router.refresh();
-    } catch {
-      alert("Sorry, something went wrong saving this. Please try again.");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Sorry, something went wrong saving this.";
+      alert(message);
     } finally {
       setSaving(false);
     }

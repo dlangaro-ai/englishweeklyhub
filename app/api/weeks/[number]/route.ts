@@ -55,7 +55,9 @@ export async function PATCH(
     await saveWeeks(weeks);
 
     return NextResponse.json({ ok: true, week: weeks[index] });
-  } catch {
-    return NextResponse.json({ error: "Could not save changes." }, { status: 500 });
+  } catch (error) {
+    console.error("Saving week failed:", error);
+    const message = error instanceof Error ? error.message : "Could not save changes.";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
