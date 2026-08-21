@@ -1,0 +1,10 @@
+WEEK 1 BOOK IMAGE UPDATE
+
+1. Open this folder.
+2. Copy ALL folders/files inside it.
+3. Paste them into your local englishweeklyhub project folder.
+4. When Mac asks, choose Replace.
+5. Open GitHub Desktop.
+6. Commit with: Add Week 1 book cover
+7. Push origin.
+8. Vercel updates automatically.

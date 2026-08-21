@@ -1,3 +1,21 @@
+// ── HOW TO EDIT THIS FILE ──────────────────────────────────────────────────
+// This is the ONLY file you need to touch to update the site each week.
+// Find the week you want to change below (look for `number: X`) and edit
+// its text. When you're done: save, commit in GitHub Desktop, push to main,
+// and Vercel will redeploy automatically.
+//
+// Field cheat sheet:
+//   title      -> short, friendly week title students see on their card
+//   unit       -> the topic/unit name shown under the title
+//   summary    -> a few sentences telling students what's happening this week
+//   books      -> list of books/pages, e.g. "Unlock pages 14-18"
+//   bookImage  -> optional path to a cover image, e.g. "/images/my-book.png"
+//                 (drop image files into the /public/images folder)
+//   homework   -> list of homework items, e.g. "Workbook page 7"
+//   published  -> true = students can open this week, false = shows "Soon"
+//   extraActivities -> optional bonus links/videos/PDFs for this week
+// ────────────────────────────────────────────────────────────────────────────
+
 export type ExtraActivity = {
   id: string;
   title: string;
@@ -39,6 +57,7 @@ const starterWeeks: Week[] = [
       }
     ]
   },
+
   {
     number: 2,
     title: "Week 2",
@@ -49,6 +68,7 @@ const starterWeeks: Week[] = [
     published: true,
     extraActivities: []
   },
+
   {
     number: 3,
     title: "Our School Community",

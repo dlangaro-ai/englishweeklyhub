@@ -11,6 +11,10 @@
   --accent: #6c63ff;
   --accent-soft: #eeedff;
   --success: #1f9d68;
+  --blue: #2f8fef;
+  --blue-soft: #e9f3ff;
+  --orange: #f08a24;
+  --orange-soft: #fff2e2;
 }
 
 html {
@@ -157,6 +161,14 @@ h1 {
 
 .weekNumber {
   color: var(--accent);
+}
+
+.weekStatus {
+  color: var(--muted);
+}
+
+.weekStatusReady {
+  color: var(--success);
 }
 
 .weekCard h3 {
@@ -493,6 +505,21 @@ h1 {
 
 .simpleList { margin: 10px 0 0; padding-left: 20px; }
 
+.infoCardBooks { border-color: #d6e8fe; }
+.infoCardBooks .infoLabel { color: var(--blue); }
+
+.infoCardHomework { border-color: #fbe0bd; }
+.infoCardHomework .infoLabel { color: var(--orange); }
+
+.bookImage {
+  width: 100%;
+  max-width: 160px;
+  margin-top: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  display: block;
+}
+
 .skillsFolder {
   background: linear-gradient(145deg, #ffffff, #f4f1ff);
   transition: transform 160ms ease, box-shadow 160ms ease;
@@ -516,14 +543,4 @@ h1 {
 @media (max-width: 700px) {
   .weekInfoGrid { grid-template-columns: 1fr; }
   .summaryCard { grid-column: auto; }
-}
-
-
-.bookCover {
-  width: 150px;
-  height: auto;
-  display: block;
-  margin: 16px 0;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(28, 36, 67, 0.12);
 }

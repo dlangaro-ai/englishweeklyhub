@@ -19,12 +19,12 @@ export default function ExtraActivitiesView({ week }: { week: Week }) {
       <Link href={`/week/${week.number}`} className="backLink">← Week {week.number}</Link>
 
       <header className="skillHero">
-        <div className="skillIcon large">📁</div>
+        <div className="skillIcon large">🎁</div>
         <div>
-          <p className="eyebrow">WEEK {week.number} · SKILLS</p>
+          <p className="eyebrow">WEEK {week.number} · BONUS</p>
           <h1>Extra Activities</h1>
           <p className="heroText">
-            Optional practice and extension resources for this week.
+            Optional fun practice for this week — try one whenever you like!
           </p>
         </div>
       </header>
@@ -33,8 +33,8 @@ export default function ExtraActivitiesView({ week }: { week: Week }) {
         {week.extraActivities.length === 0 ? (
           <div className="emptyState compact">
             <div className="emptyIcon">✨</div>
-            <h2>No extra activities yet</h2>
-            <p>Extra practice can be added here whenever needed.</p>
+            <h2>Nothing here yet</h2>
+            <p>Check back soon — extra activities will appear here.</p>
           </div>
         ) : (
           week.extraActivities.map((activity, index) => {
