@@ -42,7 +42,7 @@ export async function saveWeeks(weeks: Week[]): Promise<void> {
     contentType: "application/json"
   });
 
-  revalidateTag(CACHE_TAG);
+  revalidateTag(CACHE_TAG, { expire: 0 });
 }
 
 export async function uploadImage(file: File): Promise<string> {
