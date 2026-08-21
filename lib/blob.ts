@@ -6,7 +6,10 @@ const DATA_PATH = "course-data.json";
 const CACHE_TAG = "course-data";
 
 function blobConfigured() {
-  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  // Either a static read-write token, or a Blob store connected via OIDC
+  // (which adds BLOB_STORE_ID; the OIDC token itself is injected by Vercel
+  // at runtime and isn't something you set by hand).
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 }
 
 async function fetchWeeks(): Promise<Week[]> {
@@ -32,7 +35,7 @@ export const loadWeeks = unstable_cache(fetchWeeks, ["course-data"], { tags: [CA
 
 export async function saveWeeks(weeks: Week[]): Promise<void> {
   if (!blobConfigured()) {
-    throw new Error("Blob storage is not configured (missing BLOB_READ_WRITE_TOKEN).");
+    throw new Error("Blob storage is not connected to this project yet.");
   }
 
   await put(DATA_PATH, JSON.stringify(weeks), {
@@ -47,7 +50,7 @@ export async function saveWeeks(weeks: Week[]): Promise<void> {
 
 export async function uploadImage(file: File): Promise<string> {
   if (!blobConfigured()) {
-    throw new Error("Blob storage is not configured (missing BLOB_READ_WRITE_TOKEN).");
+    throw new Error("Blob storage is not connected to this project yet.");
   }
 
   const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "-");
