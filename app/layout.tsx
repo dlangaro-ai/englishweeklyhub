@@ -5,6 +5,7 @@ import Providers from "./providers";
 export const metadata: Metadata = {
   title: "English Weekly Hub",
   description: "A 40-week English learning hub organized by skills.",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({
@@ -14,7 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body><Providers>{children}</Providers></body>
+      <body>
+        <Providers>{children}</Providers>
+        <footer className="siteFooter">
+          © {new Date().getFullYear()} English Weekly Hub — DL. All rights reserved.
+        </footer>
+      </body>
     </html>
   );
 }
