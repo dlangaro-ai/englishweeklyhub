@@ -1,8 +1,8 @@
-import { list, put } from "@vercel/blob";
+import { del, list, put } from "@vercel/blob";
 import { unstable_cache, revalidateTag } from "next/cache";
 import { weeks as defaultWeeks, Week } from "./courseData";
 
-const DATA_PATH = "course-data.json";
+const DATA_PREFIX = "course-data";
 const CACHE_TAG = "course-data";
 
 function blobConfigured() {
@@ -12,12 +12,16 @@ function blobConfigured() {
   return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 }
 
+function latestBlob<T extends { pathname: string }>(blobs: T[]): T | undefined {
+  return blobs.slice().sort((a, b) => b.pathname.localeCompare(a.pathname))[0];
+}
+
 async function fetchWeeks(): Promise<Week[]> {
   if (!blobConfigured()) return defaultWeeks;
 
   try {
-    const { blobs } = await list({ prefix: DATA_PATH, limit: 1 });
-    const match = blobs.find((blob) => blob.pathname === DATA_PATH);
+    const { blobs } = await list({ prefix: DATA_PREFIX, limit: 1000 });
+    const match = latestBlob(blobs);
     if (!match) return defaultWeeks;
 
     const response = await fetch(match.url, { cache: "no-store" });
@@ -38,14 +42,28 @@ export async function saveWeeks(weeks: Week[]): Promise<void> {
     throw new Error("Blob storage is not connected to this project yet.");
   }
 
-  await put(DATA_PATH, JSON.stringify(weeks), {
+  // Vercel's public Blob storage caches content at the CDN level, per URL,
+  // for up to a month — overwriting the same pathname can keep serving the
+  // old version regardless of application-level cache invalidation. Writing
+  // to a fresh, never-before-seen pathname every time sidesteps that entirely.
+  const { blobs: previous } = await list({ prefix: DATA_PREFIX, limit: 1000 }).catch(() => ({
+    blobs: [] as { url: string }[]
+  }));
+
+  await put(`${DATA_PREFIX}-${Date.now()}.json`, JSON.stringify(weeks), {
     access: "public",
     addRandomSuffix: false,
-    allowOverwrite: true,
     contentType: "application/json"
   });
 
   revalidateTag(CACHE_TAG, { expire: 0 });
+
+  if (previous.length > 0) {
+    await del(previous.map((blob) => blob.url)).catch(() => {
+      // Best-effort cleanup — a leftover old copy doesn't hurt correctness
+      // since reads always pick the most recent pathname.
+    });
+  }
 }
 
 export async function uploadImage(file: File): Promise<string> {
