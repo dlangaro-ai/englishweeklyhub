@@ -11,12 +11,13 @@ const iconFor = (type?: string) => {
   if (type === "pdf") return "📄";
   if (type === "link") return "🔗";
   if (type === "image") return "🖼️";
+  if (type === "list") return "📋";
   return "⭐";
 };
 
-const CAPS: Record<"link" | "image" | "pdf", number> = { link: 3, image: 3, pdf: 2 };
+const CAPS: Record<"link" | "image" | "pdf" | "list", number> = { link: 3, image: 3, pdf: 2, list: 5 };
 
-type AddType = "link" | "image" | "pdf" | null;
+type AddType = "link" | "image" | "pdf" | "list" | null;
 
 export default function ExtraActivitiesView({ week, isEditor }: { week: Week; isEditor: boolean }) {
   const { isComplete, toggleActivity, studentName, setStudentName } = useProgress();
@@ -70,12 +71,17 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
       return;
     }
 
+    if (addingType === "list" && !description.trim()) {
+      alert("Please add at least one list item.");
+      return;
+    }
+
     setSaving(true);
 
     try {
       let href = url.trim();
 
-      if (addingType !== "link") {
+      if (addingType === "image" || addingType === "pdf") {
         if (!file) {
           alert("Please choose a file.");
           setSaving(false);
@@ -89,7 +95,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
           throw new Error(result.error ?? "Upload failed.");
         }
         href = (await uploadResponse.json()).url;
-      } else if (!href) {
+      } else if (addingType === "link" && !href) {
         alert("Please add a link.");
         setSaving(false);
         return;
@@ -99,7 +105,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
         id: `activity-${Date.now()}`,
         title: title.trim(),
         description: description.trim() || undefined,
-        href,
+        href: addingType === "list" ? undefined : href,
         resourceType: addingType
       };
 
@@ -169,7 +175,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
 
       {isEditor && (
         <div className="addActivityBar">
-          {(["link", "image", "pdf"] as const).map((type) => {
+          {(["link", "image", "pdf", "list"] as const).map((type) => {
             const count = counts[type] ?? 0;
             const atCap = count >= CAPS[type];
             return (
@@ -197,19 +203,20 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
           />
           <textarea
             className="editTextarea"
-            placeholder="Description (optional)"
-            rows={2}
+            placeholder={addingType === "list" ? "One item per line" : "Description (optional)"}
+            rows={addingType === "list" ? 5 : 2}
             value={description}
             onChange={(event) => setDescription(event.target.value)}
           />
-          {addingType === "link" ? (
+          {addingType === "link" && (
             <input
               className="editTextarea"
               placeholder="https://..."
               value={url}
               onChange={(event) => setUrl(event.target.value)}
             />
-          ) : (
+          )}
+          {(addingType === "image" || addingType === "pdf") && (
             <input
               ref={fileInputRef}
               type="file"
@@ -244,7 +251,21 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
                 <div className="activityBody">
                   <span className="activityType">EXTRA ACTIVITY {index + 1}</span>
                   <h2>{activity.title}</h2>
-                  {activity.description && <p>{activity.description}</p>}
+                  {activity.resourceType === "list" ? (
+                    activity.description && (
+                      <ul className="simpleList">
+                        {activity.description
+                          .split("\n")
+                          .map((line) => line.trim())
+                          .filter(Boolean)
+                          .map((line, lineIndex) => (
+                            <li key={lineIndex}>{line}</li>
+                          ))}
+                      </ul>
+                    )
+                  ) : (
+                    activity.description && <p>{activity.description}</p>
+                  )}
                   {activity.resourceType === "image" && activity.href && (
                     <a href={activity.href} target="_blank" rel="noreferrer">
                       {/* eslint-disable-next-line @next/next/no-img-element */}

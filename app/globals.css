@@ -750,6 +750,9 @@ h1 {
 .infoCardBooks { border-color: #d6e8fe; }
 .infoCardBooks .infoLabel { color: var(--blue); }
 
+.bookExtraImage { margin-top: 14px; }
+.bookExtraImage .editImageButtons { margin-top: 10px; }
+
 .infoCardHomework { border-color: #fbe0bd; }
 .infoCardHomework .infoLabel { color: var(--orange); }
 

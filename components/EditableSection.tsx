@@ -20,6 +20,7 @@ type EditableSectionProps = {
   cardClassName?: string;
   richText?: boolean;
   maxWords?: number;
+  extra?: React.ReactNode;
 };
 
 export default function EditableSection({
@@ -36,7 +37,8 @@ export default function EditableSection({
   isEditor,
   cardClassName,
   richText,
-  maxWords
+  maxWords,
+  extra
 }: EditableSectionProps) {
   const initialText = isList ? (value as string[]).join("\n") : (value as string);
   const editable = useEditableField({
@@ -138,6 +140,7 @@ export default function EditableSection({
                 }}
               />
             )}
+            {extra}
           </>
         )}
       </div>

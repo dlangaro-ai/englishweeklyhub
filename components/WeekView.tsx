@@ -4,6 +4,7 @@ import EditableSection from "./EditableSection";
 import BonusCard from "./BonusCard";
 import PublishToggle from "./PublishToggle";
 import InlineTextField from "./InlineTextField";
+import BookExtraImage from "./BookExtraImage";
 
 export default function WeekView({ week, isEditor }: { week: Week; isEditor: boolean }) {
   return (
@@ -57,6 +58,9 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           emptyText="No book information added yet."
           isEditor={isEditor}
           cardClassName="infoCardBooks"
+          extra={
+            <BookExtraImage weekNumber={week.number} image={week.bookImage2} isEditor={isEditor} />
+          }
         />
 
         <EditableSection

@@ -12,6 +12,7 @@ const EDITABLE_FIELDS = [
   "summaryImage",
   "books",
   "bookImage",
+  "bookImage2",
   "homework",
   "homeworkImage",
   "bonusText",
@@ -23,7 +24,8 @@ const EDITABLE_FIELDS = [
 const MAX_BY_TYPE: Partial<Record<NonNullable<ExtraActivity["resourceType"]>, number>> = {
   image: 3,
   link: 3,
-  pdf: 2
+  pdf: 2,
+  list: 5
 };
 
 function validateExtraActivities(activities: unknown): string | null {
