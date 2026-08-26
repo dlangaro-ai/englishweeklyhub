@@ -16,6 +16,16 @@ function latestBlob<T extends { pathname: string }>(blobs: T[]): T | undefined {
   return blobs.slice().sort((a, b) => b.pathname.localeCompare(a.pathname))[0];
 }
 
+// If courseData.ts's default week count ever grows (e.g. 40 -> 41 weeks),
+// this fills in any week numbers missing from what's already saved — without
+// touching or overwriting any week that's already been edited and stored.
+function mergeWithDefaults(stored: Week[]): Week[] {
+  const storedNumbers = new Set(stored.map((week) => week.number));
+  const missing = defaultWeeks.filter((week) => !storedNumbers.has(week.number));
+  if (missing.length === 0) return stored;
+  return [...stored, ...missing].sort((a, b) => a.number - b.number);
+}
+
 async function fetchWeeks(): Promise<Week[]> {
   if (!blobConfigured()) return defaultWeeks;
 
@@ -27,7 +37,8 @@ async function fetchWeeks(): Promise<Week[]> {
     const response = await fetch(match.url, { cache: "no-store" });
     if (!response.ok) return defaultWeeks;
 
-    return (await response.json()) as Week[];
+    const stored = (await response.json()) as Week[];
+    return mergeWithDefaults(stored);
   } catch {
     return defaultWeeks;
   }

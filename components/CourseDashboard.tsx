@@ -5,10 +5,9 @@ import { Week } from "@/lib/courseData";
 import EditModeToggle from "./EditModeToggle";
 
 const terms = [
-  { start: 0, name: "Term 1", emoji: "🌱" },
-  { start: 10, name: "Term 2", emoji: "☀️" },
-  { start: 20, name: "Term 3", emoji: "🍁" },
-  { start: 30, name: "Term 4", emoji: "❄️" }
+  { start: 0, count: 19, name: "Semester 1", emoji: "📘" },
+  { start: 19, count: 2, name: "Winter Break", emoji: "❄️" },
+  { start: 21, count: 20, name: "Semester 2", emoji: "📗" }
 ];
 
 export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
@@ -18,7 +17,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
     <main className="shell">
       <header className="hero">
         <div>
-          <p className="eyebrow">GRADE 5 ENGLISH · 40 WEEKS</p>
+          <p className="eyebrow">GRADE 5 ENGLISH · {weeks.length} WEEKS</p>
           <h1>My English Hub</h1>
           <p className="heroText">
             Pick your week below to find this week&apos;s topic, books, homework and fun extra activities.
@@ -30,15 +29,15 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         </div>
       </header>
 
-      {terms.map(({ start, name, emoji }) => (
+      {terms.map(({ start, count, name, emoji }) => (
         <section className="termSection" key={start}>
           <div className="sectionHeading">
             <h2>{emoji} {name}</h2>
-            <span>Weeks {start + 1}–{start + 10}</span>
+            <span>Weeks {start + 1}–{start + count}</span>
           </div>
 
           <div className="weekGrid">
-            {weeks.slice(start, start + 10).map((week) => {
+            {weeks.slice(start, start + count).map((week) => {
               const clickable = week.published || isEditor;
 
               return clickable ? (

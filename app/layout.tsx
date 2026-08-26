@@ -4,7 +4,7 @@ import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "English Weekly Hub",
-  description: "A 40-week English learning hub organized by skills.",
+  description: "A 2-semester English learning hub organized by week.",
   robots: { index: false, follow: false },
 };
 

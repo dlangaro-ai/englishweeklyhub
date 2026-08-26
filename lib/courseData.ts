@@ -104,7 +104,7 @@ const starterWeeks: Week[] = [
   }
 ];
 
-const placeholders: Week[] = Array.from({ length: 37 }, (_, index) => {
+const placeholders: Week[] = Array.from({ length: 38 }, (_, index) => {
   const number = index + 4;
 
   return {
