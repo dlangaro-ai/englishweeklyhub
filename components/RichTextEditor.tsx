@@ -60,6 +60,25 @@ export default function RichTextEditor({
     }
   }
 
+  // Bold / italic / underline / bullets run through the browser's built-in
+  // editing commands. styleWithCSS=false keeps them emitting plain tags
+  // (<b>, <i>, <u>, <ul><li>) rather than inline styles — that's what
+  // sanitizeRichText allows through when the content is displayed.
+  function applyCommand(command: "bold" | "italic" | "underline" | "insertUnorderedList") {
+    const el = editorRef.current;
+    if (!el) return;
+    el.focus();
+    restoreSelection();
+    try {
+      document.execCommand("styleWithCSS", false, "false");
+    } catch {
+      // Older browsers don't support this toggle — the command below still runs.
+    }
+    document.execCommand(command);
+    handleInput();
+    saveSelection();
+  }
+
   function applyStyle(styleProp: "fontFamily" | "fontSize" | "backgroundColor" | "color", styleValue: string) {
     restoreSelection();
     const selection = window.getSelection();
@@ -90,6 +109,47 @@ export default function RichTextEditor({
   return (
     <div className="richTextEditor">
       <div className="richTextToolbar">
+        <button
+          type="button"
+          className="richTextFormatButton"
+          title="Bold"
+          aria-label="Bold"
+          onMouseDown={saveSelection}
+          onClick={() => applyCommand("bold")}
+        >
+          <strong>B</strong>
+        </button>
+        <button
+          type="button"
+          className="richTextFormatButton"
+          title="Italic"
+          aria-label="Italic"
+          onMouseDown={saveSelection}
+          onClick={() => applyCommand("italic")}
+        >
+          <em>I</em>
+        </button>
+        <button
+          type="button"
+          className="richTextFormatButton"
+          title="Underline"
+          aria-label="Underline"
+          onMouseDown={saveSelection}
+          onClick={() => applyCommand("underline")}
+        >
+          <span style={{ textDecoration: "underline" }}>U</span>
+        </button>
+        <button
+          type="button"
+          className="richTextFormatButton"
+          title="Bullet list"
+          aria-label="Bullet list"
+          onMouseDown={saveSelection}
+          onClick={() => applyCommand("insertUnorderedList")}
+        >
+          • List
+        </button>
+        <span className="richTextToolbarDivider" aria-hidden="true" />
         <select onMouseDown={saveSelection} onChange={(event) => applyStyle("fontFamily", event.target.value)} defaultValue="">
           <option value="" disabled>Font</option>
           {FONT_FAMILIES.map((font) => (

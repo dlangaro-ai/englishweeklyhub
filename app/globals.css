@@ -509,6 +509,37 @@ h1 {
   line-height: 1.65;
 }
 
+.richTextFormatButton {
+  min-width: 36px;
+  text-align: center;
+  line-height: 1;
+}
+
+.richTextToolbarDivider {
+  width: 1px;
+  align-self: stretch;
+  min-height: 24px;
+  background: var(--line);
+}
+
+.richTextArea ul,
+.richTextArea ol,
+.richTextDisplay ul,
+.richTextDisplay ol {
+  margin: 0.5em 0;
+  padding-left: 1.5em;
+}
+
+.richTextArea ul,
+.richTextDisplay ul {
+  list-style: disc;
+}
+
+.richTextArea ol,
+.richTextDisplay ol {
+  list-style: decimal;
+}
+
 .completeButton,
 .primaryButton {
   border: 0;

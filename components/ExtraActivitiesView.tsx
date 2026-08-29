@@ -4,7 +4,9 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ExtraActivity, Week } from "@/lib/courseData";
+import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { useProgress } from "./ProgressProvider";
+import RichTextEditor from "./RichTextEditor";
 
 const iconFor = (type?: string) => {
   if (type === "video") return "▶️";
@@ -174,13 +176,22 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
             value={title}
             onChange={(event) => setTitle(event.target.value)}
           />
-          <textarea
-            className="editTextarea"
-            placeholder={addingType === "list" ? "One item per line" : "Description (optional)"}
-            rows={addingType === "list" ? 5 : 2}
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-          />
+          {addingType === "list" ? (
+            <textarea
+              className="editTextarea"
+              placeholder="One item per line"
+              rows={5}
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+            />
+          ) : (
+            <RichTextEditor
+              key={addingType}
+              value={description}
+              onChange={setDescription}
+              maxWords={200}
+            />
+          )}
           {addingType === "link" && (
             <input
               className="editTextarea"
@@ -237,7 +248,12 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
                       </ul>
                     )
                   ) : (
-                    activity.description && <p>{activity.description}</p>
+                    activity.description && (
+                      <div
+                        className="richTextDisplay"
+                        dangerouslySetInnerHTML={{ __html: sanitizeRichText(activity.description) }}
+                      />
+                    )
                   )}
                   {activity.resourceType === "image" && activity.href && (
                     <a href={activity.href} target="_blank" rel="noreferrer">
