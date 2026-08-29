@@ -336,38 +336,6 @@ h1 {
   background: #f8fffb;
 }
 
-.nameGate {
-  margin-top: 20px;
-  padding: 18px 22px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: var(--accent-soft);
-}
-
-.nameGate label {
-  display: block;
-  margin-bottom: 10px;
-  font-weight: 800;
-  font-size: 14px;
-  color: var(--ink);
-}
-
-.nameGateRow {
-  display: flex;
-  gap: 10px;
-}
-
-.nameGateRow .editTextarea {
-  background: var(--card);
-}
-
-.nameGateHint {
-  margin: 10px 0 0;
-  color: var(--success);
-  font-weight: 700;
-  font-size: 13px;
-}
-
 .addActivityBar {
   display: flex;
   flex-wrap: wrap;

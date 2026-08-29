@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ExtraActivity, Week } from "@/lib/courseData";
@@ -20,11 +20,8 @@ const CAPS: Record<"link" | "image" | "pdf" | "list", number> = { link: 3, image
 type AddType = "link" | "image" | "pdf" | "list" | null;
 
 export default function ExtraActivitiesView({ week, isEditor }: { week: Week; isEditor: boolean }) {
-  const { isComplete, toggleActivity, studentName, setStudentName } = useProgress();
+  const { isComplete, toggleActivity } = useProgress();
   const router = useRouter();
-
-  const [nameInput, setNameInput] = useState(studentName);
-  useEffect(() => setNameInput(studentName), [studentName]);
 
   const [addingType, setAddingType] = useState<AddType>(null);
   const [title, setTitle] = useState("");
@@ -148,30 +145,6 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
           </p>
         </div>
       </header>
-
-      {!isEditor && (
-        <div className="nameGate">
-          <label htmlFor="studentName">Your name (so your teacher can see your progress):</label>
-          <div className="nameGateRow">
-            <input
-              id="studentName"
-              className="editTextarea"
-              placeholder="Type your name"
-              value={nameInput}
-              onChange={(event) => setNameInput(event.target.value)}
-            />
-            <button
-              className="primaryButton"
-              type="button"
-              onClick={() => setStudentName(nameInput)}
-              disabled={nameInput.trim() === studentName && Boolean(studentName)}
-            >
-              {studentName ? "Update" : "Save"}
-            </button>
-          </div>
-          {studentName && <p className="nameGateHint">Marking complete as: {studentName}</p>}
-        </div>
-      )}
 
       {isEditor && (
         <div className="addActivityBar">
