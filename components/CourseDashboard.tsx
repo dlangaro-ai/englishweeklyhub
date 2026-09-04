@@ -11,27 +11,78 @@ const terms = [
   { start: 21, count: 20, name: "Semester 2", emoji: "📗" }
 ];
 
-const stripHtml = (value: string) => value.replace(/<[^>]+>/g, " ");
+const stripHtml = (value: string) => value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 
-// Text a search query is matched against. Hidden content (summary, homework,
-// books, bonus, activities) is only searchable once a week is published — or
-// for the teacher — so students can't surface content that isn't live yet.
-function searchableText(week: Week, deep: boolean): string {
-  const parts = [`week ${week.number}`, week.title, week.unit];
+type SearchHit = {
+  week: number;
+  where: string;
+  snippet: string;
+  href: string;
+  open: boolean;
+};
+
+const SNIPPET_PAD = 44;
+
+function snippetAround(text: string, at: number, length: number): string {
+  const start = Math.max(0, at - SNIPPET_PAD);
+  const end = Math.min(text.length, at + length + SNIPPET_PAD);
+  return (
+    (start > 0 ? "… " : "") +
+    text.slice(start, end).trim() +
+    (end < text.length ? " …" : "")
+  );
+}
+
+// Walk a week's content for the query and report each place it turns up — the
+// section, a snippet of the text, and a link that lands on that spot. Hidden
+// content (summary, books, homework, bonus, activities) is only searched once a
+// week is published, or for the teacher.
+function weekHits(week: Week, deep: boolean, query: string): SearchHit[] {
+  const hits: SearchHit[] = [];
+  const open = week.published || deep;
+  const weekHref = `/week/${week.number}`;
+
+  const add = (where: string, raw: string, href: string) => {
+    const text = raw.trim();
+    if (!text) return;
+    const at = text.toLowerCase().indexOf(query);
+    if (at === -1) return;
+    hits.push({ week: week.number, where, snippet: snippetAround(text, at, query.length), href, open });
+  };
+
+  add("Title", `Week ${week.number} — ${week.title}`, weekHref);
+  add("Topic", week.unit, weekHref);
 
   if (deep) {
-    parts.push(
-      stripHtml(week.summary),
-      week.books.join(" "),
-      week.homework.join(" "),
-      week.bonusText,
-      week.extraActivities
-        .flatMap((activity) => [activity.title, stripHtml(activity.description ?? "")])
-        .join(" ")
-    );
+    add("This week", stripHtml(week.summary), `${weekHref}/this-week`);
+    week.books.forEach((book) => add("Books", book, `${weekHref}#books`));
+    week.homework.forEach((item) => add("Homework", item, `${weekHref}#homework`));
+    add("Bonus", week.bonusText, `${weekHref}#bonus`);
+    week.extraActivities.forEach((activity) => {
+      add("Eager Learners", activity.title, `${weekHref}/skills`);
+      add("Eager Learners", stripHtml(activity.description ?? ""), `${weekHref}/skills`);
+    });
   }
 
-  return parts.join(" ").toLowerCase();
+  return hits;
+}
+
+function highlight(text: string, query: string) {
+  if (!query) return text;
+  const lower = text.toLowerCase();
+  const nodes: React.ReactNode[] = [];
+  let cursor = 0;
+  let found = lower.indexOf(query);
+  let key = 0;
+
+  while (found !== -1) {
+    if (found > cursor) nodes.push(text.slice(cursor, found));
+    nodes.push(<mark key={key++}>{text.slice(found, found + query.length)}</mark>);
+    cursor = found + query.length;
+    found = lower.indexOf(query, cursor);
+  }
+  nodes.push(text.slice(cursor));
+  return nodes;
 }
 
 export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
@@ -39,19 +90,27 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
   const readyCount = weeks.filter((week) => week.published).length;
 
   const trimmed = query.trim().toLowerCase();
-  const matches = (week: Week) =>
-    !trimmed || searchableText(week, week.published || isEditor).includes(trimmed);
-  const resultList = trimmed
-    ? weeks.filter(matches).slice().sort((a, b) => a.number - b.number)
+
+  const seen = new Set<string>();
+  const hits = trimmed
+    ? weeks
+        .flatMap((week) => weekHits(week, week.published || isEditor, trimmed))
+        .filter((hit) => {
+          const key = `${hit.week}|${hit.where}`;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        })
+        .slice(0, 40)
     : [];
+  const hitWeeks = new Set(hits.map((hit) => hit.week));
 
   function renderWeekCard(week: Week) {
     const clickable = week.published || isEditor;
-    const hit = trimmed !== "" && matches(week);
-    const cls = (base: string) => (hit ? `${base} weekCardMatch` : base);
+    const cls = hitWeeks.has(week.number) ? "weekCard weekCardMatch" : "weekCard";
 
     return clickable ? (
-      <Link className={cls("weekCard")} href={`/week/${week.number}`} key={week.number}>
+      <Link className={cls} href={`/week/${week.number}`} key={week.number}>
         <div className="weekTop">
           <span className="weekNumber">WEEK {week.number}</span>
           <span className={`weekStatus ${week.published ? "weekStatusReady" : ""}`}>
@@ -62,7 +121,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         <p>{week.unit}</p>
       </Link>
     ) : (
-      <div className={cls("weekCard weekCardMuted")} key={week.number}>
+      <div className={`${cls} weekCardMuted`} key={week.number}>
         <div className="weekTop">
           <span className="weekNumber">WEEK {week.number}</span>
           <span className="weekStatus">Soon 🔒</span>
@@ -113,33 +172,33 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
 
       {trimmed && (
         <div className="searchResults">
-          {resultList.length === 0 ? (
+          {hits.length === 0 ? (
             <p className="dashboardSearchCount">No weeks match your search.</p>
           ) : (
             <>
               <p className="dashboardSearchCount">
-                {resultList.length} {resultList.length === 1 ? "week" : "weeks"} found — tap to open
+                {hits.length}
+                {hits.length === 40 ? "+" : ""} {hits.length === 1 ? "result" : "results"} — tap to jump to it
               </p>
               <ul className="searchResultsList">
-                {resultList.map((week) => {
-                  const clickable = week.published || isEditor;
-                  const label = (
+                {hits.map((hit) => {
+                  const inside = (
                     <>
-                      <strong>Week {week.number}</strong> — {week.title}
+                      <span className="searchResultWhere">Week {hit.week} · {hit.where}</span>
+                      <span className="searchResultSnippet">{highlight(hit.snippet, trimmed)}</span>
                     </>
                   );
 
                   return (
-                    <li key={week.number}>
-                      {clickable ? (
-                        <Link href={`/week/${week.number}`} className="searchResultLink">
-                          {label}
-                          <span aria-hidden="true">→</span>
+                    <li key={`${hit.week}-${hit.where}`}>
+                      {hit.open ? (
+                        <Link href={hit.href} className="searchResultLink">
+                          {inside}
                         </Link>
                       ) : (
                         <span className="searchResultLink searchResultLinkMuted">
-                          {label}
-                          <span>Soon 🔒</span>
+                          {inside}
+                          <span className="searchResultSoon">Soon 🔒</span>
                         </span>
                       )}
                     </li>

@@ -30,7 +30,7 @@ export default function BonusCard({
   });
 
   return (
-    <div className="infoCard skillsFolder">
+    <div id="bonus" className="infoCard skillsFolder">
       <span className="infoIcon">🎁</span>
       <div className="infoCardBody">
         <div className="infoCardHead">

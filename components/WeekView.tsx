@@ -43,6 +43,7 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           label="BOOKS USED"
           heading="Books & Pages"
           field="books"
+          anchorId="books"
           imageField="bookImage"
           imageWidthField="bookImageWidth"
           isList={true}
@@ -68,6 +69,7 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           label="HOMEWORK"
           heading="Homework Pages"
           field="homework"
+          anchorId="homework"
           imageField="homeworkImage"
           imageWidthField="homeworkImageWidth"
           isList={true}

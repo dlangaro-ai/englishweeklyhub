@@ -13,6 +13,7 @@ type EditableSectionProps = {
   label: string;
   heading: string;
   field: string;
+  anchorId?: string;
   imageField: string;
   imageWidthField?: string;
   isList: boolean;
@@ -33,6 +34,7 @@ export default function EditableSection({
   label,
   heading,
   field,
+  anchorId,
   imageField,
   imageWidthField,
   isList,
@@ -61,7 +63,7 @@ export default function EditableSection({
   const listValue = Array.isArray(value) ? value : [];
 
   return (
-    <article className={`infoCard ${cardClassName ?? ""}`}>
+    <article id={anchorId} className={`infoCard ${cardClassName ?? ""}`}>
       <span className="infoIcon">{icon}</span>
       <div className="infoCardBody">
         <div className="infoCardHead">
