@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Week } from "@/lib/courseData";
 import EditableSection from "./EditableSection";
+import SummaryCard from "./SummaryCard";
 import BonusCard from "./BonusCard";
 import PublishToggle from "./PublishToggle";
 import InlineTextField from "./InlineTextField";
@@ -28,23 +29,12 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
       </header>
 
       <section className="weekInfoGrid">
-        <EditableSection
+        <SummaryCard
           weekNumber={week.number}
-          icon="✨"
-          label="THIS WEEK"
-          heading="What's Happening this week"
-          field="summary"
-          imageField="summaryImage"
-          imageWidthField="summaryImageWidth"
-          isList={false}
-          value={week.summary}
+          summary={week.summary}
           image={week.summaryImage}
           imageWidth={week.summaryImageWidth}
-          emptyText="Nothing added yet."
           isEditor={isEditor}
-          cardClassName="summaryCard"
-          richText
-          maxWords={300}
         />
 
         <EditableSection

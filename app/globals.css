@@ -213,6 +213,13 @@ h1 {
   font-weight: 800;
 }
 
+.returnButton {
+  display: inline-block;
+  margin-top: 28px;
+  text-decoration: none;
+  color: white;
+}
+
 .progressCircle {
   width: 112px;
   aspect-ratio: 1;
