@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ExtraActivity, Week } from "@/lib/courseData";
-import { sanitizeRichText } from "@/lib/sanitizeHtml";
+import { listActivityToHtml, sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle } from "@/lib/imageSize";
 import { useProgress } from "./ProgressProvider";
 import RichTextEditor from "./RichTextEditor";
@@ -150,13 +150,9 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
     }
   }
 
-  async function handleListEdit(activityId: string, text: string) {
-    const items = text
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean);
-
-    if (items.length === 0) {
+  async function handleListEdit(activityId: string, html: string) {
+    const plain = html.replace(/<[^>]+>/g, " ").trim();
+    if (!plain) {
       alert("Please keep at least one item in the list.");
       return;
     }
@@ -166,7 +162,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
     try {
       await saveActivities(
         week.extraActivities.map((activity) =>
-          activity.id === activityId ? { ...activity, description: items.join("\n") } : activity
+          activity.id === activityId ? { ...activity, description: html } : activity
         )
       );
       setEditingListId(null);
@@ -311,15 +307,12 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
                     ) : (
                       <>
                         {activity.description && (
-                          <ul className="simpleList">
-                            {activity.description
-                              .split("\n")
-                              .map((line) => line.trim())
-                              .filter(Boolean)
-                              .map((line, lineIndex) => (
-                                <li key={lineIndex}>{line}</li>
-                              ))}
-                          </ul>
+                          <div
+                            className="richTextDisplay"
+                            dangerouslySetInnerHTML={{
+                              __html: sanitizeRichText(listActivityToHtml(activity.description))
+                            }}
+                          />
                         )}
                         {isEditor && (
                           <button

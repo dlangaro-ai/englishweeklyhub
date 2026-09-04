@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import RichTextEditor from "./RichTextEditor";
+import { listActivityToHtml } from "@/lib/sanitizeHtml";
 
-// Inline editor for the one-item-per-line text of a "list" Eager Learners activity.
+// Rich-text editor for a "list" Eager Learners activity. Seeds from either the
+// legacy "one item per line" text or previously-saved HTML.
 export default function ListActivityEditor({
   initialText,
   saving,
@@ -11,22 +14,16 @@ export default function ListActivityEditor({
 }: {
   initialText: string;
   saving: boolean;
-  onSave: (text: string) => void;
+  onSave: (html: string) => void;
   onCancel: () => void;
 }) {
-  const [text, setText] = useState(initialText);
+  const [html, setHtml] = useState(() => listActivityToHtml(initialText));
 
   return (
     <div className="editForm">
-      <textarea
-        className="editTextarea"
-        rows={5}
-        placeholder="One item per line"
-        value={text}
-        onChange={(event) => setText(event.target.value)}
-      />
+      <RichTextEditor value={html} onChange={setHtml} maxWords={200} />
       <div className="editActions">
-        <button className="primaryButton" type="button" onClick={() => onSave(text)} disabled={saving}>
+        <button className="primaryButton" type="button" onClick={() => onSave(html)} disabled={saving}>
           {saving ? "Saving…" : "Save"}
         </button>
         <button className="cancelButton" type="button" onClick={onCancel} disabled={saving}>

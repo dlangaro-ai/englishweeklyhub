@@ -38,3 +38,20 @@ export function sanitizeRichText(html: string): string {
 
   return cleaned;
 }
+
+// "list" activities used to store their items as plain "one per line" text.
+// Newer ones store rich HTML from RichTextEditor. This normalises either form
+// to HTML so it can go through sanitizeRichText and render consistently.
+export function listActivityToHtml(value: string): string {
+  const text = value.trim();
+  if (!text) return "";
+  if (/<[a-zA-Z]/.test(text)) return text;
+
+  const items = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => line.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+
+  return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+}
