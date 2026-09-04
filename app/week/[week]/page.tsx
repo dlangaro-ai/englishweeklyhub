@@ -18,7 +18,9 @@ export default async function WeekPage({
   const cookieStore = await cookies();
   const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
 
-  if (!week || (!week.published && !isEditor)) notFound();
+  // Unpublished weeks are still reachable (e.g. from a search result) — the
+  // "Soon" badge on the dashboard is the signal, not a hard lock.
+  if (!week) notFound();
 
   return <WeekView week={week} isEditor={isEditor} />;
 }

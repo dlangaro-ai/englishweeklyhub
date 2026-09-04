@@ -17,7 +17,7 @@ export default async function SkillsPage({
   const cookieStore = await cookies();
   const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
 
-  if (!week || (!week.published && !isEditor) || skill !== "skills") notFound();
+  if (!week || skill !== "skills") notFound();
 
   return <ExtraActivitiesView week={week} isEditor={isEditor} />;
 }

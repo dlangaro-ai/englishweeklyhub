@@ -18,7 +18,6 @@ type SearchHit = {
   where: string;
   snippet: string;
   href: string;
-  open: boolean;
 };
 
 const SNIPPET_PAD = 44;
@@ -34,12 +33,10 @@ function snippetAround(text: string, at: number, length: number): string {
 }
 
 // Walk a week's content for the query and report each place it turns up — the
-// section, a snippet of the text, and a link that lands on that spot. Hidden
-// content (summary, books, homework, bonus, activities) is only searched once a
-// week is published, or for the teacher.
-function weekHits(week: Week, deep: boolean, query: string): SearchHit[] {
+// section, a snippet of the text, and a link that lands on that spot. Every
+// week is searched, published or not, so students can look things up ahead.
+function weekHits(week: Week, query: string): SearchHit[] {
   const hits: SearchHit[] = [];
-  const open = week.published || deep;
   const weekHref = `/week/${week.number}`;
 
   const add = (where: string, raw: string, href: string) => {
@@ -47,22 +44,19 @@ function weekHits(week: Week, deep: boolean, query: string): SearchHit[] {
     if (!text) return;
     const at = text.toLowerCase().indexOf(query);
     if (at === -1) return;
-    hits.push({ week: week.number, where, snippet: snippetAround(text, at, query.length), href, open });
+    hits.push({ week: week.number, where, snippet: snippetAround(text, at, query.length), href });
   };
 
   add("Title", `Week ${week.number} — ${week.title}`, weekHref);
   add("Topic", week.unit, weekHref);
-
-  if (deep) {
-    add("This week", stripHtml(week.summary), `${weekHref}/this-week`);
-    week.books.forEach((book) => add("Books", book, `${weekHref}#books`));
-    week.homework.forEach((item) => add("Homework", item, `${weekHref}#homework`));
-    add("Bonus", week.bonusText, `${weekHref}#bonus`);
-    week.extraActivities.forEach((activity) => {
-      add("Eager Learners", activity.title, `${weekHref}/skills`);
-      add("Eager Learners", stripHtml(activity.description ?? ""), `${weekHref}/skills`);
-    });
-  }
+  add("This week", stripHtml(week.summary), `${weekHref}/this-week`);
+  week.books.forEach((book) => add("Books", book, `${weekHref}#books`));
+  week.homework.forEach((item) => add("Homework", item, `${weekHref}#homework`));
+  add("Bonus", week.bonusText, `${weekHref}#bonus`);
+  week.extraActivities.forEach((activity) => {
+    add("Eager Learners", activity.title, `${weekHref}/skills`);
+    add("Eager Learners", stripHtml(activity.description ?? ""), `${weekHref}/skills`);
+  });
 
   return hits;
 }
@@ -94,7 +88,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
   const seen = new Set<string>();
   const hits = trimmed
     ? weeks
-        .flatMap((week) => weekHits(week, week.published || isEditor, trimmed))
+        .flatMap((week) => weekHits(week, trimmed))
         .filter((hit) => {
           const key = `${hit.week}|${hit.where}`;
           if (seen.has(key)) return false;
@@ -181,29 +175,14 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
                 {hits.length === 40 ? "+" : ""} {hits.length === 1 ? "result" : "results"} — tap to jump to it
               </p>
               <ul className="searchResultsList">
-                {hits.map((hit) => {
-                  const inside = (
-                    <>
+                {hits.map((hit) => (
+                  <li key={`${hit.week}-${hit.where}`}>
+                    <Link href={hit.href} className="searchResultLink">
                       <span className="searchResultWhere">Week {hit.week} · {hit.where}</span>
                       <span className="searchResultSnippet">{highlight(hit.snippet, trimmed)}</span>
-                    </>
-                  );
-
-                  return (
-                    <li key={`${hit.week}-${hit.where}`}>
-                      {hit.open ? (
-                        <Link href={hit.href} className="searchResultLink">
-                          {inside}
-                        </Link>
-                      ) : (
-                        <span className="searchResultLink searchResultLinkMuted">
-                          {inside}
-                          <span className="searchResultSoon">Soon 🔒</span>
-                        </span>
-                      )}
-                    </li>
-                  );
-                })}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </>
           )}

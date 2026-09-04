@@ -206,16 +206,6 @@ a.searchResultLink:hover {
   padding: 0 1px;
 }
 
-.searchResultLinkMuted {
-  opacity: 0.6;
-}
-
-.searchResultSoon {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--muted);
-}
-
 .weekCardMatch {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
