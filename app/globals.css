@@ -837,6 +837,60 @@ h1 {
 
 .hiddenFileInput { display: none; }
 
+.imageSizeControl {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+}
+
+.imageSizePreviewWrap {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 10px;
+  background: var(--paper);
+}
+
+.imageSizePreview {
+  display: block;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+}
+
+.imageSizeSlider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.imageSizeSlider input[type="range"] {
+  flex: 1;
+  cursor: pointer;
+}
+
+.imageSizeValue {
+  min-width: 52px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.activityImageSize {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.activityImageSize .primaryButton {
+  justify-self: start;
+}
+
 .editActions {
   display: flex;
   gap: 10px;
