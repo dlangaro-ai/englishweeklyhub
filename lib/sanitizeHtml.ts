@@ -1,7 +1,9 @@
 const ALLOWED_TAGS = new Set([
   "span", "br", "b", "i", "u", "strong", "em", "mark", "div", "p", "ul", "ol", "li"
 ]);
-const ALLOWED_STYLE_PROPS = new Set(["font-family", "font-size", "background-color", "color"]);
+const ALLOWED_STYLE_PROPS = new Set([
+  "font-family", "font-size", "background-color", "color", "text-align"
+]);
 
 // Minimal allowlist sanitizer for the rich-text summary field. Only the
 // logged-in teacher can write this content (via RichTextEditor's own

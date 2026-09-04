@@ -79,6 +79,23 @@ export default function RichTextEditor({
     saveSelection();
   }
 
+  // Alignment always needs a CSS declaration (text-align), so force styleWithCSS
+  // on for these — sanitizeRichText allows text-align through.
+  function applyAlign(align: "Left" | "Center" | "Right") {
+    const el = editorRef.current;
+    if (!el) return;
+    el.focus();
+    restoreSelection();
+    try {
+      document.execCommand("styleWithCSS", false, "true");
+    } catch {
+      // Older browsers don't support this toggle — the command below still runs.
+    }
+    document.execCommand(`justify${align}`);
+    handleInput();
+    saveSelection();
+  }
+
   function applyStyle(styleProp: "fontFamily" | "fontSize" | "backgroundColor" | "color", styleValue: string) {
     restoreSelection();
     const selection = window.getSelection();
@@ -148,6 +165,37 @@ export default function RichTextEditor({
           onClick={() => applyCommand("insertUnorderedList")}
         >
           • List
+        </button>
+        <span className="richTextToolbarDivider" aria-hidden="true" />
+        <button
+          type="button"
+          className="richTextFormatButton"
+          title="Align left"
+          aria-label="Align left"
+          onMouseDown={saveSelection}
+          onClick={() => applyAlign("Left")}
+        >
+          ⇤
+        </button>
+        <button
+          type="button"
+          className="richTextFormatButton"
+          title="Center"
+          aria-label="Center"
+          onMouseDown={saveSelection}
+          onClick={() => applyAlign("Center")}
+        >
+          ⇔
+        </button>
+        <button
+          type="button"
+          className="richTextFormatButton"
+          title="Align right"
+          aria-label="Align right"
+          onMouseDown={saveSelection}
+          onClick={() => applyAlign("Right")}
+        >
+          ⇥
         </button>
         <span className="richTextToolbarDivider" aria-hidden="true" />
         <select onMouseDown={saveSelection} onChange={(event) => applyStyle("fontFamily", event.target.value)} defaultValue="">
