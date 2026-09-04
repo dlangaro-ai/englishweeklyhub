@@ -41,7 +41,9 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
   const trimmed = query.trim().toLowerCase();
   const matches = (week: Week) =>
     !trimmed || searchableText(week, week.published || isEditor).includes(trimmed);
-  const totalMatches = trimmed ? weeks.filter(matches).length : weeks.length;
+  const resultList = trimmed
+    ? weeks.filter(matches).slice().sort((a, b) => a.number - b.number)
+    : [];
 
   function renderWeekCard(week: Week) {
     const clickable = week.published || isEditor;
@@ -110,11 +112,43 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
       </div>
 
       {trimmed && (
-        <p className="dashboardSearchCount">
-          {totalMatches === 0
-            ? "No weeks match your search."
-            : `${totalMatches} ${totalMatches === 1 ? "week" : "weeks"} highlighted below`}
-        </p>
+        <div className="searchResults">
+          {resultList.length === 0 ? (
+            <p className="dashboardSearchCount">No weeks match your search.</p>
+          ) : (
+            <>
+              <p className="dashboardSearchCount">
+                {resultList.length} {resultList.length === 1 ? "week" : "weeks"} found — tap to open
+              </p>
+              <ul className="searchResultsList">
+                {resultList.map((week) => {
+                  const clickable = week.published || isEditor;
+                  const label = (
+                    <>
+                      <strong>Week {week.number}</strong> — {week.title}
+                    </>
+                  );
+
+                  return (
+                    <li key={week.number}>
+                      {clickable ? (
+                        <Link href={`/week/${week.number}`} className="searchResultLink">
+                          {label}
+                          <span aria-hidden="true">→</span>
+                        </Link>
+                      ) : (
+                        <span className="searchResultLink searchResultLinkMuted">
+                          {label}
+                          <span>Soon 🔒</span>
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          )}
+        </div>
       )}
 
       {terms.map(({ start, count, name, emoji }) => (
