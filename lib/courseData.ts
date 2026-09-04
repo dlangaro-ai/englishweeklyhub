@@ -22,6 +22,8 @@ export type ExtraActivity = {
   description?: string;
   href?: string;
   resourceType?: "link" | "video" | "pdf" | "activity" | "image" | "list";
+  // Display width in px for an image-type activity (unset = CSS default).
+  imageWidth?: number;
 };
 
 export type Week = {
@@ -30,13 +32,18 @@ export type Week = {
   unit: string;
   summary: string;
   summaryImage?: string;
+  summaryImageWidth?: number;
   books: string[];
   bookImage?: string;
+  bookImageWidth?: number;
   bookImage2?: string;
+  bookImage2Width?: number;
   homework: string[];
   homeworkImage?: string;
+  homeworkImageWidth?: number;
   bonusText: string;
   bonusImage?: string;
+  bonusImageWidth?: number;
   published: boolean;
   extraActivities: ExtraActivity[];
 };

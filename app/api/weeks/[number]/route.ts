@@ -4,22 +4,36 @@ import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { loadWeeks, saveWeeks } from "@/lib/blob";
 import { ExtraActivity, Week } from "@/lib/courseData";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
+import { clampImageWidth } from "@/lib/imageSize";
 
 const EDITABLE_FIELDS = [
   "title",
   "unit",
   "summary",
   "summaryImage",
+  "summaryImageWidth",
   "books",
   "bookImage",
+  "bookImageWidth",
   "bookImage2",
+  "bookImage2Width",
   "homework",
   "homeworkImage",
+  "homeworkImageWidth",
   "bonusText",
   "bonusImage",
+  "bonusImageWidth",
   "published",
   "extraActivities"
 ] as const;
+
+const IMAGE_WIDTH_FIELDS = new Set([
+  "summaryImageWidth",
+  "bookImageWidth",
+  "bookImage2Width",
+  "homeworkImageWidth",
+  "bonusImageWidth"
+]);
 
 const MAX_BY_TYPE: Partial<Record<NonNullable<ExtraActivity["resourceType"]>, number>> = {
   image: 3,
@@ -69,11 +83,27 @@ export async function PATCH(
     if (key in body) updates[key] = body[key];
   }
 
+  // Image widths: clamp to a sane range, or drop entirely (null → cleared).
+  for (const key of IMAGE_WIDTH_FIELDS) {
+    if (!(key in updates)) continue;
+    if (updates[key] === null) continue;
+    const clamped = clampImageWidth(updates[key]);
+    if (clamped === undefined) delete updates[key];
+    else updates[key] = clamped;
+  }
+
   if ("extraActivities" in updates) {
     const validationError = validateExtraActivities(updates.extraActivities);
     if (validationError) {
       return NextResponse.json({ error: validationError }, { status: 400 });
     }
+    updates.extraActivities = (updates.extraActivities as ExtraActivity[]).map((activity) => {
+      const width = clampImageWidth(activity.imageWidth);
+      const next = { ...activity };
+      if (width === undefined) delete next.imageWidth;
+      else next.imageWidth = width;
+      return next;
+    });
   }
 
   if (typeof updates.summary === "string") {
