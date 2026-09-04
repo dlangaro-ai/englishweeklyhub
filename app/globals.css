@@ -150,8 +150,20 @@ h1 {
   color: var(--ink);
 }
 
-.dashboardSearchEmpty {
-  margin-top: 32px;
+.dashboardSearchCount {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.weekCardMatch {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.weekCardMuted.weekCardMatch {
+  opacity: 1;
 }
 
 .sectionHeading {

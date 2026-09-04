@@ -45,9 +45,11 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
 
   function renderWeekCard(week: Week) {
     const clickable = week.published || isEditor;
+    const hit = trimmed !== "" && matches(week);
+    const cls = (base: string) => (hit ? `${base} weekCardMatch` : base);
 
     return clickable ? (
-      <Link className="weekCard" href={`/week/${week.number}`} key={week.number}>
+      <Link className={cls("weekCard")} href={`/week/${week.number}`} key={week.number}>
         <div className="weekTop">
           <span className="weekNumber">WEEK {week.number}</span>
           <span className={`weekStatus ${week.published ? "weekStatusReady" : ""}`}>
@@ -58,7 +60,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         <p>{week.unit}</p>
       </Link>
     ) : (
-      <div className="weekCard weekCardMuted" key={week.number}>
+      <div className={cls("weekCard weekCardMuted")} key={week.number}>
         <div className="weekTop">
           <span className="weekNumber">WEEK {week.number}</span>
           <span className="weekStatus">Soon 🔒</span>
@@ -107,29 +109,26 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         )}
       </div>
 
-      {trimmed && totalMatches === 0 && (
-        <p className="heroText dashboardSearchEmpty">No weeks match your search. Try another word.</p>
+      {trimmed && (
+        <p className="dashboardSearchCount">
+          {totalMatches === 0
+            ? "No weeks match your search."
+            : `${totalMatches} ${totalMatches === 1 ? "week" : "weeks"} highlighted below`}
+        </p>
       )}
 
-      {terms.map(({ start, count, name, emoji }) => {
-        const shown = weeks.slice(start, start + count).filter(matches);
-        if (trimmed && shown.length === 0) return null;
+      {terms.map(({ start, count, name, emoji }) => (
+        <section className="termSection" key={start}>
+          <div className="sectionHeading">
+            <h2>{emoji} {name}</h2>
+            <span>Weeks {start + 1}–{start + count}</span>
+          </div>
 
-        return (
-          <section className="termSection" key={start}>
-            <div className="sectionHeading">
-              <h2>{emoji} {name}</h2>
-              <span>
-                {trimmed
-                  ? `${shown.length} ${shown.length === 1 ? "match" : "matches"}`
-                  : `Weeks ${start + 1}–${start + count}`}
-              </span>
-            </div>
-
-            <div className="weekGrid">{shown.map(renderWeekCard)}</div>
-          </section>
-        );
-      })}
+          <div className="weekGrid">
+            {weeks.slice(start, start + count).map(renderWeekCard)}
+          </div>
+        </section>
+      ))}
     </main>
   );
 }
