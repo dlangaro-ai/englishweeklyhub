@@ -10,6 +10,8 @@ const terms = [
   { start: 21, count: 20, name: "Semester 2", emoji: "📗" }
 ];
 
+const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, "-");
+
 export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
   const readyCount = weeks.filter((week) => week.published).length;
 
@@ -29,8 +31,18 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         </div>
       </header>
 
+      <nav className="semesterTabs" aria-label="Jump to semester">
+        {terms
+          .filter((term) => term.name.startsWith("Semester"))
+          .map((term) => (
+            <a key={term.name} href={`#${slugify(term.name)}`} className="semesterTab">
+              {term.emoji} {term.name}
+            </a>
+          ))}
+      </nav>
+
       {terms.map(({ start, count, name, emoji }) => (
-        <section className="termSection" key={start}>
+        <section className="termSection" id={slugify(name)} key={start}>
           <div className="sectionHeading">
             <h2>{emoji} {name}</h2>
             <span>Weeks {start + 1}–{start + count}</span>
