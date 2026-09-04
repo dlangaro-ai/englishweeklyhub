@@ -1,6 +1,7 @@
 "use client";
 
 import { useEditableField } from "./useEditableField";
+import ImageSizeControl from "./ImageSizeControl";
 
 type Editable = ReturnType<typeof useEditableField>;
 
@@ -38,6 +39,14 @@ export default function EditFormBody({ editable, isList }: { editable: Editable;
           onChange={editable.handleFileChange}
         />
       </div>
+
+      {editable.imageWidthField && editable.imagePreview && (
+        <ImageSizeControl
+          src={editable.imagePreview}
+          width={editable.imageWidth}
+          onChange={editable.setImageWidth}
+        />
+      )}
 
       <div className="editActions">
         <button className="primaryButton" type="button" onClick={editable.save} disabled={editable.saving}>

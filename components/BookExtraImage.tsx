@@ -2,25 +2,30 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import ImageSizeControl from "./ImageSizeControl";
+import { imageWidthStyle } from "@/lib/imageSize";
 
 export default function BookExtraImage({
   weekNumber,
   image,
+  imageWidth,
   isEditor
 }: {
   weekNumber: number;
   image?: string;
+  imageWidth?: number;
   isEditor: boolean;
 }) {
   const [saving, setSaving] = useState(false);
+  const [width, setWidth] = useState<number | undefined>(imageWidth);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  async function saveImage(url: string | null) {
+  async function patchWeek(body: Record<string, unknown>) {
     const response = await fetch(`/api/weeks/${weekNumber}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ bookImage2: url })
+      body: JSON.stringify(body)
     });
     if (!response.ok) {
       const result = await response.json().catch(() => ({}));
@@ -43,7 +48,7 @@ export default function BookExtraImage({
         throw new Error(result.error ?? "Upload failed.");
       }
       const { url } = await uploadResponse.json();
-      await saveImage(url);
+      await patchWeek({ bookImage2: url });
       router.refresh();
     } catch (error) {
       alert(error instanceof Error ? error.message : "Something went wrong.");
@@ -56,10 +61,23 @@ export default function BookExtraImage({
     if (!confirm("Remove this image?")) return;
     setSaving(true);
     try {
-      await saveImage(null);
+      await patchWeek({ bookImage2: null, bookImage2Width: null });
+      setWidth(undefined);
       router.refresh();
     } catch (error) {
       alert(error instanceof Error ? error.message : "Could not remove this.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleSaveWidth() {
+    setSaving(true);
+    try {
+      await patchWeek({ bookImage2Width: width ?? null });
+      router.refresh();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Could not save the size.");
     } finally {
       setSaving(false);
     }
@@ -71,7 +89,7 @@ export default function BookExtraImage({
     <div className="bookExtraImage">
       {image && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={image} alt="" className="bookImage" />
+        <img src={image} alt="" className="bookImage" style={imageWidthStyle(imageWidth)} />
       )}
       {isEditor && (
         <div className="editImageButtons">
@@ -84,6 +102,19 @@ export default function BookExtraImage({
             </button>
           )}
         </div>
+      )}
+      {isEditor && image && (
+        <>
+          <ImageSizeControl src={image} width={width} onChange={setWidth} />
+          <button
+            type="button"
+            className="primaryButton"
+            onClick={handleSaveWidth}
+            disabled={saving || width === imageWidth}
+          >
+            {saving ? "Saving…" : "Save size"}
+          </button>
+        </>
       )}
       <input
         ref={fileInputRef}

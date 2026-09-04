@@ -1,12 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ExtraActivity, Week } from "@/lib/courseData";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
+import { imageWidthStyle } from "@/lib/imageSize";
 import { useProgress } from "./ProgressProvider";
 import RichTextEditor from "./RichTextEditor";
+import ImageSizeControl from "./ImageSizeControl";
+import ActivityImageSize from "./ActivityImageSize";
 
 const iconFor = (type?: string) => {
   if (type === "video") return "▶️";
@@ -30,9 +33,18 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
   const [description, setDescription] = useState("");
   const [url, setUrl] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [imageWidth, setImageWidth] = useState<number | undefined>(undefined);
   const [saving, setSaving] = useState(false);
   const [removingId, setRemovingId] = useState<string | null>(null);
+  const [savingSizeId, setSavingSizeId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const filePreview = useMemo(() => (file ? URL.createObjectURL(file) : null), [file]);
+  useEffect(() => {
+    return () => {
+      if (filePreview) URL.revokeObjectURL(filePreview);
+    };
+  }, [filePreview]);
 
   const counts = week.extraActivities.reduce<Record<string, number>>((acc, activity) => {
     if (activity.resourceType) acc[activity.resourceType] = (acc[activity.resourceType] ?? 0) + 1;
@@ -45,6 +57,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
     setDescription("");
     setUrl("");
     setFile(null);
+    setImageWidth(undefined);
   }
 
   function cancelAdding() {
@@ -105,7 +118,8 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
         title: title.trim(),
         description: description.trim() || undefined,
         href: addingType === "list" ? undefined : href,
-        resourceType: addingType
+        resourceType: addingType,
+        ...(addingType === "image" && imageWidth != null ? { imageWidth } : {})
       };
 
       await saveActivities([...week.extraActivities, newActivity]);
@@ -130,6 +144,23 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
       alert(error instanceof Error ? error.message : "Could not remove this.");
     } finally {
       setRemovingId(null);
+    }
+  }
+
+  async function handleActivityWidth(activityId: string, width: number) {
+    setSavingSizeId(activityId);
+
+    try {
+      await saveActivities(
+        week.extraActivities.map((activity) =>
+          activity.id === activityId ? { ...activity, imageWidth: width } : activity
+        )
+      );
+      router.refresh();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Could not save the size.");
+    } finally {
+      setSavingSizeId(null);
     }
   }
 
@@ -208,6 +239,9 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
               onChange={(event) => setFile(event.target.files?.[0] ?? null)}
             />
           )}
+          {addingType === "image" && filePreview && (
+            <ImageSizeControl src={filePreview} width={imageWidth} onChange={setImageWidth} />
+          )}
           <div className="editActions">
             <button className="primaryButton" type="button" onClick={handleAdd} disabled={saving}>
               {saving ? "Saving…" : "Add"}
@@ -256,10 +290,25 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
                     )
                   )}
                   {activity.resourceType === "image" && activity.href && (
-                    <a href={activity.href} target="_blank" rel="noreferrer">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={activity.href} alt={activity.title} className="activityThumbnail" />
-                    </a>
+                    <>
+                      <a href={activity.href} target="_blank" rel="noreferrer">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={activity.href}
+                          alt={activity.title}
+                          className="activityThumbnail"
+                          style={imageWidthStyle(activity.imageWidth)}
+                        />
+                      </a>
+                      {isEditor && (
+                        <ActivityImageSize
+                          src={activity.href}
+                          width={activity.imageWidth}
+                          saving={savingSizeId === activity.id}
+                          onSave={(width) => handleActivityWidth(activity.id, width)}
+                        />
+                      )}
+                    </>
                   )}
                   {activity.resourceType !== "image" && activity.href && (
                     <a href={activity.href} target="_blank" rel="noreferrer" className="textLink">

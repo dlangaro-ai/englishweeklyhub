@@ -10,6 +10,8 @@ type UseEditableFieldArgs = {
   isList: boolean;
   initialText: string;
   initialImage?: string;
+  initialImageWidth?: number;
+  imageWidthField?: string;
   maxWords?: number;
 };
 
@@ -20,6 +22,8 @@ export function useEditableField({
   isList,
   initialText,
   initialImage,
+  initialImageWidth,
+  imageWidthField,
   maxWords
 }: UseEditableFieldArgs) {
   const [editing, setEditing] = useState(false);
@@ -27,6 +31,7 @@ export function useEditableField({
   const [imagePreview, setImagePreview] = useState(initialImage);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageRemoved, setImageRemoved] = useState(false);
+  const [imageWidth, setImageWidth] = useState<number | undefined>(initialImageWidth);
   const [saving, setSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -36,6 +41,7 @@ export function useEditableField({
     setImagePreview(initialImage);
     setImageFile(null);
     setImageRemoved(false);
+    setImageWidth(initialImageWidth);
     setEditing(true);
   }
 
@@ -55,6 +61,7 @@ export function useEditableField({
     setImageFile(null);
     setImagePreview(undefined);
     setImageRemoved(true);
+    setImageWidth(undefined);
   }
 
   async function save() {
@@ -92,6 +99,11 @@ export function useEditableField({
       if (uploadedUrl) payload[imageField] = uploadedUrl;
       else if (imageRemoved) payload[imageField] = null;
 
+      if (imageWidthField) {
+        if (imageRemoved) payload[imageWidthField] = null;
+        else if (imageWidth != null) payload[imageWidthField] = imageWidth;
+      }
+
       const response = await fetch(`/api/weeks/${weekNumber}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -118,6 +130,9 @@ export function useEditableField({
     text,
     setText,
     imagePreview,
+    imageWidth,
+    setImageWidth,
+    imageWidthField,
     saving,
     fileInputRef,
     startEdit,

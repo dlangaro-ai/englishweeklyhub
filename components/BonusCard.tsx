@@ -3,25 +3,30 @@
 import Link from "next/link";
 import { useEditableField } from "./useEditableField";
 import EditFormBody from "./EditFormBody";
+import { imageWidthStyle } from "@/lib/imageSize";
 
 export default function BonusCard({
   weekNumber,
   text,
   image,
+  imageWidth,
   isEditor
 }: {
   weekNumber: number;
   text: string;
   image?: string;
+  imageWidth?: number;
   isEditor: boolean;
 }) {
   const editable = useEditableField({
     weekNumber,
     field: "bonusText",
     imageField: "bonusImage",
+    imageWidthField: "bonusImageWidth",
     isList: false,
     initialText: text,
-    initialImage: image
+    initialImage: image,
+    initialImageWidth: imageWidth
   });
 
   return (
@@ -52,6 +57,7 @@ export default function BonusCard({
                 className="bookImage"
                 src={image}
                 alt=""
+                style={imageWidthStyle(imageWidth)}
                 onError={(event) => {
                   event.currentTarget.style.display = "none";
                 }}

@@ -35,9 +35,11 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           heading="What we're doing"
           field="summary"
           imageField="summaryImage"
+          imageWidthField="summaryImageWidth"
           isList={false}
           value={week.summary}
           image={week.summaryImage}
+          imageWidth={week.summaryImageWidth}
           emptyText="Nothing added yet."
           isEditor={isEditor}
           cardClassName="summaryCard"
@@ -52,14 +54,21 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           heading="Books & Pages"
           field="books"
           imageField="bookImage"
+          imageWidthField="bookImageWidth"
           isList={true}
           value={week.books}
           image={week.bookImage}
+          imageWidth={week.bookImageWidth}
           emptyText="No book information added yet."
           isEditor={isEditor}
           cardClassName="infoCardBooks"
           extra={
-            <BookExtraImage weekNumber={week.number} image={week.bookImage2} isEditor={isEditor} />
+            <BookExtraImage
+              weekNumber={week.number}
+              image={week.bookImage2}
+              imageWidth={week.bookImage2Width}
+              isEditor={isEditor}
+            />
           }
         />
 
@@ -70,9 +79,11 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           heading="Homework Pages"
           field="homework"
           imageField="homeworkImage"
+          imageWidthField="homeworkImageWidth"
           isList={true}
           value={week.homework}
           image={week.homeworkImage}
+          imageWidth={week.homeworkImageWidth}
           emptyText="No homework this week — enjoy the break!"
           isEditor={isEditor}
           cardClassName="infoCardHomework"
@@ -82,6 +93,7 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           weekNumber={week.number}
           text={week.bonusText}
           image={week.bonusImage}
+          imageWidth={week.bonusImageWidth}
           isEditor={isEditor}
         />
       </section>

@@ -3,7 +3,9 @@
 import { useEditableField } from "./useEditableField";
 import EditFormBody from "./EditFormBody";
 import RichTextEditor from "./RichTextEditor";
+import ImageSizeControl from "./ImageSizeControl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
+import { imageWidthStyle } from "@/lib/imageSize";
 
 type EditableSectionProps = {
   weekNumber: number;
@@ -12,9 +14,11 @@ type EditableSectionProps = {
   heading: string;
   field: string;
   imageField: string;
+  imageWidthField?: string;
   isList: boolean;
   value: string | string[];
   image?: string;
+  imageWidth?: number;
   emptyText: string;
   isEditor: boolean;
   cardClassName?: string;
@@ -30,9 +34,11 @@ export default function EditableSection({
   heading,
   field,
   imageField,
+  imageWidthField,
   isList,
   value,
   image,
+  imageWidth,
   emptyText,
   isEditor,
   cardClassName,
@@ -45,9 +51,11 @@ export default function EditableSection({
     weekNumber,
     field,
     imageField,
+    imageWidthField,
     isList,
     initialText,
     initialImage: image,
+    initialImageWidth: imageWidth,
     maxWords: richText ? maxWords : undefined
   });
   const listValue = Array.isArray(value) ? value : [];
@@ -93,6 +101,13 @@ export default function EditableSection({
                   onChange={editable.handleFileChange}
                 />
               </div>
+              {editable.imageWidthField && editable.imagePreview && (
+                <ImageSizeControl
+                  src={editable.imagePreview}
+                  width={editable.imageWidth}
+                  onChange={editable.setImageWidth}
+                />
+              )}
               <div className="editActions">
                 <button className="primaryButton" type="button" onClick={editable.save} disabled={editable.saving}>
                   {editable.saving ? "Saving…" : "Save"}
@@ -135,6 +150,7 @@ export default function EditableSection({
                 className="bookImage"
                 src={image}
                 alt=""
+                style={imageWidthStyle(imageWidth)}
                 onError={(event) => {
                   event.currentTarget.style.display = "none";
                 }}
