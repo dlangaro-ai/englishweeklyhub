@@ -34,7 +34,7 @@ export default function BonusCard({
       <span className="infoIcon">🎁</span>
       <div className="infoCardBody">
         <div className="infoCardHead">
-          <p className="infoLabel">BONUS</p>
+          <p className="infoLabel">EAGER LEARNERS</p>
           {isEditor && !editable.editing && (
             <button className="editButton" type="button" onClick={editable.startEdit}>
               ✏️ Edit
