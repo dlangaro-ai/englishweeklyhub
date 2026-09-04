@@ -10,6 +10,7 @@ import { useProgress } from "./ProgressProvider";
 import RichTextEditor from "./RichTextEditor";
 import ImageSizeControl from "./ImageSizeControl";
 import ActivityImageSize from "./ActivityImageSize";
+import ListActivityEditor from "./ListActivityEditor";
 
 const iconFor = (type?: string) => {
   if (type === "video") return "▶️";
@@ -37,6 +38,8 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
   const [saving, setSaving] = useState(false);
   const [removingId, setRemovingId] = useState<string | null>(null);
   const [savingSizeId, setSavingSizeId] = useState<string | null>(null);
+  const [editingListId, setEditingListId] = useState<string | null>(null);
+  const [savingListId, setSavingListId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const filePreview = useMemo(() => (file ? URL.createObjectURL(file) : null), [file]);
@@ -144,6 +147,34 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
       alert(error instanceof Error ? error.message : "Could not remove this.");
     } finally {
       setRemovingId(null);
+    }
+  }
+
+  async function handleListEdit(activityId: string, text: string) {
+    const items = text
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    if (items.length === 0) {
+      alert("Please keep at least one item in the list.");
+      return;
+    }
+
+    setSavingListId(activityId);
+
+    try {
+      await saveActivities(
+        week.extraActivities.map((activity) =>
+          activity.id === activityId ? { ...activity, description: items.join("\n") } : activity
+        )
+      );
+      setEditingListId(null);
+      router.refresh();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Could not save the list.");
+    } finally {
+      setSavingListId(null);
     }
   }
 
@@ -270,16 +301,36 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
                   <span className="activityType">ACTIVITY {index + 1}</span>
                   <h2>{activity.title}</h2>
                   {activity.resourceType === "list" ? (
-                    activity.description && (
-                      <ul className="simpleList">
-                        {activity.description
-                          .split("\n")
-                          .map((line) => line.trim())
-                          .filter(Boolean)
-                          .map((line, lineIndex) => (
-                            <li key={lineIndex}>{line}</li>
-                          ))}
-                      </ul>
+                    editingListId === activity.id ? (
+                      <ListActivityEditor
+                        initialText={activity.description ?? ""}
+                        saving={savingListId === activity.id}
+                        onSave={(text) => handleListEdit(activity.id, text)}
+                        onCancel={() => setEditingListId(null)}
+                      />
+                    ) : (
+                      <>
+                        {activity.description && (
+                          <ul className="simpleList">
+                            {activity.description
+                              .split("\n")
+                              .map((line) => line.trim())
+                              .filter(Boolean)
+                              .map((line, lineIndex) => (
+                                <li key={lineIndex}>{line}</li>
+                              ))}
+                          </ul>
+                        )}
+                        {isEditor && (
+                          <button
+                            type="button"
+                            className="editButton"
+                            onClick={() => setEditingListId(activity.id)}
+                          >
+                            ✏️ Edit list
+                          </button>
+                        )}
+                      </>
                     )
                   ) : (
                     activity.description && (
