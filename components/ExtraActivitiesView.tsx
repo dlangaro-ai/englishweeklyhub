@@ -171,7 +171,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
       <header className="skillHero">
         <div className="skillIcon large">🎁</div>
         <div>
-          <p className="eyebrow">WEEK {week.number} · BONUS</p>
+          <p className="eyebrow">WEEK {week.number} · EAGER LEARNERS</p>
           <h1>Eager Learners</h1>
           <p className="heroText">
             Optional fun practice for this week — try one whenever you like!
