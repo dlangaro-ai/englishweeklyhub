@@ -26,7 +26,6 @@
 
 html {
   background: var(--paper);
-  scroll-behavior: smooth;
 }
 
 body {
@@ -104,30 +103,51 @@ h1 {
 
 .termSection {
   margin-top: 48px;
-  scroll-margin-top: 20px;
 }
 
-.semesterTabs {
+.dashboardSearch {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
   margin-top: 24px;
-}
-
-.semesterTab {
-  display: inline-block;
-  padding: 10px 18px;
+  padding: 0 16px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--card);
-  color: var(--ink);
-  font-weight: 800;
-  text-decoration: none;
 }
 
-.semesterTab:hover {
+.dashboardSearch:focus-within {
   border-color: var(--accent);
-  color: var(--accent);
+}
+
+.dashboardSearchIcon {
+  font-size: 16px;
+}
+
+.dashboardSearchInput {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  padding: 14px 0;
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.dashboardSearchClear {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 800;
+  padding: 6px;
+}
+
+.dashboardSearchClear:hover {
+  color: var(--ink);
 }
 
 .sectionHeading {
