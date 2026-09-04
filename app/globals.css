@@ -150,6 +150,10 @@ h1 {
   color: var(--ink);
 }
 
+.dashboardSearchEmpty {
+  margin-top: 32px;
+}
+
 .sectionHeading {
   display: flex;
   align-items: center;

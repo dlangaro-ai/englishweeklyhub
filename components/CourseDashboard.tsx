@@ -39,11 +39,9 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
   const readyCount = weeks.filter((week) => week.published).length;
 
   const trimmed = query.trim().toLowerCase();
-  const results = trimmed
-    ? weeks
-        .filter((week) => searchableText(week, week.published || isEditor).includes(trimmed))
-        .sort((a, b) => a.number - b.number)
-    : [];
+  const matches = (week: Week) =>
+    !trimmed || searchableText(week, week.published || isEditor).includes(trimmed);
+  const totalMatches = trimmed ? weeks.filter(matches).length : weeks.length;
 
   function renderWeekCard(week: Week) {
     const clickable = week.published || isEditor;
@@ -109,33 +107,29 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         )}
       </div>
 
-      {trimmed ? (
-        <section className="termSection">
-          <div className="sectionHeading">
-            <h2>🔍 Search results</h2>
-            <span>{results.length} {results.length === 1 ? "week" : "weeks"}</span>
-          </div>
+      {trimmed && totalMatches === 0 && (
+        <p className="heroText dashboardSearchEmpty">No weeks match your search. Try another word.</p>
+      )}
 
-          {results.length ? (
-            <div className="weekGrid">{results.map(renderWeekCard)}</div>
-          ) : (
-            <p className="heroText">No weeks match your search. Try another word.</p>
-          )}
-        </section>
-      ) : (
-        terms.map(({ start, count, name, emoji }) => (
+      {terms.map(({ start, count, name, emoji }) => {
+        const shown = weeks.slice(start, start + count).filter(matches);
+        if (trimmed && shown.length === 0) return null;
+
+        return (
           <section className="termSection" key={start}>
             <div className="sectionHeading">
               <h2>{emoji} {name}</h2>
-              <span>Weeks {start + 1}–{start + count}</span>
+              <span>
+                {trimmed
+                  ? `${shown.length} ${shown.length === 1 ? "match" : "matches"}`
+                  : `Weeks ${start + 1}–${start + count}`}
+              </span>
             </div>
 
-            <div className="weekGrid">
-              {weeks.slice(start, start + count).map(renderWeekCard)}
-            </div>
+            <div className="weekGrid">{shown.map(renderWeekCard)}</div>
           </section>
-        ))
-      )}
+        );
+      })}
     </main>
   );
 }
