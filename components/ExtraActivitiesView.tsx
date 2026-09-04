@@ -57,7 +57,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
   function startAdding(type: AddType) {
     setAddingType(type);
     setTitle("");
-    setDescription("");
+    setDescription(type === "list" ? "<ul><li></li></ul>" : "");
     setUrl("");
     setFile(null);
     setImageWidth(undefined);
@@ -86,7 +86,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
       return;
     }
 
-    if (addingType === "list" && !description.trim()) {
+    if (addingType === "list" && !description.replace(/<[^>]+>/g, " ").trim()) {
       alert("Please add at least one list item.");
       return;
     }
@@ -234,22 +234,12 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
             value={title}
             onChange={(event) => setTitle(event.target.value)}
           />
-          {addingType === "list" ? (
-            <textarea
-              className="editTextarea"
-              placeholder="One item per line"
-              rows={5}
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-            />
-          ) : (
-            <RichTextEditor
-              key={addingType}
-              value={description}
-              onChange={setDescription}
-              maxWords={200}
-            />
-          )}
+          <RichTextEditor
+            key={addingType}
+            value={description}
+            onChange={setDescription}
+            maxWords={200}
+          />
           {addingType === "link" && (
             <input
               className="editTextarea"
