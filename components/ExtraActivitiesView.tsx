@@ -172,7 +172,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
         <div className="skillIcon large">🎁</div>
         <div>
           <p className="eyebrow">WEEK {week.number} · BONUS</p>
-          <h1>Extra Activities</h1>
+          <h1>Eager Learners</h1>
           <p className="heroText">
             Optional fun practice for this week — try one whenever you like!
           </p>
@@ -258,7 +258,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
           <div className="emptyState compact">
             <div className="emptyIcon">✨</div>
             <h2>Nothing here yet</h2>
-            <p>Check back soon — extra activities will appear here.</p>
+            <p>Check back soon — new activities will appear here.</p>
           </div>
         ) : (
           week.extraActivities.map((activity, index) => {
@@ -267,7 +267,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
               <article className={`activityCard ${done ? "activityDone" : ""}`} key={activity.id}>
                 <div className="activityIndex">{done ? "✓" : iconFor(activity.resourceType)}</div>
                 <div className="activityBody">
-                  <span className="activityType">EXTRA ACTIVITY {index + 1}</span>
+                  <span className="activityType">ACTIVITY {index + 1}</span>
                   <h2>{activity.title}</h2>
                   {activity.resourceType === "list" ? (
                     activity.description && (

@@ -31,7 +31,7 @@ export default async function CompletionsPage() {
         <div>
           <p className="eyebrow">TEACHER ONLY</p>
           <h1>Completions</h1>
-          <p className="unitLabel">Who&apos;s finished which extra activities</p>
+          <p className="unitLabel">Who&apos;s finished which Eager Learners activities</p>
         </div>
       </header>
 

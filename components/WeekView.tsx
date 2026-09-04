@@ -32,7 +32,7 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           weekNumber={week.number}
           icon="✨"
           label="THIS WEEK"
-          heading="What we're doing"
+          heading="What's Happening this week"
           field="summary"
           imageField="summaryImage"
           imageWidthField="summaryImageWidth"

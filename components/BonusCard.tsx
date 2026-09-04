@@ -44,12 +44,12 @@ export default function BonusCard({
 
         {editable.editing ? (
           <>
-            <h2>Extra Activities</h2>
+            <h2>Eager Learners</h2>
             <EditFormBody editable={editable} isList={false} />
           </>
         ) : (
           <Link href={`/week/${weekNumber}/skills`} className="skillsFolderLink">
-            <h2>Extra Activities</h2>
+            <h2>Eager Learners</h2>
             <p className="infoText">{text}</p>
             {image && (
               // eslint-disable-next-line @next/next/no-img-element

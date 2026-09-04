@@ -3,7 +3,7 @@
 import { useState } from "react";
 import ImageSizeControl from "./ImageSizeControl";
 
-// Edit-mode size slider for an image that's already on an Extra Activity.
+// Edit-mode size slider for an image that's already on an Eager Learners activity.
 // Keeps its own draft width and only persists when "Save size" is pressed.
 export default function ActivityImageSize({
   src,
