@@ -6,9 +6,9 @@ import { Week } from "@/lib/courseData";
 import EditModeToggle from "./EditModeToggle";
 
 const terms = [
-  { start: 0, count: 19, name: "Semester 1", emoji: "📘" },
-  { start: 19, count: 2, name: "Winter Break", emoji: "❄️" },
-  { start: 21, count: 20, name: "Semester 2", emoji: "📗" }
+  { start: 0, count: 19, name: "Semester 1", emoji: "📘", tint: "tintBlue" },
+  { start: 19, count: 2, name: "Winter Break", emoji: "❄️", tint: "tintIce" },
+  { start: 21, count: 20, name: "Semester 2", emoji: "📗", tint: "tintSun" }
 ];
 
 const stripHtml = (value: string) => value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
@@ -100,9 +100,9 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
     : [];
   const hitWeeks = new Set(hits.map((hit) => hit.week));
 
-  function renderWeekCard(week: Week) {
+  function renderWeekCard(week: Week, tint: string) {
     const clickable = week.published || isEditor;
-    const cls = hitWeeks.has(week.number) ? "weekCard weekCardMatch" : "weekCard";
+    const cls = `weekCard ${tint}${hitWeeks.has(week.number) ? " weekCardMatch" : ""}`;
 
     return clickable ? (
       <Link className={cls} href={`/week/${week.number}`} key={week.number}>
@@ -130,11 +130,12 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
   return (
     <main className="shell">
       <header className="hero">
+        <div className="heroMascot" aria-hidden="true">🦉📚✏️</div>
         <div>
           <p className="eyebrow">GRADE 5 ENGLISH · {weeks.length} WEEKS</p>
           <h1>My English Hub</h1>
           <p className="heroText">
-            Pick your week below to find this week&apos;s topic, books, homework and fun activities.
+            Pick your week below to find this week&apos;s topic, books, homework and fun activities!
           </p>
         </div>
         <div className="heroRight">
@@ -195,15 +196,15 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         </div>
       )}
 
-      {terms.map(({ start, count, name, emoji }) => (
+      {terms.map(({ start, count, name, emoji, tint }) => (
         <section className="termSection" key={start}>
           <div className="sectionHeading">
-            <h2>{emoji} {name}</h2>
+            <h2><span className="sectionEmoji">{emoji}</span> {name}</h2>
             <span>Weeks {start + 1}–{start + count}</span>
           </div>
 
           <div className="weekGrid">
-            {weeks.slice(start, start + count).map(renderWeekCard)}
+            {weeks.slice(start, start + count).map((week) => renderWeekCard(week, tint))}
           </div>
         </section>
       ))}
