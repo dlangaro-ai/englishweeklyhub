@@ -137,9 +137,9 @@ export default function LibraryCard({
       <span className="infoIcon">📖</span>
       <div className="infoCardBody">
         <div className="infoCardHead">
-          <p className="infoLabel">LIBRARY</p>
+          <p className="infoLabel">RESOURCES</p>
         </div>
-        <h2>Library</h2>
+        <h2>Resources</h2>
 
         {image && (
           // eslint-disable-next-line @next/next/no-img-element
