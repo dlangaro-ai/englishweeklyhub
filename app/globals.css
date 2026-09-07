@@ -22,6 +22,11 @@
   --blue-soft: #e9f3ff;
   --orange: #f08a24;
   --orange-soft: #fff2e2;
+  --sunny: #ffb703;
+  --sunny-soft: #fff3d6;
+  --pink: #ff6b9d;
+  --pink-soft: #ffe4ee;
+  --font-heading: "Baloo 2", Arial, sans-serif;
 }
 
 html {
@@ -34,8 +39,13 @@ body {
   color: var(--ink);
   background:
     radial-gradient(circle at top right, #ecebff 0, transparent 28rem),
+    radial-gradient(circle at 10% 20%, #fff3d6 0, transparent 24rem),
     var(--paper);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
 }
 
 a {
