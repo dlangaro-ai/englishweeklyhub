@@ -810,7 +810,8 @@ a.searchResultLink:hover {
     padding: 26px;
   }
 
-  .heroBadge {
+  .heroBadge,
+  .heroMascot {
     display: none;
   }
 
