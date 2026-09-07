@@ -130,7 +130,6 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
   return (
     <main className="shell">
       <header className="hero">
-        <div className="heroMascot" aria-hidden="true">🦉📚✏️</div>
         <div>
           <p className="eyebrow">GRADE 5 ENGLISH · {weeks.length} WEEKS</p>
           <h1>My English Hub</h1>
@@ -144,70 +143,79 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         </div>
       </header>
 
-      <div className="dashboardSearchRow">
-        <div className="dashboardSearch">
-          <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
-          <input
-            type="text"
-            className="dashboardSearchInput"
-            placeholder="Search all weeks — topic, book, homework, activity…"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            aria-label="Search all weeks"
-          />
-          {query && (
-            <button
-              type="button"
-              className="dashboardSearchClear"
-              onClick={() => setQuery("")}
-              aria-label="Clear search"
-            >
-              ✕
-            </button>
+      <div className="dashboardLayout">
+        <aside className="dashboardSidebar">
+          <div className="dashboardSearch">
+            <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
+            <input
+              type="text"
+              className="dashboardSearchInput"
+              placeholder="Search all weeks…"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              aria-label="Search all weeks"
+            />
+            {query && (
+              <button
+                type="button"
+                className="dashboardSearchClear"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          <nav className="dashboardSidebarNav">
+            <Link href="/resources" className="dashboardSidebarLink">
+              📖 Resources
+            </Link>
+            <Link href="/completed" className="dashboardSidebarLink">
+              ✅ Completed Weeks
+            </Link>
+          </nav>
+        </aside>
+
+        <div className="dashboardContent">
+          {trimmed && (
+            <div className="searchResults">
+              {hits.length === 0 ? (
+                <p className="dashboardSearchCount">No weeks match your search.</p>
+              ) : (
+                <>
+                  <p className="dashboardSearchCount">
+                    {hits.length}
+                    {hits.length === 40 ? "+" : ""} {hits.length === 1 ? "result" : "results"} — tap to jump to it
+                  </p>
+                  <ul className="searchResultsList">
+                    {hits.map((hit) => (
+                      <li key={`${hit.week}-${hit.where}`}>
+                        <Link href={hit.href} className="searchResultLink">
+                          <span className="searchResultWhere">Week {hit.week} · {hit.where}</span>
+                          <span className="searchResultSnippet">{highlight(hit.snippet, trimmed)}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
           )}
+
+          {terms.map(({ start, count, name, emoji, tint }) => (
+            <section className="termSection" key={start}>
+              <div className="sectionHeading">
+                <h2><span className="sectionEmoji">{emoji}</span> {name}</h2>
+                <span>Weeks {start + 1}–{start + count}</span>
+              </div>
+
+              <div className="weekGrid">
+                {weeks.slice(start, start + count).map((week) => renderWeekCard(week, tint))}
+              </div>
+            </section>
+          ))}
         </div>
-        <Link href="/resources" className="dashboardResourcesShortcut">
-          📖 Resources
-        </Link>
       </div>
-
-      {trimmed && (
-        <div className="searchResults">
-          {hits.length === 0 ? (
-            <p className="dashboardSearchCount">No weeks match your search.</p>
-          ) : (
-            <>
-              <p className="dashboardSearchCount">
-                {hits.length}
-                {hits.length === 40 ? "+" : ""} {hits.length === 1 ? "result" : "results"} — tap to jump to it
-              </p>
-              <ul className="searchResultsList">
-                {hits.map((hit) => (
-                  <li key={`${hit.week}-${hit.where}`}>
-                    <Link href={hit.href} className="searchResultLink">
-                      <span className="searchResultWhere">Week {hit.week} · {hit.where}</span>
-                      <span className="searchResultSnippet">{highlight(hit.snippet, trimmed)}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
-      )}
-
-      {terms.map(({ start, count, name, emoji, tint }) => (
-        <section className="termSection" key={start}>
-          <div className="sectionHeading">
-            <h2><span className="sectionEmoji">{emoji}</span> {name}</h2>
-            <span>Weeks {start + 1}–{start + count}</span>
-          </div>
-
-          <div className="weekGrid">
-            {weeks.slice(start, start + count).map((week) => renderWeekCard(week, tint))}
-          </div>
-        </section>
-      ))}
     </main>
   );
 }
