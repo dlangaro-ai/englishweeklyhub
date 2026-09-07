@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { loadWeeks, saveWeeks } from "@/lib/blob";
-import { ExtraActivity, Week } from "@/lib/courseData";
+import { ExtraActivity, LibraryLink, Week } from "@/lib/courseData";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { clampImageWidth } from "@/lib/imageSize";
 
@@ -23,6 +23,9 @@ const EDITABLE_FIELDS = [
   "bonusText",
   "bonusImage",
   "bonusImageWidth",
+  "libraryImage",
+  "libraryImageWidth",
+  "libraryLinks",
   "published",
   "extraActivities"
 ] as const;
@@ -32,8 +35,25 @@ const IMAGE_WIDTH_FIELDS = new Set([
   "bookImageWidth",
   "bookImage2Width",
   "homeworkImageWidth",
-  "bonusImageWidth"
+  "bonusImageWidth",
+  "libraryImageWidth"
 ]);
+
+const MAX_LIBRARY_LINKS = 6;
+
+function validateLibraryLinks(links: unknown): string | null {
+  if (!Array.isArray(links)) return "libraryLinks must be a list.";
+  if (links.length > MAX_LIBRARY_LINKS) {
+    return `You can only have up to ${MAX_LIBRARY_LINKS} library links.`;
+  }
+  for (const link of links) {
+    const candidate = link as Partial<LibraryLink>;
+    if (!candidate?.title || !candidate?.href) {
+      return "Each library link needs a title and a URL.";
+    }
+  }
+  return null;
+}
 
 const MAX_BY_TYPE: Partial<Record<NonNullable<ExtraActivity["resourceType"]>, number>> = {
   image: 3,
@@ -90,6 +110,13 @@ export async function PATCH(
     const clamped = clampImageWidth(updates[key]);
     if (clamped === undefined) delete updates[key];
     else updates[key] = clamped;
+  }
+
+  if ("libraryLinks" in updates) {
+    const validationError = validateLibraryLinks(updates.libraryLinks);
+    if (validationError) {
+      return NextResponse.json({ error: validationError }, { status: 400 });
+    }
   }
 
   if ("extraActivities" in updates) {

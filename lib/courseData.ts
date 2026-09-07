@@ -12,6 +12,7 @@
 //   books        / bookImage     -> "Books used" list + optional picture
 //   homework     / homeworkImage -> "Homework" list + optional picture
 //   bonusText    / bonusImage    -> "Bonus" teaser text + optional picture
+//   libraryImage / libraryLinks  -> "Library" picture + list of website links
 //   published  -> true = students can open this week, false = shows "Soon"
 //   extraActivities -> bonus links/videos/PDFs, shown on the Bonus sub-page
 // ────────────────────────────────────────────────────────────────────────────
@@ -24,6 +25,12 @@ export type ExtraActivity = {
   resourceType?: "link" | "video" | "pdf" | "activity" | "image" | "list";
   // Display width in px for an image-type activity (unset = CSS default).
   imageWidth?: number;
+};
+
+export type LibraryLink = {
+  id: string;
+  title: string;
+  href: string;
 };
 
 export type Week = {
@@ -44,6 +51,9 @@ export type Week = {
   bonusText: string;
   bonusImage?: string;
   bonusImageWidth?: number;
+  libraryImage?: string;
+  libraryImageWidth?: number;
+  libraryLinks: LibraryLink[];
   published: boolean;
   extraActivities: ExtraActivity[];
 };
@@ -61,6 +71,7 @@ const starterWeeks: Week[] = [
     bookImage: "/images/curious-kids-6.png",
     homework: ["No homework information added yet"],
     bonusText: defaultBonusText,
+    libraryLinks: [],
     published: true,
     extraActivities: [
       {
@@ -81,6 +92,7 @@ const starterWeeks: Week[] = [
     books: ["Book pages coming soon"],
     homework: ["Homework coming soon"],
     bonusText: defaultBonusText,
+    libraryLinks: [],
     published: true,
     extraActivities: []
   },
@@ -93,6 +105,7 @@ const starterWeeks: Week[] = [
     books: ["Unlock pages 14–18"],
     homework: ["Workbook page 7"],
     bonusText: defaultBonusText,
+    libraryLinks: [],
     published: true,
     extraActivities: [
       {
@@ -122,6 +135,7 @@ const placeholders: Week[] = Array.from({ length: 38 }, (_, index) => {
     books: [],
     homework: [],
     bonusText: defaultBonusText,
+    libraryLinks: [],
     published: false,
     extraActivities: []
   };

@@ -878,6 +878,29 @@ a.searchResultLink:hover {
 .infoCardHomework { border-color: #fbe0bd; }
 .infoCardHomework .infoLabel { color: var(--orange); }
 
+.infoCardLibrary { border-color: #c9ecdc; }
+.infoCardLibrary .infoLabel { color: var(--success); }
+
+.libraryLinksList {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.libraryLinksList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.libraryLinksList .removeButton {
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
 .bookImage {
   width: 100%;
   max-width: 160px;

@@ -6,6 +6,7 @@ import BonusCard from "./BonusCard";
 import PublishToggle from "./PublishToggle";
 import InlineTextField from "./InlineTextField";
 import BookExtraImage from "./BookExtraImage";
+import LibraryCard from "./LibraryCard";
 
 export default function WeekView({ week, isEditor }: { week: Week; isEditor: boolean }) {
   return (
@@ -86,6 +87,14 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           text={week.bonusText}
           image={week.bonusImage}
           imageWidth={week.bonusImageWidth}
+          isEditor={isEditor}
+        />
+
+        <LibraryCard
+          weekNumber={week.number}
+          image={week.libraryImage}
+          imageWidth={week.libraryImageWidth}
+          links={week.libraryLinks ?? []}
           isEditor={isEditor}
         />
       </section>
