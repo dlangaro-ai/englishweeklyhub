@@ -138,13 +138,6 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
           </p>
         </div>
         <div className="heroRight">
-          <div className="heroBadge">🚀 {readyCount} of {weeks.length} weeks ready</div>
-          <EditModeToggle isEditor={isEditor} />
-        </div>
-      </header>
-
-      <div className="dashboardLayout">
-        <aside className="dashboardSidebar">
           <div className="dashboardSearch">
             <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
             <input
@@ -174,48 +167,56 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
               ✅ Completed Weeks
             </Link>
           </nav>
-        </aside>
-
-        <div className="dashboardContent">
-          {trimmed && (
-            <div className="searchResults">
-              {hits.length === 0 ? (
-                <p className="dashboardSearchCount">No weeks match your search.</p>
-              ) : (
-                <>
-                  <p className="dashboardSearchCount">
-                    {hits.length}
-                    {hits.length === 40 ? "+" : ""} {hits.length === 1 ? "result" : "results"} — tap to jump to it
-                  </p>
-                  <ul className="searchResultsList">
-                    {hits.map((hit) => (
-                      <li key={`${hit.week}-${hit.where}`}>
-                        <Link href={hit.href} className="searchResultLink">
-                          <span className="searchResultWhere">Week {hit.week} · {hit.where}</span>
-                          <span className="searchResultSnippet">{highlight(hit.snippet, trimmed)}</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
+          <div className="heroProgress">
+            <div className="heroProgressTrack">
+              <div
+                className="heroProgressFill"
+                style={{ width: `${weeks.length ? (readyCount / weeks.length) * 100 : 0}%` }}
+              />
             </div>
-          )}
-
-          {terms.map(({ start, count, name, emoji, tint }) => (
-            <section className="termSection" key={start}>
-              <div className="sectionHeading">
-                <h2><span className="sectionEmoji">{emoji}</span> {name}</h2>
-                <span>Weeks {start + 1}–{start + count}</span>
-              </div>
-
-              <div className="weekGrid">
-                {weeks.slice(start, start + count).map((week) => renderWeekCard(week, tint))}
-              </div>
-            </section>
-          ))}
+            <span className="heroProgressLabel">🚀 {readyCount}/{weeks.length}</span>
+          </div>
+          <EditModeToggle isEditor={isEditor} />
         </div>
-      </div>
+      </header>
+
+      {trimmed && (
+        <div className="searchResults">
+          {hits.length === 0 ? (
+            <p className="dashboardSearchCount">No weeks match your search.</p>
+          ) : (
+            <>
+              <p className="dashboardSearchCount">
+                {hits.length}
+                {hits.length === 40 ? "+" : ""} {hits.length === 1 ? "result" : "results"} — tap to jump to it
+              </p>
+              <ul className="searchResultsList">
+                {hits.map((hit) => (
+                  <li key={`${hit.week}-${hit.where}`}>
+                    <Link href={hit.href} className="searchResultLink">
+                      <span className="searchResultWhere">Week {hit.week} · {hit.where}</span>
+                      <span className="searchResultSnippet">{highlight(hit.snippet, trimmed)}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+      )}
+
+      {terms.map(({ start, count, name, emoji, tint }) => (
+        <section className="termSection" key={start}>
+          <div className="sectionHeading">
+            <h2><span className="sectionEmoji">{emoji}</span> {name}</h2>
+            <span>Weeks {start + 1}–{start + count}</span>
+          </div>
+
+          <div className="weekGrid">
+            {weeks.slice(start, start + count).map((week) => renderWeekCard(week, tint))}
+          </div>
+        </section>
+      ))}
     </main>
   );
 }
