@@ -117,6 +117,13 @@ export async function PATCH(
     if (validationError) {
       return NextResponse.json({ error: validationError }, { status: 400 });
     }
+    updates.libraryLinks = (updates.libraryLinks as LibraryLink[]).map((link) => {
+      const width = clampImageWidth(link.imageWidth);
+      const next = { ...link };
+      if (width === undefined) delete next.imageWidth;
+      else next.imageWidth = width;
+      return next;
+    });
   }
 
   if ("extraActivities" in updates) {

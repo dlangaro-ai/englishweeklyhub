@@ -31,6 +31,10 @@ export type LibraryLink = {
   id: string;
   title: string;
   href: string;
+  // Optional per-link picture — when present, it's shown as a clickable
+  // button that opens this link (instead of / alongside the plain text).
+  image?: string;
+  imageWidth?: number;
 };
 
 export type Week = {

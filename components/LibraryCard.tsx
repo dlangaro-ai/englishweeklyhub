@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LibraryLink } from "@/lib/courseData";
 import { imageWidthStyle } from "@/lib/imageSize";
@@ -26,9 +26,19 @@ export default function LibraryCard({
   const [addingLink, setAddingLink] = useState(false);
   const [linkTitle, setLinkTitle] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
+  const [linkFile, setLinkFile] = useState<File | null>(null);
+  const [linkImageWidth, setLinkImageWidth] = useState<number | undefined>(undefined);
   const [removingId, setRemovingId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const linkFileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  const linkFilePreview = useMemo(() => (linkFile ? URL.createObjectURL(linkFile) : null), [linkFile]);
+  useEffect(() => {
+    return () => {
+      if (linkFilePreview) URL.revokeObjectURL(linkFilePreview);
+    };
+  }, [linkFilePreview]);
 
   async function patchWeek(body: Record<string, unknown>) {
     const response = await fetch(`/api/weeks/${weekNumber}`, {
@@ -92,23 +102,45 @@ export default function LibraryCard({
     }
   }
 
+  function startAddingLink() {
+    setAddingLink(true);
+    setLinkTitle("");
+    setLinkUrl("");
+    setLinkFile(null);
+    setLinkImageWidth(undefined);
+  }
+
   async function handleAddLink() {
     if (!linkTitle.trim() || !linkUrl.trim()) {
-      alert("Please add both a title and a link.");
+      alert("Please add both a name and a link.");
       return;
     }
 
     setSaving(true);
     try {
+      let linkImageUrl: string | undefined;
+
+      if (linkFile) {
+        const formData = new FormData();
+        formData.append("file", linkFile);
+        const uploadResponse = await fetch("/api/upload", { method: "POST", body: formData });
+        if (!uploadResponse.ok) {
+          const result = await uploadResponse.json().catch(() => ({}));
+          throw new Error(result.error ?? "Image upload failed.");
+        }
+        linkImageUrl = (await uploadResponse.json()).url;
+      }
+
       const newLink: LibraryLink = {
         id: `library-${Date.now()}`,
         title: linkTitle.trim(),
-        href: linkUrl.trim()
+        href: linkUrl.trim(),
+        ...(linkImageUrl ? { image: linkImageUrl } : {}),
+        ...(linkImageUrl && linkImageWidth != null ? { imageWidth: linkImageWidth } : {})
       };
+
       await patchWeek({ libraryLinks: [...links, newLink] });
       setAddingLink(false);
-      setLinkTitle("");
-      setLinkUrl("");
       router.refresh();
     } catch (error) {
       alert(error instanceof Error ? error.message : "Something went wrong.");
@@ -189,23 +221,48 @@ export default function LibraryCard({
 
         {links.length > 0 ? (
           <ul className="libraryLinksList">
-            {links.map((link) => (
-              <li key={link.id}>
-                <a href={link.href} target="_blank" rel="noreferrer" className="textLink">
-                  {link.title} ↗
-                </a>
-                {isEditor && (
-                  <button
-                    type="button"
-                    className="removeButton"
-                    onClick={() => handleRemoveLink(link.id)}
-                    disabled={removingId === link.id}
-                  >
-                    {removingId === link.id ? "…" : "🗑"}
-                  </button>
-                )}
-              </li>
-            ))}
+            {links.map((link) =>
+              link.image ? (
+                <li key={link.id} className="libraryLinkButton">
+                  <a href={link.href} target="_blank" rel="noreferrer" className="libraryLinkImageWrap">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={link.image}
+                      alt={link.title}
+                      className="bookImage"
+                      style={imageWidthStyle(link.imageWidth)}
+                    />
+                    <span className="libraryLinkCaption">{link.title}</span>
+                  </a>
+                  {isEditor && (
+                    <button
+                      type="button"
+                      className="removeButton"
+                      onClick={() => handleRemoveLink(link.id)}
+                      disabled={removingId === link.id}
+                    >
+                      {removingId === link.id ? "…" : "🗑 Remove"}
+                    </button>
+                  )}
+                </li>
+              ) : (
+                <li key={link.id}>
+                  <a href={link.href} target="_blank" rel="noreferrer" className="textLink">
+                    {link.title} ↗
+                  </a>
+                  {isEditor && (
+                    <button
+                      type="button"
+                      className="removeButton"
+                      onClick={() => handleRemoveLink(link.id)}
+                      disabled={removingId === link.id}
+                    >
+                      {removingId === link.id ? "…" : "🗑"}
+                    </button>
+                  )}
+                </li>
+              )
+            )}
           </ul>
         ) : (
           !isEditor && <p className="infoText">No websites added yet.</p>
@@ -216,7 +273,7 @@ export default function LibraryCard({
             <button
               type="button"
               className="addActivityButton"
-              onClick={() => setAddingLink(true)}
+              onClick={startAddingLink}
               disabled={atCap}
             >
               🔗 Add website ({links.length}/{MAX_LINKS})
@@ -238,6 +295,26 @@ export default function LibraryCard({
               value={linkUrl}
               onChange={(event) => setLinkUrl(event.target.value)}
             />
+            <div className="editImageButtons">
+              <button type="button" onClick={() => linkFileInputRef.current?.click()}>
+                📷 {linkFile ? "Change button image" : "Add button image (optional)"}
+              </button>
+              {linkFile && (
+                <button type="button" onClick={() => setLinkFile(null)}>
+                  Remove image
+                </button>
+              )}
+            </div>
+            <input
+              ref={linkFileInputRef}
+              type="file"
+              accept="image/*"
+              className="hiddenFileInput"
+              onChange={(event) => setLinkFile(event.target.files?.[0] ?? null)}
+            />
+            {linkFilePreview && (
+              <ImageSizeControl src={linkFilePreview} width={linkImageWidth} onChange={setLinkImageWidth} />
+            )}
             <div className="editActions">
               <button className="primaryButton" type="button" onClick={handleAddLink} disabled={saving}>
                 {saving ? "Saving…" : "Add"}
