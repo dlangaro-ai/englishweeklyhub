@@ -92,6 +92,18 @@ button {
     rgba(255, 255, 255, 0.9);
 }
 
+.heroTitleBlock {
+  align-self: center;
+}
+
+.hero .eyebrow {
+  margin-bottom: 14px;
+}
+
+.hero .heroText {
+  margin-top: 28px;
+}
+
 .eyebrow {
   margin: 0 0 10px;
   color: var(--accent);
