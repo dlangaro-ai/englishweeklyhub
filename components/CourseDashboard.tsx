@@ -143,26 +143,31 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         </div>
       </header>
 
-      <div className="dashboardSearch">
-        <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
-        <input
-          type="text"
-          className="dashboardSearchInput"
-          placeholder="Search all weeks — topic, book, homework, activity…"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          aria-label="Search all weeks"
-        />
-        {query && (
-          <button
-            type="button"
-            className="dashboardSearchClear"
-            onClick={() => setQuery("")}
-            aria-label="Clear search"
-          >
-            ✕
-          </button>
-        )}
+      <div className="dashboardSearchRow">
+        <div className="dashboardSearch">
+          <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
+          <input
+            type="text"
+            className="dashboardSearchInput"
+            placeholder="Search all weeks — topic, book, homework, activity…"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            aria-label="Search all weeks"
+          />
+          {query && (
+            <button
+              type="button"
+              className="dashboardSearchClear"
+              onClick={() => setQuery("")}
+              aria-label="Clear search"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+        <Link href="/resources" className="dashboardResourcesShortcut">
+          📖 Resources
+        </Link>
       </div>
 
       {trimmed && (

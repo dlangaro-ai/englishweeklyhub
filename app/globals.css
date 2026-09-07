@@ -106,15 +106,49 @@ h1 {
   margin-top: 48px;
 }
 
-.dashboardSearch {
+.dashboardSearchRow {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-top: 24px;
+}
+
+.dashboardSearch {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 0 16px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--card);
+}
+
+.dashboardResourcesShortcut {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--success);
+  font-weight: 800;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.dashboardResourcesShortcut:hover {
+  background: #e9f9f1;
+}
+
+@media (max-width: 640px) {
+  .dashboardSearchRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 .dashboardSearch:focus-within {
@@ -927,6 +961,33 @@ a.searchResultLink:hover {
   color: var(--accent);
   font-weight: 800;
   font-size: 14px;
+}
+
+.resourcesPageGrid {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+.resourcesPageItem {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .resourcesPageGrid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 14px;
+  }
 }
 
 .bookImage {
