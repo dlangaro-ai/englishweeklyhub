@@ -132,7 +132,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
       <header className="hero">
         <div className="heroTitleBlock">
           <p className="eyebrow">GRADE 5 ENGLISH · {weeks.length} WEEKS</p>
-          <h1>My English Hub</h1>
+          <h1>TED ANK 5</h1>
           <p className="heroText">
             Pick your week below to find this week&apos;s topic, books, homework and fun activities!
           </p>
