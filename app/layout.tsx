@@ -10,14 +10,14 @@ const baloo = Baloo_2({
 });
 
 const siteUrl = "https://tedank5.vercel.app";
-const title = "English Weekly Hub";
+const title = "TAK5 | English Weekly Hub";
 const description = "A 2-semester English learning hub organized by week.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: title,
-    template: `%s | ${title}`,
+    template: `%s | TAK5`,
   },
   description,
   openGraph: {
