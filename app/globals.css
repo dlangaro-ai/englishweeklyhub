@@ -104,6 +104,13 @@ button {
   margin-top: 28px;
 }
 
+.heroLogo {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+}
+
 .eyebrow {
   margin: 0 0 10px;
   color: var(--accent);
