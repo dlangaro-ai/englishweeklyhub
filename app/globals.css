@@ -84,6 +84,7 @@ button {
   position: relative;
   overflow: hidden;
   align-items: flex-start;
+  justify-content: flex-start;
   border-radius: 36px;
   border-color: #e4dcff;
   background:
