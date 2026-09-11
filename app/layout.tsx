@@ -9,10 +9,30 @@ const baloo = Baloo_2({
   variable: "--font-heading"
 });
 
+const siteUrl = "https://tedank5.vercel.app";
+const title = "English Weekly Hub";
+const description = "A 2-semester English learning hub organized by week.";
+
 export const metadata: Metadata = {
-  title: "English Weekly Hub",
-  description: "A 2-semester English learning hub organized by week.",
-  robots: { index: false, follow: false },
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: title,
+    template: `%s | ${title}`,
+  },
+  description,
+  openGraph: {
+    title,
+    description,
+    url: siteUrl,
+    siteName: title,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title,
+    description,
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
