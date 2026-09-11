@@ -853,6 +853,14 @@ a.searchResultLink:hover {
     padding: 26px;
   }
 
+  .heroTitleBlock {
+    width: 100%;
+  }
+
+  .heroText {
+    white-space: normal;
+  }
+
   .heroRight {
     align-items: stretch;
     width: 100%;
