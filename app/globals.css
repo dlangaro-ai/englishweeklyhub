@@ -145,7 +145,7 @@ h1 {
 }
 
 .dashboardSearch {
-  width: 240px;
+  width: 280px;
   height: 40px;
   display: flex;
   align-items: center;
@@ -157,11 +157,11 @@ h1 {
 }
 
 .dashboardSidebarNav {
-  width: 240px;
+  width: 280px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
 .dashboardSidebarLink {
@@ -169,15 +169,15 @@ h1 {
   justify-content: flex-start;
   display: flex;
   align-items: center;
-  gap: 6px;
-  height: 40px;
-  padding: 0 12px;
+  gap: 8px;
+  height: 44px;
+  padding: 0 16px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--card);
   color: var(--success);
   font-weight: 800;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1;
   white-space: nowrap;
   box-sizing: border-box;
@@ -191,7 +191,7 @@ h1 {
   display: flex;
   align-items: center;
   gap: 8px;
-  width: 240px;
+  width: 280px;
 }
 
 .heroProgressTrack {
