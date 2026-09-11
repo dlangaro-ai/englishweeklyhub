@@ -5,7 +5,7 @@ const LAVENDER = "#e4dbfb";
 export default function TedAnk5Logo({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 640 180"
+      viewBox="130 0 380 180"
       className={className}
       role="img"
       aria-label="TEDANK5 — My English Hub"
