@@ -1,12 +1,13 @@
 "use client";
 
-import Link from "next/link";
 import { useEditableField } from "./useEditableField";
 import RichTextEditor from "./RichTextEditor";
 import ImageSizeControl from "./ImageSizeControl";
+import { sanitizeRichText } from "@/lib/sanitizeHtml";
+import { imageWidthStyle } from "@/lib/imageSize";
 
-// The "This Week" card on the week page. Students see a folder link to the
-// full message at /week/N/this-week; the teacher edits the message in place.
+// The "This Week" card on the week page. The message is shown directly on
+// the card; the teacher edits it in place.
 export default function SummaryCard({
   weekNumber,
   summary,
@@ -33,7 +34,7 @@ export default function SummaryCard({
   });
 
   return (
-    <article className="infoCard skillsFolder summaryCard">
+    <article className="infoCard summaryCard">
       <span className="infoIcon">✨</span>
       <div className="infoCardBody">
         <div className="infoCardHead">
@@ -44,10 +45,10 @@ export default function SummaryCard({
             </button>
           )}
         </div>
+        <h2>What&apos;s Happening this week</h2>
 
         {editable.editing ? (
           <div className="editForm">
-            <h2>What&apos;s Happening this week</h2>
             <RichTextEditor value={editable.text} onChange={editable.setText} maxWords={300} />
             <div className="editImageRow">
               {editable.imagePreview && (
@@ -88,11 +89,27 @@ export default function SummaryCard({
               </button>
             </div>
           </div>
+        ) : summary ? (
+          <>
+            <div
+              className="infoText richTextDisplay"
+              dangerouslySetInnerHTML={{ __html: sanitizeRichText(summary) }}
+            />
+            {image && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                className="bookImage"
+                src={image}
+                alt=""
+                style={imageWidthStyle(imageWidth)}
+                onError={(event) => {
+                  event.currentTarget.style.display = "none";
+                }}
+              />
+            )}
+          </>
         ) : (
-          <Link href={`/week/${weekNumber}/this-week`} className="skillsFolderLink">
-            <h2>What&apos;s Happening this week</h2>
-            <span className="openLabel">Open folder →</span>
-          </Link>
+          <p className="infoText">Check back soon for this week&apos;s update.</p>
         )}
       </div>
     </article>
