@@ -21,3 +21,13 @@ export function clampImageWidth(value: unknown): number | undefined {
 export function imageWidthStyle(width?: number): { width: string; maxWidth: string } | undefined {
   return width ? { width: `${width}px`, maxWidth: "100%" } : undefined;
 }
+
+export type ImageAlign = "left" | "center" | "right";
+export const IMAGE_ALIGNS: ImageAlign[] = ["left", "center", "right"];
+
+/** Inline style that positions a block-level image within its full-width container. */
+export function imageAlignStyle(align?: ImageAlign): { marginLeft?: string; marginRight?: string } {
+  if (align === "center") return { marginLeft: "auto", marginRight: "auto" };
+  if (align === "right") return { marginLeft: "auto", marginRight: "0" };
+  return {};
+}

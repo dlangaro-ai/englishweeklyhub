@@ -44,6 +44,7 @@ export type Week = {
   summary: string;
   summaryImage?: string;
   summaryImageWidth?: number;
+  summaryImageAlign?: "left" | "center" | "right";
   books: string[];
   bookImage?: string;
   bookImageWidth?: number;

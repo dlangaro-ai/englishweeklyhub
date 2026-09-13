@@ -4,7 +4,7 @@ import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { loadWeeks, saveWeeks } from "@/lib/blob";
 import { ExtraActivity, LibraryLink, Week } from "@/lib/courseData";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
-import { clampImageWidth } from "@/lib/imageSize";
+import { clampImageWidth, IMAGE_ALIGNS } from "@/lib/imageSize";
 
 const EDITABLE_FIELDS = [
   "title",
@@ -12,6 +12,7 @@ const EDITABLE_FIELDS = [
   "summary",
   "summaryImage",
   "summaryImageWidth",
+  "summaryImageAlign",
   "books",
   "bookImage",
   "bookImageWidth",
@@ -142,6 +143,14 @@ export async function PATCH(
 
   if (typeof updates.summary === "string") {
     updates.summary = sanitizeRichText(updates.summary);
+  }
+
+  if (
+    "summaryImageAlign" in updates &&
+    updates.summaryImageAlign !== null &&
+    !IMAGE_ALIGNS.includes(updates.summaryImageAlign as never)
+  ) {
+    delete updates.summaryImageAlign;
   }
 
   try {

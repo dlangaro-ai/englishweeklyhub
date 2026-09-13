@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import { ImageAlign } from "@/lib/imageSize";
 
 type UseEditableFieldArgs = {
   weekNumber: number;
@@ -12,6 +13,8 @@ type UseEditableFieldArgs = {
   initialImage?: string;
   initialImageWidth?: number;
   imageWidthField?: string;
+  initialImageAlign?: ImageAlign;
+  imageAlignField?: string;
   maxWords?: number;
 };
 
@@ -24,6 +27,8 @@ export function useEditableField({
   initialImage,
   initialImageWidth,
   imageWidthField,
+  initialImageAlign,
+  imageAlignField,
   maxWords
 }: UseEditableFieldArgs) {
   const [editing, setEditing] = useState(false);
@@ -32,6 +37,7 @@ export function useEditableField({
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageRemoved, setImageRemoved] = useState(false);
   const [imageWidth, setImageWidth] = useState<number | undefined>(initialImageWidth);
+  const [imageAlign, setImageAlign] = useState<ImageAlign | undefined>(initialImageAlign);
   const [saving, setSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -42,6 +48,7 @@ export function useEditableField({
     setImageFile(null);
     setImageRemoved(false);
     setImageWidth(initialImageWidth);
+    setImageAlign(initialImageAlign);
     setEditing(true);
   }
 
@@ -62,6 +69,7 @@ export function useEditableField({
     setImagePreview(undefined);
     setImageRemoved(true);
     setImageWidth(undefined);
+    setImageAlign(undefined);
   }
 
   async function save() {
@@ -104,6 +112,11 @@ export function useEditableField({
         else if (imageWidth != null) payload[imageWidthField] = imageWidth;
       }
 
+      if (imageAlignField) {
+        if (imageRemoved) payload[imageAlignField] = null;
+        else if (imageAlign != null) payload[imageAlignField] = imageAlign;
+      }
+
       const response = await fetch(`/api/weeks/${weekNumber}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -133,6 +146,9 @@ export function useEditableField({
     imageWidth,
     setImageWidth,
     imageWidthField,
+    imageAlign,
+    setImageAlign,
+    imageAlignField,
     saving,
     fileInputRef,
     startEdit,
