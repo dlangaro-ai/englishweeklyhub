@@ -35,6 +35,7 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           summary={week.summary}
           image={week.summaryImage}
           imageWidth={week.summaryImageWidth}
+          imageAlign={week.summaryImageAlign}
           isEditor={isEditor}
         />
 

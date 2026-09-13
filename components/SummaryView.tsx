@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Week } from "@/lib/courseData";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
-import { imageWidthStyle } from "@/lib/imageSize";
+import { imageWidthStyle, imageAlignStyle } from "@/lib/imageSize";
 
 // The "This Week" folder page: the full weekly message, with a way back.
 export default function SummaryView({ week }: { week: Week }) {
@@ -33,7 +33,7 @@ export default function SummaryView({ week }: { week: Week }) {
                   className="bookImage"
                   src={week.summaryImage}
                   alt=""
-                  style={imageWidthStyle(week.summaryImageWidth)}
+                  style={{ ...imageWidthStyle(week.summaryImageWidth), ...imageAlignStyle(week.summaryImageAlign) }}
                 />
               )}
             </div>
