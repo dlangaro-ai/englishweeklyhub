@@ -4,7 +4,7 @@ import { useEditableField } from "./useEditableField";
 import RichTextEditor from "./RichTextEditor";
 import ImageSizeControl from "./ImageSizeControl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
-import { imageWidthStyle } from "@/lib/imageSize";
+import { imageWidthStyle, imageAlignStyle, ImageAlign } from "@/lib/imageSize";
 
 // The "This Week" card on the week page. The message is shown directly on
 // the card; the teacher edits it in place.
@@ -13,12 +13,14 @@ export default function SummaryCard({
   summary,
   image,
   imageWidth,
+  imageAlign,
   isEditor
 }: {
   weekNumber: number;
   summary: string;
   image?: string;
   imageWidth?: number;
+  imageAlign?: ImageAlign;
   isEditor: boolean;
 }) {
   const editable = useEditableField({
@@ -26,10 +28,12 @@ export default function SummaryCard({
     field: "summary",
     imageField: "summaryImage",
     imageWidthField: "summaryImageWidth",
+    imageAlignField: "summaryImageAlign",
     isList: false,
     initialText: summary,
     initialImage: image,
     initialImageWidth: imageWidth,
+    initialImageAlign: imageAlign,
     maxWords: 300
   });
 
@@ -78,6 +82,8 @@ export default function SummaryCard({
                 src={editable.imagePreview}
                 width={editable.imageWidth}
                 onChange={editable.setImageWidth}
+                align={editable.imageAlign}
+                onAlignChange={editable.setImageAlign}
               />
             )}
             <div className="editActions">

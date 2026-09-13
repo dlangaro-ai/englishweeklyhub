@@ -1189,7 +1189,7 @@ a.searchResultLink:hover {
 
 .imageSizePreviewWrap {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 8px;
   border-radius: 10px;
   background: var(--paper);
@@ -1219,6 +1219,37 @@ a.searchResultLink:hover {
   min-width: 52px;
   text-align: right;
   font-variant-numeric: tabular-nums;
+}
+
+.imageAlignControl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.imageAlignButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.imageAlignButton {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.imageAlignButton.active {
+  background: var(--accent, #2563eb);
+  border-color: var(--accent, #2563eb);
+  color: #fff;
 }
 
 .activityImageSize {
