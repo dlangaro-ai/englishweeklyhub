@@ -87,20 +87,20 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           cardClassName="infoCardHomework"
         />
 
-        <BonusCard
-          weekNumber={week.number}
-          text={week.bonusText}
-          image={week.bonusImage}
-          imageWidth={week.bonusImageWidth}
-          isEditor={isEditor}
-        />
-
         <LibraryCard
           weekNumber={week.number}
           text={week.libraryText}
           image={week.libraryImage}
           imageWidth={week.libraryImageWidth}
           links={week.libraryLinks ?? []}
+          isEditor={isEditor}
+        />
+
+        <BonusCard
+          weekNumber={week.number}
+          text={week.bonusText}
+          image={week.bonusImage}
+          imageWidth={week.bonusImageWidth}
           isEditor={isEditor}
         />
       </section>
