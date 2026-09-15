@@ -9,10 +9,11 @@
 //   title      -> short, friendly week title students see on their card
 //   unit       -> the topic/unit name shown under the title
 //   summary      / summaryImage  -> "This week" text + optional picture
-//   books        / bookImage     -> "Books used" list + optional picture
-//   homework     / homeworkImage -> "Homework" list + optional picture
+//   books        / bookImage     -> "Books used" rich text + optional picture
+//   homework     / homeworkImage -> "Homework" rich text + optional picture
 //   bonusText    / bonusImage    -> "Bonus" teaser text + optional picture
-//   libraryImage / libraryLinks  -> "Library" picture + list of website links
+//   libraryText  / libraryLinks  -> "Resources" rich-text notes + website links
+//   libraryImage                 -> "Library" picture
 //   published  -> true = students can open this week, false = shows "Soon"
 //   extraActivities -> bonus links/videos/PDFs, shown on the Bonus sub-page
 // ────────────────────────────────────────────────────────────────────────────
@@ -45,17 +46,18 @@ export type Week = {
   summaryImage?: string;
   summaryImageWidth?: number;
   summaryImageAlign?: "left" | "center" | "right";
-  books: string[];
+  books: string;
   bookImage?: string;
   bookImageWidth?: number;
   bookImage2?: string;
   bookImage2Width?: number;
-  homework: string[];
+  homework: string;
   homeworkImage?: string;
   homeworkImageWidth?: number;
   bonusText: string;
   bonusImage?: string;
   bonusImageWidth?: number;
+  libraryText: string;
   libraryImage?: string;
   libraryImageWidth?: number;
   libraryLinks: LibraryLink[];
@@ -72,10 +74,11 @@ const starterWeeks: Week[] = [
     unit: "Getting Started",
     summary:
       "This week we have started our new school year! Please follow this page for more information.",
-    books: ["Curious Kids 6 — Pupil's Book"],
+    books: "Curious Kids 6 — Pupil's Book",
     bookImage: "/images/curious-kids-6.png",
-    homework: ["No homework information added yet"],
+    homework: "No homework information added yet",
     bonusText: defaultBonusText,
+    libraryText: "",
     libraryLinks: [],
     published: true,
     extraActivities: [
@@ -94,9 +97,10 @@ const starterWeeks: Week[] = [
     title: "Week 2",
     unit: "Unit information coming soon",
     summary: "Weekly information will be added here.",
-    books: ["Book pages coming soon"],
-    homework: ["Homework coming soon"],
+    books: "Book pages coming soon",
+    homework: "Homework coming soon",
     bonusText: defaultBonusText,
+    libraryText: "",
     libraryLinks: [],
     published: true,
     extraActivities: []
@@ -107,9 +111,10 @@ const starterWeeks: Week[] = [
     title: "Our School Community",
     unit: "School Community",
     summary: "This week we are learning about our school community.",
-    books: ["Unlock pages 14–18"],
-    homework: ["Workbook page 7"],
+    books: "Unlock pages 14–18",
+    homework: "Workbook page 7",
     bonusText: defaultBonusText,
+    libraryText: "",
     libraryLinks: [],
     published: true,
     extraActivities: [
@@ -137,9 +142,10 @@ const placeholders: Week[] = Array.from({ length: 38 }, (_, index) => {
     title: `Week ${number}`,
     unit: "Coming soon",
     summary: "Weekly information will be added here.",
-    books: [],
-    homework: [],
+    books: "",
+    homework: "",
     bonusText: defaultBonusText,
+    libraryText: "",
     libraryLinks: [],
     published: false,
     extraActivities: []
