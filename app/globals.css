@@ -788,6 +788,12 @@ a.searchResultLink:hover {
   list-style: decimal;
 }
 
+.richTextArea a,
+.richTextDisplay a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
 .completeButton,
 .primaryButton {
   border: 0;

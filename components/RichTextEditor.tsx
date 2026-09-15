@@ -123,6 +123,39 @@ export default function RichTextEditor({
     onChange(editorRef.current.innerHTML);
   }
 
+  function applyLink() {
+    const el = editorRef.current;
+    if (!el) return;
+    el.focus();
+    restoreSelection();
+    const selection = window.getSelection();
+
+    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) {
+      alert("Select some text first, then add a link.");
+      return;
+    }
+
+    const range = selection.getRangeAt(0);
+    if (!el.contains(range.commonAncestorContainer)) return;
+
+    const href = window.prompt("Link to (e.g. https://example.com):", "https://");
+    if (!href || !href.trim()) return;
+
+    const anchor = document.createElement("a");
+    anchor.href = href.trim();
+
+    try {
+      range.surroundContents(anchor);
+    } catch {
+      const contents = range.extractContents();
+      anchor.appendChild(contents);
+      range.insertNode(anchor);
+    }
+
+    selection.removeAllRanges();
+    handleInput();
+  }
+
   return (
     <div className="richTextEditor">
       <div className="richTextToolbar">
@@ -220,6 +253,9 @@ export default function RichTextEditor({
           onClick={() => applyStyle("backgroundColor", HIGHLIGHT_COLOR)}
         >
           🖍 Highlight
+        </button>
+        <button type="button" onMouseDown={saveSelection} onClick={applyLink}>
+          🔗 Link
         </button>
         <label className="richTextColorLabel">
           Font color

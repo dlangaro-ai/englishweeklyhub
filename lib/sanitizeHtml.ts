@@ -1,9 +1,17 @@
 const ALLOWED_TAGS = new Set([
-  "span", "br", "b", "i", "u", "strong", "em", "mark", "div", "p", "ul", "ol", "li"
+  "span", "br", "b", "i", "u", "strong", "em", "mark", "div", "p", "a", "ul", "ol", "li"
 ]);
 const ALLOWED_STYLE_PROPS = new Set([
   "font-family", "font-size", "background-color", "color", "text-align"
 ]);
+
+function isSafeHref(href: string): boolean {
+  const trimmed = href.trim();
+  if (!trimmed) return false;
+  if (/^https?:\/\//i.test(trimmed)) return true;
+  if (trimmed.startsWith("/")) return true;
+  return false;
+}
 
 // Minimal allowlist sanitizer for the rich-text summary field. Only the
 // logged-in teacher can write this content (via RichTextEditor's own
@@ -23,19 +31,29 @@ export function sanitizeRichText(html: string): string {
     if (closing) return `</${tag}>`;
 
     const styleMatch = /style\s*=\s*"([^"]*)"/i.exec(attrs) ?? /style\s*=\s*'([^']*)'/i.exec(attrs);
-    if (!styleMatch) return `<${tag}>`;
+    const safeDeclarations = styleMatch
+      ? styleMatch[1]
+          .split(";")
+          .map((decl) => decl.trim())
+          .filter(Boolean)
+          .filter((decl) => {
+            const [prop] = decl.split(":");
+            return Boolean(prop && ALLOWED_STYLE_PROPS.has(prop.trim().toLowerCase()));
+          })
+          .join("; ")
+      : "";
 
-    const safeDeclarations = styleMatch[1]
-      .split(";")
-      .map((decl) => decl.trim())
-      .filter(Boolean)
-      .filter((decl) => {
-        const [prop] = decl.split(":");
-        return Boolean(prop && ALLOWED_STYLE_PROPS.has(prop.trim().toLowerCase()));
-      })
-      .join("; ");
+    let hrefAttr = "";
+    if (tag === "a") {
+      const hrefMatch = /href\s*=\s*"([^"]*)"/i.exec(attrs) ?? /href\s*=\s*'([^']*)'/i.exec(attrs);
+      const href = hrefMatch?.[1] ?? "";
+      if (isSafeHref(href)) {
+        hrefAttr = ` href="${href.trim().replace(/"/g, "&quot;")}" target="_blank" rel="noreferrer"`;
+      }
+    }
 
-    return safeDeclarations ? `<${tag} style="${safeDeclarations}">` : `<${tag}>`;
+    const styleAttr = safeDeclarations ? ` style="${safeDeclarations}"` : "";
+    return `<${tag}${hrefAttr}${styleAttr}>`;
   });
 
   return cleaned;
