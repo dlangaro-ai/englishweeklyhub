@@ -1,11 +1,18 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { getAllWeeks } from "@/lib/getWeeks";
+import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 export default async function ExtraActivitiesPage() {
   const weeks = await getAllWeeks();
-  const weeksWithActivities = weeks.filter((week) => week.extraActivities.length > 0);
+  const cookieStore = await cookies();
+  const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
+
+  const weeksWithActivities = weeks.filter(
+    (week) => week.extraActivities.length > 0 && (week.published || isEditor)
+  );
 
   return (
     <main className="shell narrow">
