@@ -48,7 +48,9 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           anchorId="books"
           imageField="bookImage"
           imageWidthField="bookImageWidth"
-          isList={true}
+          isList={false}
+          richText={true}
+          maxWords={150}
           value={week.books}
           image={week.bookImage}
           imageWidth={week.bookImageWidth}
@@ -74,7 +76,9 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           anchorId="homework"
           imageField="homeworkImage"
           imageWidthField="homeworkImageWidth"
-          isList={true}
+          isList={false}
+          richText={true}
+          maxWords={150}
           value={week.homework}
           image={week.homeworkImage}
           imageWidth={week.homeworkImageWidth}
@@ -93,6 +97,7 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
 
         <LibraryCard
           weekNumber={week.number}
+          text={week.libraryText}
           image={week.libraryImage}
           imageWidth={week.libraryImageWidth}
           links={week.libraryLinks ?? []}

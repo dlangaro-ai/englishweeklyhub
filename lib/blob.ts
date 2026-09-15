@@ -27,6 +27,22 @@ function mergeWithDefaults(stored: Week[]): Week[] {
   return [...stored, ...missing].sort((a, b) => a.number - b.number);
 }
 
+// "books" and "homework" used to be saved as one-line-per-item string[]
+// lists; they're now a single rich-text HTML string like "summary". Convert
+// old array data on read so nothing already saved silently disappears.
+// "libraryText" is new — backfill it too so older saved weeks don't crash.
+type LegacyWeek = Omit<Week, "books" | "homework" | "libraryText"> & {
+  books: string | string[];
+  homework: string | string[];
+  libraryText?: string;
+};
+
+function normalizeWeek(week: LegacyWeek): Week {
+  const books = Array.isArray(week.books) ? listActivityToHtml(week.books.join("\n")) : week.books;
+  const homework = Array.isArray(week.homework) ? listActivityToHtml(week.homework.join("\n")) : week.homework;
+  return { ...week, books, homework, libraryText: week.libraryText ?? "" };
+}
+
 async function fetchWeeks(): Promise<Week[]> {
   if (!blobConfigured()) return defaultWeeks;
 
@@ -38,8 +54,8 @@ async function fetchWeeks(): Promise<Week[]> {
     const response = await fetch(match.url, { cache: "no-store" });
     if (!response.ok) return defaultWeeks;
 
-    const stored = (await response.json()) as Week[];
-    return mergeWithDefaults(stored);
+    const stored = (await response.json()) as LegacyWeek[];
+    return mergeWithDefaults(stored.map(normalizeWeek));
   } catch {
     return defaultWeeks;
   }

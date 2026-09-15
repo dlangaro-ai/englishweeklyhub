@@ -4,18 +4,22 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LibraryLink } from "@/lib/courseData";
 import { imageWidthStyle } from "@/lib/imageSize";
+import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import ImageSizeControl from "./ImageSizeControl";
+import RichTextEditor from "./RichTextEditor";
 
 const MAX_LINKS = 6;
 
 export default function LibraryCard({
   weekNumber,
+  text,
   image,
   imageWidth,
   links,
   isEditor
 }: {
   weekNumber: number;
+  text: string;
   image?: string;
   imageWidth?: number;
   links: LibraryLink[];
@@ -23,6 +27,9 @@ export default function LibraryCard({
 }) {
   const [saving, setSaving] = useState(false);
   const [width, setWidth] = useState<number | undefined>(imageWidth);
+  const [editingText, setEditingText] = useState(false);
+  const [draftText, setDraftText] = useState(text);
+  const [textSaving, setTextSaving] = useState(false);
   const [addingLink, setAddingLink] = useState(false);
   const [linkTitle, setLinkTitle] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
@@ -49,6 +56,24 @@ export default function LibraryCard({
     if (!response.ok) {
       const result = await response.json().catch(() => ({}));
       throw new Error(result.error ?? "Could not save.");
+    }
+  }
+
+  function startEditingText() {
+    setDraftText(text);
+    setEditingText(true);
+  }
+
+  async function handleSaveText() {
+    setTextSaving(true);
+    try {
+      await patchWeek({ libraryText: draftText });
+      setEditingText(false);
+      router.refresh();
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Could not save.");
+    } finally {
+      setTextSaving(false);
     }
   }
 
@@ -170,8 +195,36 @@ export default function LibraryCard({
       <div className="infoCardBody">
         <div className="infoCardHead">
           <p className="infoLabel">RESOURCES</p>
+          {isEditor && !editingText && (
+            <button className="editButton" type="button" onClick={startEditingText}>
+              ✏️ Edit
+            </button>
+          )}
         </div>
         <h2>Resources</h2>
+
+        {editingText ? (
+          <div className="editForm">
+            <RichTextEditor value={draftText} onChange={setDraftText} maxWords={150} />
+            <div className="editActions">
+              <button className="primaryButton" type="button" onClick={handleSaveText} disabled={textSaving}>
+                {textSaving ? "Saving…" : "Save"}
+              </button>
+              <button
+                className="cancelButton"
+                type="button"
+                onClick={() => setEditingText(false)}
+                disabled={textSaving}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          text && (
+            <div className="infoText richTextDisplay" dangerouslySetInnerHTML={{ __html: sanitizeRichText(text) }} />
+          )
+        )}
 
         {image && (
           // eslint-disable-next-line @next/next/no-img-element

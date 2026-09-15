@@ -24,6 +24,7 @@ const EDITABLE_FIELDS = [
   "bonusText",
   "bonusImage",
   "bonusImageWidth",
+  "libraryText",
   "libraryImage",
   "libraryImageWidth",
   "libraryLinks",
@@ -141,8 +142,10 @@ export async function PATCH(
     });
   }
 
-  if (typeof updates.summary === "string") {
-    updates.summary = sanitizeRichText(updates.summary);
+  for (const field of ["summary", "books", "homework", "libraryText"] as const) {
+    if (typeof updates[field] === "string") {
+      updates[field] = sanitizeRichText(updates[field] as string);
+    }
   }
 
   if (

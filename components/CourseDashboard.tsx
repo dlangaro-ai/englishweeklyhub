@@ -51,9 +51,10 @@ function weekHits(week: Week, query: string): SearchHit[] {
   add("Title", `Week ${week.number} — ${week.title}`, weekHref);
   add("Topic", week.unit, weekHref);
   add("This week", stripHtml(week.summary), `${weekHref}/this-week`);
-  week.books.forEach((book) => add("Books", book, `${weekHref}#books`));
-  week.homework.forEach((item) => add("Homework", item, `${weekHref}#homework`));
+  add("Books", stripHtml(week.books), `${weekHref}#books`);
+  add("Homework", stripHtml(week.homework), `${weekHref}#homework`);
   add("Bonus", week.bonusText, `${weekHref}#bonus`);
+  add("Resources", stripHtml(week.libraryText), `${weekHref}#library`);
   (week.libraryLinks ?? []).forEach((link) => add("Resources", link.title, `${weekHref}#library`));
   week.extraActivities.forEach((activity) => {
     add("Eager Learners", activity.title, `${weekHref}/skills`);
