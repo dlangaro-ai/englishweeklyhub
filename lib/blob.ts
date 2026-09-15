@@ -1,6 +1,7 @@
 import { del, list, put } from "@vercel/blob";
 import { unstable_cache, revalidateTag } from "next/cache";
 import { weeks as defaultWeeks, Week } from "./courseData";
+import { listActivityToHtml } from "./sanitizeHtml";
 
 const DATA_PREFIX = "course-data";
 const CACHE_TAG = "course-data";
