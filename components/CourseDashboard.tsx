@@ -34,8 +34,8 @@ function snippetAround(text: string, at: number, length: number): string {
 }
 
 // Walk a week's content for the query and report each place it turns up — the
-// section, a snippet of the text, and a link that lands on that spot. Every
-// week is searched, published or not, so students can look things up ahead.
+// section, a snippet of the text, and a link that lands on that spot. Callers
+// decide which weeks to search (students only get published ones).
 function weekHits(week: Week, query: string): SearchHit[] {
   const hits: SearchHit[] = [];
   const weekHref = `/week/${week.number}`;
@@ -91,6 +91,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
   const seen = new Set<string>();
   const hits = trimmed
     ? weeks
+        .filter((week) => week.published || isEditor)
         .flatMap((week) => weekHits(week, trimmed))
         .filter((hit) => {
           const key = `${hit.week}|${hit.where}`;
