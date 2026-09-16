@@ -1,38 +1,26 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useProgress } from "./ProgressProvider";
 
-// Blocks the whole site behind a one-time "who are you" form (name, class,
+// Blocks its children behind a one-time "who are you" form (name, class,
 // teacher's email) so completed activities can be attributed to a real
-// student. Skipped for the teacher (edit mode) and for anyone who's already
-// filled it in on this device — checked in that order so a returning
-// student never pays for the extra /api/admin/status round trip.
-export default function StudentIdentityGate({ children }: { children: React.ReactNode }) {
+// student. Used only on the Eager Learners (extra activities) page — the
+// rest of the site stays freely browsable. Pass skip for the teacher (edit
+// mode), who has no business filling in a fake identity to manage activities.
+export default function StudentIdentityGate({
+  children,
+  skip = false
+}: {
+  children: React.ReactNode;
+  skip?: boolean;
+}) {
   const { identity, identityLoaded, setIdentity } = useProgress();
-  const [checkingEditor, setCheckingEditor] = useState(true);
-  const [isEditor, setIsEditor] = useState(false);
 
   const [name, setName] = useState("");
   const [studentClass, setStudentClass] = useState("");
   const [teacherEmail, setTeacherEmail] = useState("");
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    if (!identityLoaded || identity) {
-      setCheckingEditor(false);
-      return;
-    }
-
-    fetch("/api/admin/status")
-      .then((response) => response.json())
-      .then((data) => setIsEditor(Boolean(data?.isEditor)))
-      .catch(() => {
-        // If the check fails, fall through to showing the form — worst
-        // case the teacher fills it in once too.
-      })
-      .finally(() => setCheckingEditor(false));
-  }, [identityLoaded, identity]);
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -54,14 +42,15 @@ export default function StudentIdentityGate({ children }: { children: React.Reac
     setIdentity({ name: trimmedName, studentClass: trimmedClass, teacherEmail: trimmedEmail });
   }
 
-  if (!identityLoaded || checkingEditor) return null;
-  if (identity || isEditor) return <>{children}</>;
+  if (skip) return <>{children}</>;
+  if (!identityLoaded) return null;
+  if (identity) return <>{children}</>;
 
   return (
     <main className="shell narrow">
       <div className="loginCard">
-        <h1>Welcome!</h1>
-        <p className="infoText">Please enter your details before you start — this only takes a moment.</p>
+        <h1>Before you start…</h1>
+        <p className="infoText">Please enter your details to access the Eager Learners activities.</p>
         <form onSubmit={handleSubmit} className="identityForm">
           <input
             type="text"
