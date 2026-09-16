@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { ExtraActivity, Week } from "@/lib/courseData";
 import { listActivityToHtml, sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle } from "@/lib/imageSize";
-import { useProgress } from "./ProgressProvider";
 import RichTextEditor from "./RichTextEditor";
 import ImageSizeControl from "./ImageSizeControl";
 import ActivityImageSize from "./ActivityImageSize";
@@ -26,7 +25,6 @@ const CAPS: Record<"link" | "image" | "pdf" | "list", number> = { link: 3, image
 type AddType = "link" | "image" | "pdf" | "list" | null;
 
 export default function ExtraActivitiesView({ week, isEditor }: { week: Week; isEditor: boolean }) {
-  const { isComplete, toggleActivity } = useProgress();
   const router = useRouter();
 
   const [addingType, setAddingType] = useState<AddType>(null);
@@ -279,10 +277,9 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
           </div>
         ) : (
           week.extraActivities.map((activity, index) => {
-            const done = isComplete(activity.id);
             return (
-              <article className={`activityCard ${done ? "activityDone" : ""}`} key={activity.id}>
-                <div className="activityIndex">{done ? "✓" : iconFor(activity.resourceType)}</div>
+              <article className="activityCard" key={activity.id}>
+                <div className="activityIndex">{iconFor(activity.resourceType)}</div>
                 <div className="activityBody">
                   <span className="activityType">ACTIVITY {index + 1}</span>
                   <h2>{activity.title}</h2>
@@ -350,14 +347,8 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
                     </a>
                   )}
                 </div>
-                <div className="activityActions">
-                  <button
-                    className="completeButton"
-                    onClick={() => toggleActivity(week.number, activity.id, activity.title)}
-                  >
-                    {done ? "Completed" : "Mark complete"}
-                  </button>
-                  {isEditor && (
+                {isEditor && (
+                  <div className="activityActions">
                     <button
                       className="removeButton"
                       type="button"
@@ -366,8 +357,8 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
                     >
                       {removingId === activity.id ? "Removing…" : "🗑 Remove"}
                     </button>
-                  )}
-                </div>
+                  </div>
+                )}
               </article>
             );
           })

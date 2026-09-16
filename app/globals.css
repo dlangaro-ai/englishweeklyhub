@@ -579,11 +579,6 @@ a.searchResultLink:hover {
   background: var(--card);
 }
 
-.activityDone {
-  border-color: #ccebdd;
-  background: #f8fffb;
-}
-
 .addActivityBar {
   display: flex;
   flex-wrap: wrap;
@@ -662,11 +657,6 @@ a.searchResultLink:hover {
   background: var(--accent-soft);
   color: var(--accent);
   font-weight: 900;
-}
-
-.activityDone .activityIndex {
-  background: #ddf5e9;
-  color: var(--success);
 }
 
 .activityType {
@@ -794,7 +784,6 @@ a.searchResultLink:hover {
   text-decoration: underline;
 }
 
-.completeButton,
 .primaryButton {
   border: 0;
   border-radius: 12px;
@@ -803,10 +792,6 @@ a.searchResultLink:hover {
   cursor: pointer;
   font-weight: 800;
   padding: 12px 14px;
-}
-
-.activityDone .completeButton {
-  background: var(--success);
 }
 
 .textLink {
@@ -884,7 +869,6 @@ a.searchResultLink:hover {
     grid-template-columns: 42px 1fr;
   }
 
-  .completeButton,
   .activityActions {
     grid-column: 1 / -1;
   }
