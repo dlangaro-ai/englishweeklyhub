@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import ExtraActivitiesView from "@/components/ExtraActivitiesView";
-import StudentIdentityGate from "@/components/StudentIdentityGate";
 import { getWeekByNumber } from "@/lib/getWeeks";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 
@@ -20,9 +19,5 @@ export default async function SkillsPage({
 
   if (!week || skill !== "skills") notFound();
 
-  return (
-    <StudentIdentityGate skip={isEditor}>
-      <ExtraActivitiesView week={week} isEditor={isEditor} />
-    </StudentIdentityGate>
-  );
+  return <ExtraActivitiesView week={week} isEditor={isEditor} />;
 }
