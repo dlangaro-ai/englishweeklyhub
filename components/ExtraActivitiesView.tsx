@@ -199,7 +199,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
           <p className="eyebrow">WEEK {week.number} · EAGER LEARNERS</p>
           <h1>Eager Learners</h1>
           <p className="heroText">
-            Optional fun practice for this week — try one whenever you like!
+            Optional fun practice for this week! Choose one activity or try them all.
           </p>
         </div>
       </header>
