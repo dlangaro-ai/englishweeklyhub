@@ -8,6 +8,8 @@ export async function POST(request: NextRequest) {
   const activityId = typeof body.activityId === "string" ? body.activityId.slice(0, 200) : "";
   const activityTitle = typeof body.activityTitle === "string" ? body.activityTitle.slice(0, 200) : "";
   const studentName = typeof body.studentName === "string" ? body.studentName.trim().slice(0, 60) : "";
+  const studentClass = typeof body.studentClass === "string" ? body.studentClass.trim().slice(0, 30) : "";
+  const teacherEmail = typeof body.teacherEmail === "string" ? body.teacherEmail.trim().slice(0, 100) : "";
   const completed = Boolean(body.completed);
 
   if (!Number.isFinite(weekNumber) || !activityId || !studentName) {
@@ -31,6 +33,8 @@ export async function POST(request: NextRequest) {
         activityId,
         activityTitle,
         studentName,
+        studentClass,
+        teacherEmail,
         completedAt: new Date().toISOString()
       });
     }

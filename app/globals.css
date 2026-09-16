@@ -952,6 +952,11 @@ a.searchResultLink:hover {
   letter-spacing: 0.06em;
 }
 
+.downloadCompletionsButton {
+  display: inline-block;
+  margin: 18px 0 0;
+}
+
 .weekInfoGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1365,6 +1370,21 @@ a.searchResultLink:hover {
   border: 1px solid var(--line);
   border-radius: 12px;
   font: inherit;
+}
+
+.identityForm {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+  text-align: left;
+}
+
+.identityForm input {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font: inherit;
+  width: 100%;
 }
 
 .loginError {

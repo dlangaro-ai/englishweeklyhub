@@ -4,30 +4,49 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 type ProgressMap = Record<string, boolean>;
 
+export type StudentIdentity = {
+  name: string;
+  studentClass: string;
+  teacherEmail: string;
+};
+
 type ProgressContextValue = {
   progress: ProgressMap;
-  studentName: string;
-  setStudentName: (name: string) => void;
+  identity: StudentIdentity | null;
+  identityLoaded: boolean;
+  setIdentity: (identity: StudentIdentity) => void;
   toggleActivity: (weekNumber: number, activityId: string, activityTitle: string) => void;
   isComplete: (activityId: string) => boolean;
 };
 
 const ProgressContext = createContext<ProgressContextValue | null>(null);
 const STORAGE_KEY = "english-weekly-hub-progress";
-const NAME_STORAGE_KEY = "english-weekly-hub-student-name";
+const IDENTITY_STORAGE_KEY = "english-weekly-hub-student-identity";
 
 export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const [progress, setProgress] = useState<ProgressMap>({});
-  const [studentName, setStudentNameState] = useState("");
+  const [identity, setIdentityState] = useState<StudentIdentity | null>(null);
+  // Distinguishes "haven't checked localStorage yet" from "checked, found
+  // nothing" — the identity gate needs this to avoid flashing its form for
+  // a split second before a returning student's saved identity loads.
+  const [identityLoaded, setIdentityLoaded] = useState(false);
 
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) setProgress(JSON.parse(saved));
-      const savedName = localStorage.getItem(NAME_STORAGE_KEY);
-      if (savedName) setStudentNameState(savedName);
+
+      const savedIdentity = localStorage.getItem(IDENTITY_STORAGE_KEY);
+      if (savedIdentity) {
+        const parsed = JSON.parse(savedIdentity) as Partial<StudentIdentity>;
+        if (parsed?.name && parsed?.studentClass && parsed?.teacherEmail) {
+          setIdentityState(parsed as StudentIdentity);
+        }
+      }
     } catch {
       // Ignore malformed local data.
+    } finally {
+      setIdentityLoaded(true);
     }
   }, []);
 
@@ -38,11 +57,11 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo(
     () => ({
       progress,
-      studentName,
-      setStudentName: (name: string) => {
-        const trimmed = name.trim();
-        setStudentNameState(trimmed);
-        localStorage.setItem(NAME_STORAGE_KEY, trimmed);
+      identity,
+      identityLoaded,
+      setIdentity: (next: StudentIdentity) => {
+        setIdentityState(next);
+        localStorage.setItem(IDENTITY_STORAGE_KEY, JSON.stringify(next));
       },
       toggleActivity: (weekNumber: number, activityId: string, activityTitle: string) => {
         const nowComplete = !progress[activityId];
@@ -51,7 +70,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
           [activityId]: nowComplete
         }));
 
-        if (studentName) {
+        if (identity) {
           fetch("/api/completions", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -59,7 +78,9 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
               weekNumber,
               activityId,
               activityTitle,
-              studentName,
+              studentName: identity.name,
+              studentClass: identity.studentClass,
+              teacherEmail: identity.teacherEmail,
               completed: nowComplete
             })
           }).catch(() => {
@@ -69,7 +90,7 @@ export function ProgressProvider({ children }: { children: React.ReactNode }) {
       },
       isComplete: (activityId: string) => Boolean(progress[activityId])
     }),
-    [progress, studentName]
+    [progress, identity, identityLoaded]
   );
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;

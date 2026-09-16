@@ -32,6 +32,11 @@ export default async function CompletionsPage() {
           <p className="eyebrow">TEACHER ONLY</p>
           <h1>Completions</h1>
           <p className="unitLabel">Who&apos;s finished which Eager Learners activities</p>
+          {completions.length > 0 && (
+            <a href="/api/admin/completions/export" className="primaryButton downloadCompletionsButton">
+              ⬇️ Download Excel (.csv)
+            </a>
+          )}
         </div>
       </header>
 
@@ -74,7 +79,8 @@ export default async function CompletionsPage() {
                           .sort((a, b) => a.studentName.localeCompare(b.studentName))
                           .map((entry) => (
                             <li key={entry.studentName}>
-                              {entry.studentName}{" "}
+                              {entry.studentName}
+                              {entry.studentClass ? ` · ${entry.studentClass}` : ""}{" "}
                               <span className="completedAt">
                                 ({new Date(entry.completedAt).toLocaleDateString()})
                               </span>

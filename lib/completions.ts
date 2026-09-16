@@ -9,6 +9,8 @@ export type Completion = {
   activityId: string;
   activityTitle: string;
   studentName: string;
+  studentClass: string;
+  teacherEmail: string;
   completedAt: string;
 };
 
