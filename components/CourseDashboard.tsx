@@ -172,6 +172,9 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
             <Link href="/extra-activities" className="dashboardSidebarLink">
               <span aria-hidden="true">🎁</span> Extra Activities
             </Link>
+            <Link href="/about" className="dashboardSidebarLink">
+              <span aria-hidden="true">💬</span> About Us
+            </Link>
           </nav>
           <div className="heroProgress">
             <div className="heroProgressTrack">
