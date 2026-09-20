@@ -31,6 +31,17 @@ export default function AboutPage() {
           <p className="aboutClosing">We hope you find it helpful and enjoy exploring! ✨</p>
         </div>
       </article>
+
+      <div className="aboutAvatars">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/about-avatar-1.png" alt="" className="aboutAvatarImg" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/about-avatar-2.png" alt="" className="aboutAvatarImg" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/about-avatar-3.png" alt="" className="aboutAvatarImg" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/images/about-avatar-4.png" alt="" className="aboutAvatarImg" />
+      </div>
     </main>
   );
 }

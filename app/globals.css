@@ -1031,6 +1031,23 @@ a.searchResultLink:hover {
   font-weight: 800;
 }
 
+.aboutAvatars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  margin-top: 40px;
+}
+
+.aboutAvatarImg {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--card);
+  box-shadow: 0 10px 24px rgba(28, 36, 67, 0.1);
+}
+
 .infoCardBooks { border-color: #d6e8fe; }
 
 .bookExtraImage { margin-top: 14px; }
