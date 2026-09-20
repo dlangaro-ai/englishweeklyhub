@@ -3,10 +3,10 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 const team = [
-  { name: "Ms. Alla", image: "/images/about-avatar-1.png" },
-  { name: "Ms. Anna", image: "/images/about-avatar-2.png" },
-  { name: "Ms. Bea", image: "/images/about-avatar-3.png" },
-  { name: "Ms. Denise", image: "/images/about-avatar-4.png" }
+  { name: "Ms. Alla", image: "/images/about-avatar-1.png", email: "akina@tedankara.k12.tr" },
+  { name: "Ms. Anna", image: "/images/about-avatar-2.png", email: "akelleci@tedankara.k12.tr" },
+  { name: "Ms. Bea", image: "/images/about-avatar-3.png", email: "bkulpinar@tedankara.k12.tr" },
+  { name: "Ms. Denise", image: "/images/about-avatar-4.png", email: "dlangaro@tedankara.k12.tr" }
 ];
 
 export default function AboutPage() {
@@ -41,11 +41,11 @@ export default function AboutPage() {
 
       <div className="aboutAvatars">
         {team.map((member) => (
-          <div className="aboutAvatar" key={member.name}>
+          <a className="aboutAvatar" href={`mailto:${member.email}`} key={member.name}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={member.image} alt="" className="aboutAvatarImg" />
             <p className="aboutAvatarName">{member.name}</p>
-          </div>
+          </a>
         ))}
       </div>
     </main>

@@ -1044,6 +1044,15 @@ a.searchResultLink:hover {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  transition: transform 160ms ease;
+}
+
+.aboutAvatar:hover {
+  transform: translateY(-3px);
+}
+
+.aboutAvatar:hover .aboutAvatarName {
+  color: var(--accent);
 }
 
 .aboutAvatarImg {
