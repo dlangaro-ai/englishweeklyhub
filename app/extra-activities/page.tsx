@@ -22,7 +22,9 @@ export default async function ExtraActivitiesPage() {
         <div>
           <p className="eyebrow">EAGER LEARNERS</p>
           <h1>Extra Activities</h1>
-          <p className="unitLabel">Pick a week to see its bonus activities</p>
+          <p className="unitLabel">
+            Pick a week to see its bonus activities. Send them to your English 2 Teachers by email.
+          </p>
         </div>
       </header>
 
