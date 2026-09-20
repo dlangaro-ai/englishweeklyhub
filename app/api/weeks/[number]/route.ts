@@ -27,6 +27,7 @@ const EDITABLE_FIELDS = [
   "libraryText",
   "libraryImage",
   "libraryImageWidth",
+  "libraryVocabularyPdf",
   "libraryLinks",
   "published",
   "extraActivities"

@@ -983,6 +983,21 @@ a.searchResultLink:hover {
 
 .infoCard h2 { margin: 0 0 10px; font-size: 23px; }
 
+.libraryVocabulary {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.libraryVocabularyRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.libraryVocabularyRow .textLink { margin-top: 0; }
+
 .infoText, .simpleList {
   color: var(--muted);
   font-size: 16px;

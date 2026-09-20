@@ -14,6 +14,7 @@
 //   bonusText    / bonusImage    -> "Bonus" teaser text + optional picture
 //   libraryText  / libraryLinks  -> "Resources" rich-text notes + website links
 //   libraryImage                 -> "Library" picture
+//   libraryVocabularyPdf         -> "Resources" dedicated Vocabulary PDF
 //   published  -> true = students can open this week, false = shows "Soon"
 //   extraActivities -> bonus links/videos/PDFs, shown on the Bonus sub-page
 // ────────────────────────────────────────────────────────────────────────────
@@ -60,6 +61,7 @@ export type Week = {
   libraryText: string;
   libraryImage?: string;
   libraryImageWidth?: number;
+  libraryVocabularyPdf?: string;
   libraryLinks: LibraryLink[];
   published: boolean;
   extraActivities: ExtraActivity[];
