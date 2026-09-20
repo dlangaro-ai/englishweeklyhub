@@ -547,10 +547,11 @@ a.searchResultLink:hover {
 }
 
 .nextCardLink {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   width: fit-content;
   margin-top: 18px;
+  margin-left: auto;
   padding: 8px 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
