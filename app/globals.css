@@ -535,6 +535,18 @@ a.searchResultLink:hover {
   font-weight: 800;
 }
 
+.nextCardLink {
+  display: inline-block;
+  margin-top: 18px;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.nextCardLink:hover {
+  text-decoration: underline;
+}
+
 .skillHero {
   display: flex;
   align-items: center;

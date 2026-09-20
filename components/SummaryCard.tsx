@@ -5,6 +5,7 @@ import RichTextEditor from "./RichTextEditor";
 import ImageSizeControl from "./ImageSizeControl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle, imageAlignStyle, ImageAlign } from "@/lib/imageSize";
+import NextCardLink from "./NextCardLink";
 
 // The "This Week" card on the week page. The message is shown directly on
 // the card; the teacher edits it in place.
@@ -38,7 +39,7 @@ export default function SummaryCard({
   });
 
   return (
-    <article className="infoCard summaryCard">
+    <article id="summary" className="infoCard summaryCard">
       <span className="infoIcon">✨</span>
       <div className="infoCardBody">
         <div className="infoCardHead">
@@ -117,6 +118,8 @@ export default function SummaryCard({
         ) : (
           <p className="infoText">Check back soon for this week&apos;s update.</p>
         )}
+
+        {!editable.editing && <NextCardLink anchor="books" label="Books Used" />}
       </div>
     </article>
   );

@@ -6,6 +6,7 @@ import RichTextEditor from "./RichTextEditor";
 import ImageSizeControl from "./ImageSizeControl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle } from "@/lib/imageSize";
+import NextCardLink from "./NextCardLink";
 
 type EditableSectionProps = {
   weekNumber: number;
@@ -26,6 +27,8 @@ type EditableSectionProps = {
   richText?: boolean;
   maxWords?: number;
   extra?: React.ReactNode;
+  nextAnchor?: string;
+  nextLabel?: string;
 };
 
 export default function EditableSection({
@@ -46,7 +49,9 @@ export default function EditableSection({
   cardClassName,
   richText,
   maxWords,
-  extra
+  extra,
+  nextAnchor,
+  nextLabel
 }: EditableSectionProps) {
   const initialText = isList ? (value as string[]).join("\n") : (value as string);
   const editable = useEditableField({
@@ -159,6 +164,7 @@ export default function EditableSection({
               />
             )}
             {extra}
+            {nextAnchor && nextLabel && <NextCardLink anchor={nextAnchor} label={nextLabel} />}
           </>
         )}
       </div>
