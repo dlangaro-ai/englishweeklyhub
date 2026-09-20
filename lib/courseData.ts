@@ -36,6 +36,10 @@ export type LibraryLink = {
   // button that opens this link (instead of / alongside the plain text).
   image?: string;
   imageWidth?: number;
+  // "link" (default, missing = legacy data) -> href is an external URL.
+  // "image" -> href is the uploaded image itself (image is set to the same URL).
+  // "pdf" -> href is an uploaded PDF.
+  resourceType?: "link" | "image" | "pdf";
 };
 
 export type Week = {
