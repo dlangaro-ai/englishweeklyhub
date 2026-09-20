@@ -64,7 +64,7 @@ export default function BonusCard({
                   }}
                 />
               )}
-              <span className="openLabel">Open folder →</span>
+              <span className="openLabel">Open folder</span>
             </Link>
             <Link href="/" className="nextCardLink">
               Homepage

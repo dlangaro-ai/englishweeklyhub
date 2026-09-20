@@ -529,10 +529,21 @@ a.searchResultLink:hover {
 }
 
 .openLabel {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
   margin-top: 18px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
   color: var(--accent);
   font-weight: 800;
+  font-size: 13px;
+}
+
+.skillsFolderLink:hover .openLabel {
+  background: var(--accent-soft);
 }
 
 .nextCardLink {
