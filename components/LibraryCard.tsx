@@ -15,7 +15,6 @@ export default function LibraryCard({
   text,
   image,
   imageWidth,
-  vocabularyPdf,
   links,
   isEditor
 }: {
@@ -23,7 +22,6 @@ export default function LibraryCard({
   text: string;
   image?: string;
   imageWidth?: number;
-  vocabularyPdf?: string;
   links: LibraryLink[];
   isEditor: boolean;
 }) {
@@ -38,10 +36,8 @@ export default function LibraryCard({
   const [linkFile, setLinkFile] = useState<File | null>(null);
   const [linkImageWidth, setLinkImageWidth] = useState<number | undefined>(undefined);
   const [removingId, setRemovingId] = useState<string | null>(null);
-  const [vocabSaving, setVocabSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const linkFileInputRef = useRef<HTMLInputElement>(null);
-  const vocabFileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const linkFilePreview = useMemo(() => (linkFile ? URL.createObjectURL(linkFile) : null), [linkFile]);
@@ -78,48 +74,6 @@ export default function LibraryCard({
       alert(error instanceof Error ? error.message : "Could not save.");
     } finally {
       setTextSaving(false);
-    }
-  }
-
-  async function handleVocabPdfChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    event.target.value = "";
-    if (!file) return;
-
-    if (file.type !== "application/pdf") {
-      alert("Please choose a PDF file.");
-      return;
-    }
-
-    setVocabSaving(true);
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const uploadResponse = await fetch("/api/upload", { method: "POST", body: formData });
-      if (!uploadResponse.ok) {
-        const result = await uploadResponse.json().catch(() => ({}));
-        throw new Error(result.error ?? "Upload failed.");
-      }
-      const { url } = await uploadResponse.json();
-      await patchWeek({ libraryVocabularyPdf: url });
-      router.refresh();
-    } catch (error) {
-      alert(error instanceof Error ? error.message : "Something went wrong.");
-    } finally {
-      setVocabSaving(false);
-    }
-  }
-
-  async function handleRemoveVocabPdf() {
-    if (!confirm("Remove the Vocabulary PDF?")) return;
-    setVocabSaving(true);
-    try {
-      await patchWeek({ libraryVocabularyPdf: null });
-      router.refresh();
-    } catch (error) {
-      alert(error instanceof Error ? error.message : "Could not remove this.");
-    } finally {
-      setVocabSaving(false);
     }
   }
 
@@ -317,45 +271,6 @@ export default function LibraryCard({
           className="hiddenFileInput"
           onChange={handleFileChange}
         />
-
-        <div className="libraryVocabulary">
-          <p className="infoLabel">VOCABULARY</p>
-          {vocabularyPdf ? (
-            <div className="libraryVocabularyRow">
-              <a href={vocabularyPdf} target="_blank" rel="noreferrer" className="textLink">
-                📄 Vocabulary (PDF) ↗
-              </a>
-              {isEditor && (
-                <div className="editImageButtons">
-                  <button type="button" onClick={() => vocabFileInputRef.current?.click()} disabled={vocabSaving}>
-                    Change PDF
-                  </button>
-                  <button type="button" onClick={handleRemoveVocabPdf} disabled={vocabSaving}>
-                    Remove PDF
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : isEditor ? (
-            <button
-              type="button"
-              className="addActivityButton"
-              onClick={() => vocabFileInputRef.current?.click()}
-              disabled={vocabSaving}
-            >
-              📄 {vocabSaving ? "Uploading…" : "Add Vocabulary PDF"}
-            </button>
-          ) : (
-            <p className="infoText">No vocabulary PDF added yet.</p>
-          )}
-          <input
-            ref={vocabFileInputRef}
-            type="file"
-            accept="application/pdf"
-            className="hiddenFileInput"
-            onChange={handleVocabPdfChange}
-          />
-        </div>
 
         {links.length > 0 ? (
           <ul className="libraryLinksList">
