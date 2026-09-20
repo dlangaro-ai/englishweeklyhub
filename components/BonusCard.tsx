@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEditableField } from "./useEditableField";
 import EditFormBody from "./EditFormBody";
 import { imageWidthStyle } from "@/lib/imageSize";
+import NextCardLink from "./NextCardLink";
 
 export default function BonusCard({
   weekNumber,
@@ -48,23 +49,26 @@ export default function BonusCard({
             <EditFormBody editable={editable} isList={false} />
           </>
         ) : (
-          <Link href={`/week/${weekNumber}/skills`} className="skillsFolderLink">
-            <h2>Eager Learners</h2>
-            <p className="infoText">{text}</p>
-            {image && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                className="bookImage"
-                src={image}
-                alt=""
-                style={imageWidthStyle(imageWidth)}
-                onError={(event) => {
-                  event.currentTarget.style.display = "none";
-                }}
-              />
-            )}
-            <span className="openLabel">Open folder →</span>
-          </Link>
+          <>
+            <Link href={`/week/${weekNumber}/skills`} className="skillsFolderLink">
+              <h2>Eager Learners</h2>
+              <p className="infoText">{text}</p>
+              {image && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  className="bookImage"
+                  src={image}
+                  alt=""
+                  style={imageWidthStyle(imageWidth)}
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                  }}
+                />
+              )}
+              <span className="openLabel">Open folder →</span>
+            </Link>
+            <NextCardLink anchor="summary" label="This Week" />
+          </>
         )}
       </div>
     </div>

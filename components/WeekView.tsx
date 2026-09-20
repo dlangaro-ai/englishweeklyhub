@@ -57,6 +57,8 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           emptyText="No book information added yet."
           isEditor={isEditor}
           cardClassName="infoCardBooks"
+          nextAnchor="homework"
+          nextLabel="Homework Pages"
           extra={
             <BookExtraImage
               weekNumber={week.number}
@@ -85,6 +87,8 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           emptyText="No homework this week — enjoy the break!"
           isEditor={isEditor}
           cardClassName="infoCardHomework"
+          nextAnchor="library"
+          nextLabel="Resources"
         />
 
         <LibraryCard
