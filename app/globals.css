@@ -1006,6 +1006,31 @@ a.searchResultLink:hover {
 
 .simpleList { margin: 10px 0 0; padding-left: 20px; }
 
+.aboutCard {
+  background: linear-gradient(160deg, #ffffff 0%, var(--lavender) 140%);
+}
+
+.aboutCard h2 {
+  font-size: 27px;
+  letter-spacing: -0.5px;
+}
+
+.aboutCard .infoText { margin: 14px 0 0; }
+.aboutCard .infoText:first-of-type { margin-top: 16px; }
+
+.aboutCard .infoText strong {
+  color: var(--navy);
+}
+
+.aboutClosing {
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  color: var(--accent);
+  font-size: 17px;
+  font-weight: 800;
+}
+
 .infoCardBooks { border-color: #d6e8fe; }
 
 .bookExtraImage { margin-top: 14px; }

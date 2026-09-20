@@ -14,17 +14,21 @@ export default function AboutPage() {
         </div>
       </header>
 
-      <article className="infoCard">
+      <article className="infoCard aboutCard">
         <span className="infoIcon">💬</span>
         <div className="infoCardBody">
+          <p className="infoLabel">WELCOME</p>
+          <h2>Welcome to TED ANK 5, your English 2 Weekly Hub!</h2>
           <p className="infoText">
-            TEDANK5 — My English Hub is a weekly companion for Grade 5 English, built to keep students,
-            parents and teachers on the same page: this week&apos;s topic, books, homework, bonus
-            activities and resources, all in one place.
+            This page has been created by your English 2 teachers to share what we have been learning
+            and doing in our lessons each week.
           </p>
           <p className="infoText">
-            Questions or feedback? Reach out to your English teacher directly.
+            As you know, all official information is available on the <strong>TED PORTAL</strong>. This
+            page is designed to give you a simple overview of your English 2 lessons, along with extra
+            activities for eager learners, useful resources, and important reminders.
           </p>
+          <p className="aboutClosing">We hope you find it helpful and enjoy exploring! ✨</p>
         </div>
       </article>
     </main>
