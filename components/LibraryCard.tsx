@@ -7,7 +7,7 @@ import { imageWidthStyle } from "@/lib/imageSize";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import ImageSizeControl from "./ImageSizeControl";
 import RichTextEditor from "./RichTextEditor";
-import NextCardLink from "./NextCardLink";
+import { goToNextCard } from "@/lib/cardNav";
 
 const MAX_LINKS = 6;
 
@@ -217,7 +217,11 @@ export default function LibraryCard({
   const atCap = links.length >= MAX_LINKS;
 
   return (
-    <article id="library" className="infoCard infoCardLibrary">
+    <article
+      id="library"
+      className="infoCard infoCardLibrary cardClickable"
+      onClick={!editingText && !addingType ? (event) => goToNextCard(event, "bonus") : undefined}
+    >
       <span className="infoIcon">📖</span>
       <div className="infoCardBody">
         <div className="infoCardHead">
@@ -427,8 +431,6 @@ export default function LibraryCard({
             </div>
           </div>
         )}
-
-        {!editingText && !addingType && <NextCardLink anchor="bonus" label="Eager Learners" />}
       </div>
     </article>
   );

@@ -967,6 +967,16 @@ a.searchResultLink:hover {
   scroll-margin-top: 20px;
 }
 
+.cardClickable {
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.cardClickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(28, 36, 67, 0.09);
+}
+
 .infoCard:target {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
