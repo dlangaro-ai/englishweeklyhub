@@ -92,7 +92,6 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           text={week.libraryText}
           image={week.libraryImage}
           imageWidth={week.libraryImageWidth}
-          vocabularyPdf={week.libraryVocabularyPdf}
           links={week.libraryLinks ?? []}
           isEditor={isEditor}
         />
