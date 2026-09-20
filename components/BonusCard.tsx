@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEditableField } from "./useEditableField";
 import EditFormBody from "./EditFormBody";
 import { imageWidthStyle } from "@/lib/imageSize";
-import NextCardLink from "./NextCardLink";
 
 export default function BonusCard({
   weekNumber,
@@ -67,7 +66,9 @@ export default function BonusCard({
               )}
               <span className="openLabel">Open folder →</span>
             </Link>
-            <NextCardLink anchor="summary" label="This Week" />
+            <Link href="/" className="nextCardLink">
+              Homepage
+            </Link>
           </>
         )}
       </div>
