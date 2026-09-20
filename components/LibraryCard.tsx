@@ -7,6 +7,7 @@ import { imageWidthStyle } from "@/lib/imageSize";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import ImageSizeControl from "./ImageSizeControl";
 import RichTextEditor from "./RichTextEditor";
+import NextCardLink from "./NextCardLink";
 
 const MAX_LINKS = 6;
 
@@ -426,6 +427,8 @@ export default function LibraryCard({
             </div>
           </div>
         )}
+
+        {!editingText && !addingType && <NextCardLink anchor="bonus" label="Eager Learners" />}
       </div>
     </article>
   );
