@@ -30,11 +30,12 @@ export default function LibraryCard({
   const [editingText, setEditingText] = useState(false);
   const [draftText, setDraftText] = useState(text);
   const [textSaving, setTextSaving] = useState(false);
-  const [addingLink, setAddingLink] = useState(false);
+  const [addingType, setAddingType] = useState<"link" | "image" | "pdf" | null>(null);
   const [linkTitle, setLinkTitle] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
   const [linkFile, setLinkFile] = useState<File | null>(null);
   const [linkImageWidth, setLinkImageWidth] = useState<number | undefined>(undefined);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [removingId, setRemovingId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const linkFileInputRef = useRef<HTMLInputElement>(null);
@@ -127,45 +128,70 @@ export default function LibraryCard({
     }
   }
 
-  function startAddingLink() {
-    setAddingLink(true);
+  function startAdding(type: "link" | "image" | "pdf") {
+    setAddingType(type);
     setLinkTitle("");
     setLinkUrl("");
     setLinkFile(null);
     setLinkImageWidth(undefined);
+    setUploadFile(null);
   }
 
-  async function handleAddLink() {
-    if (!linkTitle.trim() || !linkUrl.trim()) {
-      alert("Please add both a name and a link.");
+  async function handleAdd() {
+    if (!addingType) return;
+
+    if (!linkTitle.trim()) {
+      alert("Please add a title.");
+      return;
+    }
+    if (addingType === "link" && !linkUrl.trim()) {
+      alert("Please add a link.");
+      return;
+    }
+    if (addingType !== "link" && !uploadFile) {
+      alert(addingType === "image" ? "Please choose an image." : "Please choose a PDF.");
       return;
     }
 
     setSaving(true);
     try {
-      let linkImageUrl: string | undefined;
+      let href = linkUrl.trim();
+      let resourceImage: string | undefined;
 
-      if (linkFile) {
+      if (addingType === "link") {
+        if (linkFile) {
+          const formData = new FormData();
+          formData.append("file", linkFile);
+          const uploadResponse = await fetch("/api/upload", { method: "POST", body: formData });
+          if (!uploadResponse.ok) {
+            const result = await uploadResponse.json().catch(() => ({}));
+            throw new Error(result.error ?? "Image upload failed.");
+          }
+          resourceImage = (await uploadResponse.json()).url;
+        }
+      } else {
         const formData = new FormData();
-        formData.append("file", linkFile);
+        formData.append("file", uploadFile as File);
         const uploadResponse = await fetch("/api/upload", { method: "POST", body: formData });
         if (!uploadResponse.ok) {
           const result = await uploadResponse.json().catch(() => ({}));
-          throw new Error(result.error ?? "Image upload failed.");
+          throw new Error(result.error ?? "Upload failed.");
         }
-        linkImageUrl = (await uploadResponse.json()).url;
+        href = (await uploadResponse.json()).url;
+        if (addingType === "image") resourceImage = href;
       }
 
       const newLink: LibraryLink = {
         id: `library-${Date.now()}`,
         title: linkTitle.trim(),
-        href: linkUrl.trim(),
-        ...(linkImageUrl ? { image: linkImageUrl } : {}),
-        ...(linkImageUrl && linkImageWidth != null ? { imageWidth: linkImageWidth } : {})
+        href,
+        resourceType: addingType,
+        ...(resourceImage ? { image: resourceImage } : {}),
+        ...(resourceImage && linkImageWidth != null ? { imageWidth: linkImageWidth } : {})
       };
 
       await patchWeek({ libraryLinks: [...links, newLink] });
-      setAddingLink(false);
+      setAddingType(null);
       router.refresh();
     } catch (error) {
       alert(error instanceof Error ? error.message : "Something went wrong.");
@@ -175,7 +201,7 @@ export default function LibraryCard({
   }
 
   async function handleRemoveLink(id: string) {
-    if (!confirm("Remove this website?")) return;
+    if (!confirm("Remove this resource?")) return;
     setRemovingId(id);
     try {
       await patchWeek({ libraryLinks: links.filter((link) => link.id !== id) });
@@ -301,6 +327,7 @@ export default function LibraryCard({
               ) : (
                 <li key={link.id}>
                   <a href={link.href} target="_blank" rel="noreferrer" className="textLink">
+                    {link.resourceType === "pdf" ? "📄 " : ""}
                     {link.title} ↗
                   </a>
                   {isEditor && (
@@ -318,46 +345,53 @@ export default function LibraryCard({
             )}
           </ul>
         ) : (
-          !isEditor && <p className="infoText">No websites added yet.</p>
+          !isEditor && <p className="infoText">No resources added yet.</p>
         )}
 
-        {isEditor && !addingLink && (
+        {isEditor && !addingType && (
           <div className="addActivityBar">
-            <button
-              type="button"
-              className="addActivityButton"
-              onClick={startAddingLink}
-              disabled={atCap}
-            >
-              🔗 Add website ({links.length}/{MAX_LINKS})
+            <button type="button" className="addActivityButton" onClick={() => startAdding("link")} disabled={atCap}>
+              🔗 Add link ({links.length}/{MAX_LINKS})
+            </button>
+            <button type="button" className="addActivityButton" onClick={() => startAdding("image")} disabled={atCap}>
+              🖼️ Add image ({links.length}/{MAX_LINKS})
+            </button>
+            <button type="button" className="addActivityButton" onClick={() => startAdding("pdf")} disabled={atCap}>
+              📄 Add PDF ({links.length}/{MAX_LINKS})
             </button>
           </div>
         )}
 
-        {isEditor && addingLink && (
+        {isEditor && addingType && (
           <div className="editForm addActivityForm">
             <input
               className="editTextarea"
-              placeholder="Website name"
+              placeholder={addingType === "link" ? "Website name" : addingType === "image" ? "Image title" : "PDF title"}
               value={linkTitle}
               onChange={(event) => setLinkTitle(event.target.value)}
             />
-            <input
-              className="editTextarea"
-              placeholder="https://..."
-              value={linkUrl}
-              onChange={(event) => setLinkUrl(event.target.value)}
-            />
-            <div className="editImageButtons">
-              <button type="button" onClick={() => linkFileInputRef.current?.click()}>
-                📷 {linkFile ? "Change button image" : "Add button image (optional)"}
-              </button>
-              {linkFile && (
-                <button type="button" onClick={() => setLinkFile(null)}>
-                  Remove image
+
+            {addingType === "link" && (
+              <input
+                className="editTextarea"
+                placeholder="https://..."
+                value={linkUrl}
+                onChange={(event) => setLinkUrl(event.target.value)}
+              />
+            )}
+
+            {addingType === "link" && (
+              <div className="editImageButtons">
+                <button type="button" onClick={() => linkFileInputRef.current?.click()}>
+                  📷 {linkFile ? "Change button image" : "Add button image (optional)"}
                 </button>
-              )}
-            </div>
+                {linkFile && (
+                  <button type="button" onClick={() => setLinkFile(null)}>
+                    Remove image
+                  </button>
+                )}
+              </div>
+            )}
             <input
               ref={linkFileInputRef}
               type="file"
@@ -365,17 +399,26 @@ export default function LibraryCard({
               className="hiddenFileInput"
               onChange={(event) => setLinkFile(event.target.files?.[0] ?? null)}
             />
-            {linkFilePreview && (
+
+            {(addingType === "image" || addingType === "pdf") && (
+              <input
+                type="file"
+                accept={addingType === "image" ? "image/*" : "application/pdf"}
+                onChange={(event) => setUploadFile(event.target.files?.[0] ?? null)}
+              />
+            )}
+
+            {addingType === "link" && linkFilePreview && (
               <ImageSizeControl src={linkFilePreview} width={linkImageWidth} onChange={setLinkImageWidth} />
             )}
             <div className="editActions">
-              <button className="primaryButton" type="button" onClick={handleAddLink} disabled={saving}>
+              <button className="primaryButton" type="button" onClick={handleAdd} disabled={saving}>
                 {saving ? "Saving…" : "Add"}
               </button>
               <button
                 className="cancelButton"
                 type="button"
-                onClick={() => setAddingLink(false)}
+                onClick={() => setAddingType(null)}
                 disabled={saving}
               >
                 Cancel
