@@ -2,6 +2,13 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
+const team = [
+  { name: "Ms. Alla", image: "/images/about-avatar-1.png" },
+  { name: "Ms. Anna", image: "/images/about-avatar-2.png" },
+  { name: "Ms. Bea", image: "/images/about-avatar-3.png" },
+  { name: "Ms. Denise", image: "/images/about-avatar-4.png" }
+];
+
 export default function AboutPage() {
   return (
     <main className="shell narrow">
@@ -33,14 +40,13 @@ export default function AboutPage() {
       </article>
 
       <div className="aboutAvatars">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/about-avatar-1.png" alt="" className="aboutAvatarImg" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/about-avatar-2.png" alt="" className="aboutAvatarImg" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/about-avatar-3.png" alt="" className="aboutAvatarImg" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/about-avatar-4.png" alt="" className="aboutAvatarImg" />
+        {team.map((member) => (
+          <div className="aboutAvatar" key={member.name}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={member.image} alt="" className="aboutAvatarImg" />
+            <p className="aboutAvatarName">{member.name}</p>
+          </div>
+        ))}
       </div>
     </main>
   );

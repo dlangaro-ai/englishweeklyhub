@@ -1035,8 +1035,15 @@ a.searchResultLink:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 28px;
+  gap: 32px;
   margin-top: 40px;
+}
+
+.aboutAvatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 .aboutAvatarImg {
@@ -1046,6 +1053,13 @@ a.searchResultLink:hover {
   object-fit: cover;
   border: 3px solid var(--card);
   box-shadow: 0 10px 24px rgba(28, 36, 67, 0.1);
+}
+
+.aboutAvatarName {
+  margin: 0;
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 800;
 }
 
 .infoCardBooks { border-color: #d6e8fe; }
