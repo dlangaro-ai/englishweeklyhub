@@ -383,6 +383,14 @@ a.searchResultLink:hover {
 .weekCard.tintIce:hover { border-color: var(--pink); }
 .weekCard.tintIce .weekNumber { color: var(--pink); }
 
+.weekCard.weekCardPublished {
+  border-color: var(--success);
+}
+
+.weekCard.weekCardPublished:hover {
+  border-color: var(--success);
+}
+
 .weekCardMuted {
   opacity: 0.48;
   cursor: default;

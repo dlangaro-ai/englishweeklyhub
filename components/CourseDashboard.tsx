@@ -105,7 +105,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
 
   function renderWeekCard(week: Week, tint: string) {
     const clickable = week.published || isEditor;
-    const cls = `weekCard ${tint}${hitWeeks.has(week.number) ? " weekCardMatch" : ""}`;
+    const cls = `weekCard ${tint}${week.published ? " weekCardPublished" : ""}${hitWeeks.has(week.number) ? " weekCardMatch" : ""}`;
 
     return clickable ? (
       <Link className={cls} href={`/week/${week.number}`} key={week.number}>
