@@ -370,7 +370,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
         📧 Some activities ask you to send your work by email — here are your English 2 teachers:{" "}
         {team.map((member, index) => (
           <span key={member.email}>
-            <a href={`mailto:${member.email}`}>{member.name}</a>
+            <a href={`mailto:${member.email}`} title={member.email}>{member.name}</a>
             {index < team.length - 1 ? " · " : ""}
           </span>
         ))}

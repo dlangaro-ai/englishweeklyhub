@@ -35,7 +35,7 @@ export default function AboutPage() {
 
       <div className="aboutAvatars">
         {team.map((member) => (
-          <a className="aboutAvatar" href={`mailto:${member.email}`} key={member.name}>
+          <a className="aboutAvatar" href={`mailto:${member.email}`} title={member.email} key={member.name}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={member.image} alt="" className="aboutAvatarImg" />
             <p className="aboutAvatarName">{member.name}</p>
