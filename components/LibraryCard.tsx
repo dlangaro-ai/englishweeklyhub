@@ -220,7 +220,7 @@ export default function LibraryCard({
     <article
       id="library"
       className="infoCard infoCardLibrary cardClickable"
-      onClick={!editingText && !addingType ? (event) => goToNextCard(event, "bonus") : undefined}
+      onClick={!editingText && !addingType ? (event) => goToNextCard(event, "summary") : undefined}
     >
       <span className="infoIcon">📖</span>
       <div className="infoCardBody">
