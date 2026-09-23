@@ -608,18 +608,27 @@ a.searchResultLink:hover {
 
 .activityFootnote {
   margin: 28px 0 0;
-  padding: 16px 20px;
+  padding: 20px;
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--card);
+}
+
+.activityFootnoteText {
+  margin: 0;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.6;
 }
 
-.activityFootnote a {
-  color: var(--accent);
-  font-weight: 800;
+.activityFootnote .aboutAvatars {
+  margin-top: 18px;
+  gap: 20px;
+}
+
+.activityFootnote .aboutAvatarImg {
+  width: 76px;
+  height: 76px;
 }
 
 .activityCard {
