@@ -606,6 +606,22 @@ a.searchResultLink:hover {
   gap: 14px;
 }
 
+.activityFootnote {
+  margin: 28px 0 0;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.activityFootnote a {
+  color: var(--accent);
+  font-weight: 800;
+}
+
 .activityCard {
   display: grid;
   grid-template-columns: 46px 1fr auto;

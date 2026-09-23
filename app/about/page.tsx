@@ -1,13 +1,7 @@
 import Link from "next/link";
+import { team } from "@/lib/team";
 
 export const dynamic = "force-dynamic";
-
-const team = [
-  { name: "Ms. Alla", image: "/images/about-avatar-1.png", email: "akina@tedankara.k12.tr" },
-  { name: "Ms. Anna", image: "/images/about-avatar-2.png", email: "akelleci@tedankara.k12.tr" },
-  { name: "Ms. Bea", image: "/images/about-avatar-3.png", email: "bkulpinar@tedankara.k12.tr" },
-  { name: "Ms. Denise", image: "/images/about-avatar-4.png", email: "dlangaro@tedankara.k12.tr" }
-];
 
 export default function AboutPage() {
   return (
