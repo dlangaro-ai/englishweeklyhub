@@ -85,6 +85,10 @@ function highlight(text: string, query: string) {
 export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
   const [query, setQuery] = useState("");
   const readyCount = weeks.filter((week) => week.published).length;
+  const latestPublishedWeek = weeks.reduce(
+    (latest, week) => (week.published && week.number > latest ? week.number : latest),
+    0
+  );
 
   const trimmed = query.trim().toLowerCase();
 
@@ -105,7 +109,12 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
 
   function renderWeekCard(week: Week, tint: string) {
     const clickable = week.published || isEditor;
-    const cls = `weekCard ${tint}${week.published ? " weekCardPublished" : ""}${hitWeeks.has(week.number) ? " weekCardMatch" : ""}`;
+    const publishedState = week.published
+      ? week.number === latestPublishedWeek
+        ? " weekCardCurrent"
+        : " weekCardPast"
+      : "";
+    const cls = `weekCard ${tint}${publishedState}${hitWeeks.has(week.number) ? " weekCardMatch" : ""}`;
 
     return clickable ? (
       <Link className={cls} href={`/week/${week.number}`} key={week.number}>

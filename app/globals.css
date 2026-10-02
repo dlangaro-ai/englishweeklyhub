@@ -383,12 +383,21 @@ a.searchResultLink:hover {
 .weekCard.tintIce:hover { border-color: var(--pink); }
 .weekCard.tintIce .weekNumber { color: var(--pink); }
 
-.weekCard.weekCardPublished {
+.weekCard.weekCardCurrent {
   border-color: var(--success);
 }
 
-.weekCard.weekCardPublished:hover {
+.weekCard.weekCardCurrent:hover {
   border-color: var(--success);
+}
+
+.weekCard.weekCardPast {
+  border-color: var(--muted);
+  opacity: 0.82;
+}
+
+.weekCard.weekCardPast:hover {
+  border-color: var(--muted);
 }
 
 .weekCardMuted {
