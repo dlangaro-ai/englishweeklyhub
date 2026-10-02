@@ -47,7 +47,7 @@ export default async function ExtraActivitiesPage() {
 
             return (
               <Link className={`weekCard ${publishedState}`} href={`/week/${week.number}/skills`} key={week.number}>
-                <div className="weekTop">
+                <div className="weekTopStacked">
                   <span className="weekNumber">WEEK {week.number}</span>
                   <span className="weekStatus">
                     {week.extraActivities.length} {week.extraActivities.length === 1 ? "activity" : "activities"}

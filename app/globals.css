@@ -431,6 +431,15 @@ a.searchResultLink:hover {
   font-weight: 800;
 }
 
+.weekTopStacked {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
 .weekNumber {
   color: var(--accent);
 }
