@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Week } from "@/lib/courseData";
+import { Week, getLatestPublishedWeek } from "@/lib/courseData";
 import EditModeToggle from "./EditModeToggle";
 import TedAnk5Logo from "./TedAnk5Logo";
 
@@ -85,10 +85,7 @@ function highlight(text: string, query: string) {
 export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
   const [query, setQuery] = useState("");
   const readyCount = weeks.filter((week) => week.published).length;
-  const latestPublishedWeek = weeks.reduce(
-    (latest, week) => (week.published && week.number > latest ? week.number : latest),
-    0
-  );
+  const latestPublishedWeek = getLatestPublishedWeek(weeks);
 
   const trimmed = query.trim().toLowerCase();
 

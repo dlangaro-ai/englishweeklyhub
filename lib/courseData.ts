@@ -161,3 +161,11 @@ export const weeks: Week[] = [...starterWeeks, ...placeholders];
 export function getWeek(number: number) {
   return weeks.find((week) => week.number === number);
 }
+
+// The highest week number currently published — used to mark the "current"
+// week card (bright green) apart from already-published past weeks (muted).
+// Pure/client-safe: keep this here rather than lib/getWeeks.ts, which pulls
+// in server-only blob/cache code that can't be bundled for client components.
+export function getLatestPublishedWeek(weeks: Week[]): number {
+  return weeks.reduce((latest, week) => (week.published && week.number > latest ? week.number : latest), 0);
+}
