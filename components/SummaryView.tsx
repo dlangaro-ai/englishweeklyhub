@@ -15,7 +15,7 @@ export default function SummaryView({ week }: { week: Week }) {
         <div className="skillIcon large">✨</div>
         <div>
           <p className="eyebrow">WEEK {week.number} · THIS WEEK</p>
-          <h1>What&apos;s Happening this week</h1>
+          <h1>What&apos;s happening this week</h1>
         </div>
       </header>
 

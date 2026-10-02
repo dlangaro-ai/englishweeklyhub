@@ -54,7 +54,7 @@ export default function SummaryCard({
             </button>
           )}
         </div>
-        <h2>What&apos;s Happening this week</h2>
+        <h2>What&apos;s happening this week</h2>
 
         {editable.editing ? (
           <div className="editForm">
