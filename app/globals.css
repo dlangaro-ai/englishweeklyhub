@@ -18,6 +18,7 @@
   --accent: #6c63ff;
   --accent-soft: #eeedff;
   --success: #1f9d68;
+  --success-soft: #e3fbee;
   --blue: #2f8fef;
   --blue-soft: #e9f3ff;
   --orange: #f08a24;
@@ -385,10 +386,17 @@ a.searchResultLink:hover {
 
 .weekCard.weekCardCurrent {
   border-color: var(--success);
+  border-width: 3px;
+  background: var(--success-soft);
+  box-shadow: 0 12px 30px rgba(31, 157, 104, 0.22);
 }
 
 .weekCard.weekCardCurrent:hover {
   border-color: var(--success);
+}
+
+.weekCard.weekCardCurrent .weekNumber {
+  color: var(--success);
 }
 
 .weekCard.weekCardPast {
