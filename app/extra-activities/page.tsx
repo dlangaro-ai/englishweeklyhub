@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { getAllWeeks } from "@/lib/getWeeks";
+import { getLatestPublishedWeek } from "@/lib/courseData";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -9,6 +10,7 @@ export default async function ExtraActivitiesPage() {
   const weeks = await getAllWeeks();
   const cookieStore = await cookies();
   const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
+  const latestPublishedWeek = getLatestPublishedWeek(weeks);
 
   const weeksWithActivities = weeks.filter(
     (week) => week.extraActivities.length > 0 && (week.published || isEditor)
@@ -36,17 +38,26 @@ export default async function ExtraActivitiesPage() {
         </div>
       ) : (
         <div className="weekGrid">
-          {weeksWithActivities.map((week) => (
-            <Link className="weekCard tintSun" href={`/week/${week.number}/skills`} key={week.number}>
-              <div className="weekTop">
-                <span className="weekNumber">WEEK {week.number}</span>
-                <span className="weekStatus">
-                  {week.extraActivities.length} {week.extraActivities.length === 1 ? "activity" : "activities"}
-                </span>
-              </div>
-              <h3>{week.title}</h3>
-              <p>{week.unit}</p>
-            </Link>
+          {weeksWithActivities.map((week) => {
+            const publishedState = week.published
+              ? week.number === latestPublishedWeek
+                ? "weekCardCurrent"
+                : "weekCardPast"
+              : "tintSun";
+
+            return (
+              <Link className={`weekCard ${publishedState}`} href={`/week/${week.number}/skills`} key={week.number}>
+                <div className="weekTop">
+                  <span className="weekNumber">WEEK {week.number}</span>
+                  <span className="weekStatus">
+                    {week.extraActivities.length} {week.extraActivities.length === 1 ? "activity" : "activities"}
+                  </span>
+                </div>
+                <h3>{week.title}</h3>
+                <p>{week.unit}</p>
+              </Link>
+            );
+          })}
           ))}
         </div>
       )}
