@@ -58,7 +58,6 @@ export default async function ExtraActivitiesPage() {
               </Link>
             );
           })}
-          ))}
         </div>
       )}
     </main>
