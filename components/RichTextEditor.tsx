@@ -247,13 +247,15 @@ export default function RichTextEditor({
             </option>
           ))}
         </select>
-        <button
-          type="button"
-          onMouseDown={saveSelection}
-          onClick={() => applyStyle("backgroundColor", HIGHLIGHT_COLOR)}
-        >
+        <label className="richTextColorLabel">
           🖍 Highlight
-        </button>
+          <input
+            type="color"
+            defaultValue={HIGHLIGHT_COLOR}
+            onMouseDown={saveSelection}
+            onChange={(event) => applyStyle("backgroundColor", event.target.value)}
+          />
+        </label>
         <button type="button" onMouseDown={saveSelection} onClick={applyLink}>
           🔗 Link
         </button>
