@@ -106,6 +106,10 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           isEditor={isEditor}
         />
       </section>
+
+      <Link href="/" className="homepageButton">
+        🏠 Homepage
+      </Link>
     </main>
   );
 }
