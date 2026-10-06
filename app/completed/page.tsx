@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export default async function CompletedWeeksPage() {
   const weeks = await getAllWeeks();
-  const completedWeeks = weeks.filter((week) => week.published);
+  const completedWeeks = weeks.filter((week) => week.published).sort((a, b) => b.number - a.number);
   const latestPublishedWeek = getLatestPublishedWeek(weeks);
 
   return (
