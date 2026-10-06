@@ -38,6 +38,10 @@ export default function LibraryCard({
   const [linkImageWidth, setLinkImageWidth] = useState<number | undefined>(undefined);
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [removingId, setRemovingId] = useState<string | null>(null);
+  // Two-step delete done inline (first click arms, second click deletes) —
+  // window.confirm() can be silently blocked by the browser, which made the
+  // delete buttons look dead.
+  const [armedId, setArmedId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const linkFileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -104,7 +108,11 @@ export default function LibraryCard({
   }
 
   async function handleRemoveImage() {
-    if (!confirm("Remove this image?")) return;
+    if (armedId !== "main-image") {
+      setArmedId("main-image");
+      return;
+    }
+    setArmedId(null);
     setSaving(true);
     try {
       await patchWeek({ libraryImage: null, libraryImageWidth: null });
@@ -202,7 +210,11 @@ export default function LibraryCard({
   }
 
   async function handleRemoveLink(id: string) {
-    if (!confirm("Remove this resource?")) return;
+    if (armedId !== id) {
+      setArmedId(id);
+      return;
+    }
+    setArmedId(null);
     setRemovingId(id);
     try {
       await patchWeek({ libraryLinks: links.filter((link) => link.id !== id) });
@@ -276,8 +288,13 @@ export default function LibraryCard({
               📷 {image ? "Change image" : "Add image"}
             </button>
             {image && (
-              <button type="button" onClick={handleRemoveImage} disabled={saving}>
-                Remove image
+              <button
+                type="button"
+                onClick={handleRemoveImage}
+                onBlur={() => setArmedId((id) => (id === "main-image" ? null : id))}
+                disabled={saving}
+              >
+                {armedId === "main-image" ? "Click again to delete" : "Remove image"}
               </button>
             )}
           </div>
@@ -323,9 +340,10 @@ export default function LibraryCard({
                       type="button"
                       className="removeButton"
                       onClick={() => handleRemoveLink(link.id)}
+                      onBlur={() => setArmedId((id) => (id === link.id ? null : id))}
                       disabled={removingId === link.id}
                     >
-                      {removingId === link.id ? "…" : "🗑 Remove"}
+                      {removingId === link.id ? "…" : armedId === link.id ? "Click again to delete" : "🗑 Remove"}
                     </button>
                   )}
                 </li>
@@ -340,9 +358,10 @@ export default function LibraryCard({
                       type="button"
                       className="removeButton"
                       onClick={() => handleRemoveLink(link.id)}
+                      onBlur={() => setArmedId((id) => (id === link.id ? null : id))}
                       disabled={removingId === link.id}
                     >
-                      {removingId === link.id ? "…" : "🗑"}
+                      {removingId === link.id ? "…" : armedId === link.id ? "Click again to delete" : "🗑"}
                     </button>
                   )}
                 </li>
