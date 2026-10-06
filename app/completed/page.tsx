@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { getAllWeeks } from "@/lib/getWeeks";
+import { getLatestPublishedWeek } from "@/lib/courseData";
 
 export const dynamic = "force-dynamic";
 
 export default async function CompletedWeeksPage() {
   const weeks = await getAllWeeks();
   const completedWeeks = weeks.filter((week) => week.published);
+  const latestPublishedWeek = getLatestPublishedWeek(weeks);
 
   return (
     <main className="shell narrow">
@@ -27,16 +29,21 @@ export default async function CompletedWeeksPage() {
         </div>
       ) : (
         <div className="weekGrid">
-          {completedWeeks.map((week) => (
-            <Link className="weekCard tintBlue" href={`/week/${week.number}`} key={week.number}>
-              <div className="weekTop">
-                <span className="weekNumber">WEEK {week.number}</span>
-                <span className="weekStatus weekStatusReady">Open ✓</span>
-              </div>
-              <h3>{week.title}</h3>
-              <p>{week.unit}</p>
-            </Link>
-          ))}
+          {completedWeeks.map((week) => {
+            const state =
+              week.number === latestPublishedWeek ? "weekCardCurrent" : "weekCardPast weekCardGrey";
+
+            return (
+              <Link className={`weekCard ${state}`} href={`/week/${week.number}`} key={week.number}>
+                <div className="weekTop">
+                  <span className="weekNumber">WEEK {week.number}</span>
+                  <span className="weekStatus weekStatusReady">Open ✓</span>
+                </div>
+                <h3>{week.title}</h3>
+                <p>{week.unit}</p>
+              </Link>
+            );
+          })}
         </div>
       )}
     </main>

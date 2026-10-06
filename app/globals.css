@@ -407,6 +407,10 @@ a.searchResultLink:hover {
   border-color: var(--muted);
 }
 
+.weekCard.weekCardGrey {
+  background: #eceef2;
+}
+
 .weekCardMuted {
   opacity: 0.48;
   cursor: default;
