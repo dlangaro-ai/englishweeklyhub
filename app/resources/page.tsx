@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllWeeks } from "@/lib/getWeeks";
 import { LibraryLink } from "@/lib/courseData";
+import { normalizeUrl } from "@/lib/normalizeUrl";
 
 export const dynamic = "force-dynamic";
 
@@ -64,7 +65,7 @@ export default async function ResourcesPage() {
             return (
               <li key={link.id}>
                 <a
-                  href={link.href}
+                  href={normalizeUrl(link.href)}
                   target="_blank"
                   rel="noreferrer"
                   className={`resourceCard ${TINTS[index % TINTS.length]}`}

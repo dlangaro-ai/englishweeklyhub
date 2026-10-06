@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { loadWeeks, saveWeeks } from "@/lib/blob";
 import { ExtraActivity, LibraryLink, Week } from "@/lib/courseData";
+import { normalizeUrl } from "@/lib/normalizeUrl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { clampImageWidth, IMAGE_ALIGNS } from "@/lib/imageSize";
 
@@ -121,7 +122,7 @@ export async function PATCH(
     }
     updates.libraryLinks = (updates.libraryLinks as LibraryLink[]).map((link) => {
       const width = clampImageWidth(link.imageWidth);
-      const next = { ...link };
+      const next = { ...link, href: normalizeUrl(link.href) };
       if (width === undefined) delete next.imageWidth;
       else next.imageWidth = width;
       return next;

@@ -8,6 +8,7 @@ import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import ImageSizeControl from "./ImageSizeControl";
 import RichTextEditor from "./RichTextEditor";
 import { goToNextCard } from "@/lib/cardNav";
+import { normalizeUrl } from "@/lib/normalizeUrl";
 
 const MAX_LINKS = 6;
 
@@ -164,7 +165,7 @@ export default function LibraryCard({
 
     setSaving(true);
     try {
-      let href = linkUrl.trim();
+      let href = normalizeUrl(linkUrl);
       let resourceImage: string | undefined;
 
       if (addingType === "link") {
@@ -325,7 +326,7 @@ export default function LibraryCard({
             {links.map((link) =>
               link.image ? (
                 <li key={link.id} className="libraryLinkButton">
-                  <a href={link.href} target="_blank" rel="noreferrer" className="libraryLinkImageWrap">
+                  <a href={normalizeUrl(link.href)} target="_blank" rel="noreferrer" className="libraryLinkImageWrap">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={link.image}
@@ -349,7 +350,7 @@ export default function LibraryCard({
                 </li>
               ) : (
                 <li key={link.id}>
-                  <a href={link.href} target="_blank" rel="noreferrer" className="textLink">
+                  <a href={normalizeUrl(link.href)} target="_blank" rel="noreferrer" className="textLink">
                     {link.resourceType === "pdf" ? "📄 " : ""}
                     {link.title} ↗
                   </a>
