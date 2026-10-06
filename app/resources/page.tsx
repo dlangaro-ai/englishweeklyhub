@@ -11,16 +11,12 @@ function idTimestamp(id: string): number {
   return match ? Number(match[1]) : 0;
 }
 
-type ResourceItem = Omit<LibraryLink, "resourceType"> & {
-  resourceType?: LibraryLink["resourceType"] | "week";
-  week: number;
-};
+type ResourceItem = LibraryLink & { week: number };
 
 const TYPE_LABELS = {
   link: { icon: "🌐", label: "Website", cta: "Visit" },
   image: { icon: "🖼️", label: "Image", cta: "View" },
-  pdf: { icon: "📄", label: "PDF", cta: "Open" },
-  week: { icon: "📖", label: "Week resources", cta: "Open week" }
+  pdf: { icon: "📄", label: "PDF", cta: "Open" }
 } as const;
 
 const TINTS = ["resBlue", "resSun", "resPink", "resPurple"];
@@ -28,25 +24,18 @@ const TINTS = ["resBlue", "resSun", "resPink", "resPurple"];
 export default async function ResourcesPage() {
   const weeks = await getAllWeeks();
 
-  // A week's main Resources picture is a resource too — it opens that week's
-  // Resources card, so replacing the picture there updates this page as well.
-  const weekPictures: ResourceItem[] = weeks
-    .filter((week) => week.libraryImage && week.published)
-    .sort((a, b) => b.number - a.number)
-    .map((week) => ({
-      id: `week-picture-${week.number}`,
-      title: `Week ${week.number} resources`,
-      href: `/week/${week.number}#library`,
-      image: week.libraryImage,
-      resourceType: "week" as const,
-      week: week.number
-    }));
-
-  const weekLinks: ResourceItem[] = weeks
-    .flatMap((week) => (week.libraryLinks ?? []).map((link) => ({ ...link, week: week.number })))
+  // A week's main Resources picture is shown on that week's first website
+  // card, so replacing the picture there updates this page too — and the card
+  // still opens the link, not the week.
+  const allLinks: ResourceItem[] = weeks
+    .flatMap((week) =>
+      (week.libraryLinks ?? []).map((link, index) => ({
+        ...link,
+        week: week.number,
+        image: link.image ?? (index === 0 && link.resourceType !== "pdf" ? week.libraryImage : undefined)
+      }))
+    )
     .sort((a, b) => idTimestamp(b.id) - idTimestamp(a.id));
-
-  const allLinks = [...weekPictures, ...weekLinks];
 
   return (
     <main className="shell narrow">
@@ -76,7 +65,7 @@ export default async function ResourcesPage() {
               <li key={link.id}>
                 <a
                   href={link.href}
-                  target={link.resourceType === "week" ? undefined : "_blank"}
+                  target="_blank"
                   rel="noreferrer"
                   className={`resourceCard ${TINTS[index % TINTS.length]}`}
                 >
