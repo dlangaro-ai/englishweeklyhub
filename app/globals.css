@@ -1358,11 +1358,20 @@ a.searchResultLink:hover {
 }
 
 .resourceTitle {
-  margin: 0;
-  color: var(--navy);
-  font-size: 17px;
+  margin: auto 0 0;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
   line-height: 1.3;
+  text-align: center;
   overflow-wrap: anywhere;
+  transition: background 160ms ease;
+}
+
+.resourceCardLink:hover .resourceTitle {
+  background: var(--navy);
 }
 
 .resourceOpen {
@@ -1739,11 +1748,19 @@ a.searchResultLink:hover {
 }
 
 .weekResourceTitle {
-  color: var(--navy);
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #fff;
   font-weight: 800;
   font-size: 15px;
   line-height: 1.25;
   overflow-wrap: anywhere;
+  transition: background 160ms ease;
+}
+
+.weekResourceLink:hover .weekResourceTitle {
+  background: var(--navy);
 }
 
 .weekResourceKind {

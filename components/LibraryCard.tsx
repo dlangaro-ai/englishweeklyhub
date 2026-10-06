@@ -15,9 +15,9 @@ import AddResourceForm from "./AddResourceForm";
 const MAX_LINKS = 12;
 
 const RESOURCE_KINDS = {
-  link: { icon: "🌐", label: "Website", cta: "Visit" },
-  image: { icon: "🖼️", label: "Image", cta: "View" },
-  pdf: { icon: "📄", label: "PDF", cta: "Open" }
+  link: { icon: "🌐", label: "Website" },
+  image: { icon: "🖼️", label: "Image" },
+  pdf: { icon: "📄", label: "PDF" }
 } as const;
 
 const RESOURCE_TINTS = ["resBlue", "resSun", "resPink", "resPurple"];
@@ -283,7 +283,7 @@ export default function LibraryCard({
                     )}
                     <span className="weekResourceText">
                       <span className="weekResourceTitle">{link.title.replace(/^📄\s*/, "")}</span>
-                      <span className="weekResourceKind">{kind.label} · {kind.cta} ↗</span>
+                      <span className="weekResourceKind">{kind.label}</span>
                     </span>
                   </a>
                   {isEditor && (

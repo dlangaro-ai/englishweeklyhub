@@ -17,9 +17,9 @@ function idTimestamp(id: string): number {
 }
 
 const TYPE_LABELS = {
-  link: { icon: "🌐", label: "Website", cta: "Visit" },
-  image: { icon: "🖼️", label: "Image", cta: "View" },
-  pdf: { icon: "📄", label: "PDF", cta: "Open" }
+  link: { icon: "🌐", label: "Website" },
+  image: { icon: "🖼️", label: "Image" },
+  pdf: { icon: "📄", label: "PDF" }
 } as const;
 
 const TINTS = ["resBlue", "resSun", "resPink", "resPurple"];
@@ -97,7 +97,6 @@ export default async function ResourcesPage() {
                       <div className="resourceIcon" aria-hidden="true">{type.icon}</div>
                     )}
                     <h3 className="resourceTitle">{title}</h3>
-                    <span className="resourceOpen">{type.cta} ↗</span>
                   </a>
                   {isEditor && <ResourceAdmin id={link.id} weeks={weekOptions} />}
                 </div>
