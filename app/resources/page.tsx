@@ -1,5 +1,9 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { getAllWeeks } from "@/lib/getWeeks";
+import { loadLibrary } from "@/lib/library";
+import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
+import { LibraryAddBar, ResourceAdmin } from "@/components/ResourceAdmin";
 import { LibraryLink } from "@/lib/courseData";
 import { normalizeUrl } from "@/lib/normalizeUrl";
 
@@ -12,8 +16,6 @@ function idTimestamp(id: string): number {
   return match ? Number(match[1]) : 0;
 }
 
-type ResourceItem = LibraryLink & { week: number };
-
 const TYPE_LABELS = {
   link: { icon: "🌐", label: "Website", cta: "Visit" },
   image: { icon: "🖼️", label: "Image", cta: "View" },
@@ -23,20 +25,26 @@ const TYPE_LABELS = {
 const TINTS = ["resBlue", "resSun", "resPink", "resPurple"];
 
 export default async function ResourcesPage() {
-  const weeks = await getAllWeeks();
+  const [weeks, library] = await Promise.all([getAllWeeks(), loadLibrary()]);
+  const cookieStore = await cookies();
+  const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
 
-  // A week's main Resources picture is shown on that week's first website
-  // card, so replacing the picture there updates this page too — and the card
-  // still opens the link, not the week.
-  const allLinks: ResourceItem[] = weeks
-    .flatMap((week) =>
-      (week.libraryLinks ?? []).map((link, index) => ({
-        ...link,
-        week: week.number,
-        image: link.image ?? (index === 0 && link.resourceType !== "pdf" ? week.libraryImage : undefined)
-      }))
-    )
-    .sort((a, b) => idTimestamp(b.id) - idTimestamp(a.id));
+  const items: LibraryLink[] = library.slice().sort((a, b) => idTimestamp(b.id) - idTimestamp(a.id));
+
+  // Which weeks each item is used in (students only see published weeks).
+  const usedIn = new Map<string, number[]>();
+  for (const week of weeks) {
+    if (!week.published && !isEditor) continue;
+    for (const id of week.resourceIds ?? []) {
+      usedIn.set(id, [...(usedIn.get(id) ?? []), week.number]);
+    }
+  }
+
+  const weekOptions = weeks.map((week) => ({
+    number: week.number,
+    title: week.title,
+    ids: week.resourceIds ?? []
+  }));
 
   return (
     <main className="shell narrow">
@@ -46,45 +54,53 @@ export default async function ResourcesPage() {
         <div>
           <p className="eyebrow">RESOURCES</p>
           <h1>All Resources</h1>
-          <p className="unitLabel">Every picture, website and PDF added across the whole hub, in one place</p>
+          <p className="unitLabel">Our library of websites, pictures and PDFs, ready to use any week</p>
         </div>
       </header>
 
-      {allLinks.length === 0 ? (
+      {isEditor && <LibraryAddBar />}
+
+      {items.length === 0 ? (
         <div className="emptyState compact">
           <div className="emptyIcon">📖</div>
           <h2>No resources added yet</h2>
-          <p>Websites added to any week&apos;s Resources card will show up here.</p>
+          <p>{isEditor ? "Add your first resource above." : "Resources will show up here."}</p>
         </div>
       ) : (
         <ul className="resourcesPageGrid">
-          {allLinks.map((link, index) => {
+          {items.map((link, index) => {
             const type = TYPE_LABELS[link.resourceType ?? "link"];
             const title = link.title.replace(/^📄\s*/, "");
+            const weekNumbers = (usedIn.get(link.id) ?? []).sort((a, b) => a - b);
 
             return (
               <li key={link.id}>
-                <a
-                  href={normalizeUrl(link.href)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`resourceCard ${TINTS[index % TINTS.length]}`}
-                >
-                  <div className="resourceCardTop">
-                    <span className="resourceBadge">
-                      <span aria-hidden="true">{type.icon}</span> {type.label}
-                    </span>
-                    <span className="resourceWeek">WEEK {link.week}</span>
-                  </div>
-                  {link.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={link.image} alt="" className="resourceThumb" />
-                  ) : (
-                    <div className="resourceIcon" aria-hidden="true">{type.icon}</div>
-                  )}
-                  <h3 className="resourceTitle">{title}</h3>
-                  <span className="resourceOpen">{type.cta} ↗</span>
-                </a>
+                <div className={`resourceCard ${TINTS[index % TINTS.length]}`}>
+                  <a
+                    href={normalizeUrl(link.href)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="resourceCardLink"
+                  >
+                    <div className="resourceCardTop">
+                      <span className="resourceBadge">
+                        <span aria-hidden="true">{type.icon}</span> {type.label}
+                      </span>
+                      <span className="resourceWeek">
+                        {weekNumbers.length > 0 ? `WEEK ${weekNumbers.join(", ")}` : "LIBRARY"}
+                      </span>
+                    </div>
+                    {link.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={link.image} alt="" className="resourceThumb" />
+                    ) : (
+                      <div className="resourceIcon" aria-hidden="true">{type.icon}</div>
+                    )}
+                    <h3 className="resourceTitle">{title}</h3>
+                    <span className="resourceOpen">{type.cta} ↗</span>
+                  </a>
+                  {isEditor && <ResourceAdmin id={link.id} weeks={weekOptions} />}
+                </div>
               </li>
             );
           })}

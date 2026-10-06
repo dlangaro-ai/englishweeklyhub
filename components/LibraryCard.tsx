@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { LibraryLink } from "@/lib/courseData";
 import { imageWidthStyle } from "@/lib/imageSize";
@@ -9,8 +9,10 @@ import ImageSizeControl from "./ImageSizeControl";
 import RichTextEditor from "./RichTextEditor";
 import { goToNextCard } from "@/lib/cardNav";
 import { normalizeUrl } from "@/lib/normalizeUrl";
+import Link from "next/link";
+import AddResourceForm from "./AddResourceForm";
 
-const MAX_LINKS = 6;
+const MAX_LINKS = 12;
 
 export default function LibraryCard({
   weekNumber,
@@ -18,6 +20,8 @@ export default function LibraryCard({
   image,
   imageWidth,
   links,
+  resourceIds,
+  libraryItems,
   isEditor
 }: {
   weekNumber: number;
@@ -25,6 +29,9 @@ export default function LibraryCard({
   image?: string;
   imageWidth?: number;
   links: LibraryLink[];
+  resourceIds: string[];
+  // The whole shared library — only sent to the page for the teacher.
+  libraryItems: LibraryLink[];
   isEditor: boolean;
 }) {
   const [saving, setSaving] = useState(false);
@@ -32,27 +39,13 @@ export default function LibraryCard({
   const [editingText, setEditingText] = useState(false);
   const [draftText, setDraftText] = useState(text);
   const [textSaving, setTextSaving] = useState(false);
-  const [addingType, setAddingType] = useState<"link" | "image" | "pdf" | null>(null);
-  const [linkTitle, setLinkTitle] = useState("");
-  const [linkUrl, setLinkUrl] = useState("");
-  const [linkFile, setLinkFile] = useState<File | null>(null);
-  const [linkImageWidth, setLinkImageWidth] = useState<number | undefined>(undefined);
-  const [uploadFile, setUploadFile] = useState<File | null>(null);
-  const [removingId, setRemovingId] = useState<string | null>(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [attachingId, setAttachingId] = useState<string | null>(null);
   // Two-step delete done inline (first click arms, second click deletes) —
-  // window.confirm() can be silently blocked by the browser, which made the
-  // delete buttons look dead.
+  // window.confirm() can be silently blocked by the browser.
   const [armedId, setArmedId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const linkFileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-
-  const linkFilePreview = useMemo(() => (linkFile ? URL.createObjectURL(linkFile) : null), [linkFile]);
-  useEffect(() => {
-    return () => {
-      if (linkFilePreview) URL.revokeObjectURL(linkFilePreview);
-    };
-  }, [linkFilePreview]);
 
   async function patchWeek(body: Record<string, unknown>) {
     const response = await fetch(`/api/weeks/${weekNumber}`, {
@@ -138,102 +131,43 @@ export default function LibraryCard({
     }
   }
 
-  function startAdding(type: "link" | "image" | "pdf") {
-    setAddingType(type);
-    setLinkTitle("");
-    setLinkUrl("");
-    setLinkFile(null);
-    setLinkImageWidth(undefined);
-    setUploadFile(null);
+  // Resources live in the shared library; a week only keeps a list of IDs,
+  // so adding/removing here never deletes anything from the library.
+  async function setWeekResources(ids: string[]) {
+    await patchWeek({ resourceIds: ids });
+    router.refresh();
   }
 
-  async function handleAdd() {
-    if (!addingType) return;
-
-    if (!linkTitle.trim()) {
-      alert("Please add a title.");
-      return;
-    }
-    if (addingType === "link" && !linkUrl.trim()) {
-      alert("Please add a link.");
-      return;
-    }
-    if (addingType !== "link" && !uploadFile) {
-      alert(addingType === "image" ? "Please choose an image." : "Please choose a PDF.");
-      return;
-    }
-
-    setSaving(true);
+  async function handleAttach(id: string) {
+    setAttachingId(id);
     try {
-      let href = normalizeUrl(linkUrl);
-      let resourceImage: string | undefined;
-
-      if (addingType === "link") {
-        if (linkFile) {
-          const formData = new FormData();
-          formData.append("file", linkFile);
-          const uploadResponse = await fetch("/api/upload", { method: "POST", body: formData });
-          if (!uploadResponse.ok) {
-            const result = await uploadResponse.json().catch(() => ({}));
-            throw new Error(result.error ?? "Image upload failed.");
-          }
-          resourceImage = (await uploadResponse.json()).url;
-        }
-      } else {
-        const formData = new FormData();
-        formData.append("file", uploadFile as File);
-        const uploadResponse = await fetch("/api/upload", { method: "POST", body: formData });
-        if (!uploadResponse.ok) {
-          const result = await uploadResponse.json().catch(() => ({}));
-          throw new Error(result.error ?? "Upload failed.");
-        }
-        href = (await uploadResponse.json()).url;
-        if (addingType === "image") resourceImage = href;
-      }
-
-      const newLink: LibraryLink = {
-        id: `library-${Date.now()}`,
-        title: linkTitle.trim(),
-        href,
-        resourceType: addingType,
-        ...(resourceImage ? { image: resourceImage } : {}),
-        ...(resourceImage && linkImageWidth != null ? { imageWidth: linkImageWidth } : {})
-      };
-
-      await patchWeek({ libraryLinks: [...links, newLink] });
-      setAddingType(null);
-      router.refresh();
+      await setWeekResources([...resourceIds, id]);
     } catch (error) {
-      alert(error instanceof Error ? error.message : "Something went wrong.");
+      alert(error instanceof Error ? error.message : "Could not add this.");
     } finally {
-      setSaving(false);
+      setAttachingId(null);
     }
   }
 
-  async function handleRemoveLink(id: string) {
-    if (armedId !== id) {
-      setArmedId(id);
-      return;
-    }
-    setArmedId(null);
-    setRemovingId(id);
+  async function handleDetach(id: string) {
+    setAttachingId(id);
     try {
-      await patchWeek({ libraryLinks: links.filter((link) => link.id !== id) });
-      router.refresh();
+      await setWeekResources(resourceIds.filter((existing) => existing !== id));
     } catch (error) {
       alert(error instanceof Error ? error.message : "Could not remove this.");
     } finally {
-      setRemovingId(null);
+      setAttachingId(null);
     }
   }
 
-  const atCap = links.length >= MAX_LINKS;
+  const atCap = resourceIds.length >= MAX_LINKS;
+  const available = libraryItems.filter((item) => !resourceIds.includes(item.id));
 
   return (
     <article
       id="library"
       className="infoCard infoCardLibrary cardClickable"
-      onClick={!editingText && !addingType ? (event) => goToNextCard(event, "summary") : undefined}
+      onClick={!editingText && !pickerOpen ? (event) => goToNextCard(event, "summary") : undefined}
     >
       <span className="infoIcon">📖</span>
       <div className="infoCardBody">
@@ -340,11 +274,10 @@ export default function LibraryCard({
                     <button
                       type="button"
                       className="removeButton"
-                      onClick={() => handleRemoveLink(link.id)}
-                      onBlur={() => setArmedId((id) => (id === link.id ? null : id))}
-                      disabled={removingId === link.id}
+                      onClick={() => handleDetach(link.id)}
+                      disabled={attachingId === link.id}
                     >
-                      {removingId === link.id ? "…" : armedId === link.id ? "Click again to delete" : "🗑 Remove"}
+                      {attachingId === link.id ? "…" : "✕ Remove from week"}
                     </button>
                   )}
                 </li>
@@ -358,11 +291,10 @@ export default function LibraryCard({
                     <button
                       type="button"
                       className="removeButton"
-                      onClick={() => handleRemoveLink(link.id)}
-                      onBlur={() => setArmedId((id) => (id === link.id ? null : id))}
-                      disabled={removingId === link.id}
+                      onClick={() => handleDetach(link.id)}
+                      disabled={attachingId === link.id}
                     >
-                      {removingId === link.id ? "…" : armedId === link.id ? "Click again to delete" : "🗑"}
+                      {attachingId === link.id ? "…" : "✕ Remove"}
                     </button>
                   )}
                 </li>
@@ -373,82 +305,58 @@ export default function LibraryCard({
           !isEditor && <p className="infoText">No resources added yet.</p>
         )}
 
-        {isEditor && !addingType && (
-          <div className="addActivityBar">
-            <button type="button" className="addActivityButton" onClick={() => startAdding("link")} disabled={atCap}>
-              🔗 Add link ({links.length}/{MAX_LINKS})
-            </button>
-            <button type="button" className="addActivityButton" onClick={() => startAdding("image")} disabled={atCap}>
-              🖼️ Add image ({links.length}/{MAX_LINKS})
-            </button>
-            <button type="button" className="addActivityButton" onClick={() => startAdding("pdf")} disabled={atCap}>
-              📄 Add PDF ({links.length}/{MAX_LINKS})
-            </button>
-          </div>
-        )}
-
-        {isEditor && addingType && (
-          <div className="editForm addActivityForm">
-            <input
-              className="editTextarea"
-              placeholder={addingType === "link" ? "Website name" : addingType === "image" ? "Image title" : "PDF title"}
-              value={linkTitle}
-              onChange={(event) => setLinkTitle(event.target.value)}
-            />
-
-            {addingType === "link" && (
-              <input
-                className="editTextarea"
-                placeholder="https://..."
-                value={linkUrl}
-                onChange={(event) => setLinkUrl(event.target.value)}
-              />
-            )}
-
-            {addingType === "link" && (
-              <div className="editImageButtons">
-                <button type="button" onClick={() => linkFileInputRef.current?.click()}>
-                  📷 {linkFile ? "Change button image" : "Add button image (optional)"}
+        {isEditor && (
+          <div className="libraryPicker">
+            {!pickerOpen ? (
+              <div className="addActivityBar">
+                <button
+                  type="button"
+                  className="addActivityButton"
+                  onClick={() => setPickerOpen(true)}
+                  disabled={atCap}
+                >
+                  📚 Add from library ({resourceIds.length}/{MAX_LINKS})
                 </button>
-                {linkFile && (
-                  <button type="button" onClick={() => setLinkFile(null)}>
-                    Remove image
-                  </button>
+                <Link href="/resources" className="addActivityButton">
+                  Manage library →
+                </Link>
+              </div>
+            ) : (
+              <div className="editForm addActivityForm">
+                <p className="infoText">
+                  Pick a resource to show on this week. Removing it later only takes it off this week.
+                </p>
+                {available.length > 0 ? (
+                  <ul className="libraryPickList">
+                    {available.map((item) => (
+                      <li key={item.id}>
+                        <span>
+                          {item.resourceType === "pdf" ? "📄 " : item.resourceType === "image" ? "🖼️ " : "🌐 "}
+                          {item.title}
+                        </span>
+                        <button
+                          type="button"
+                          className="addActivityButton"
+                          onClick={() => handleAttach(item.id)}
+                          disabled={atCap || attachingId === item.id}
+                        >
+                          {attachingId === item.id ? "…" : "＋ Add"}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="infoText">Everything in the library is already on this week.</p>
                 )}
+                <p className="infoLabel">NEW RESOURCE</p>
+                <AddResourceForm onCreated={(item) => setWeekResources([...resourceIds, item.id])} />
+                <div className="editActions">
+                  <button className="cancelButton" type="button" onClick={() => setPickerOpen(false)}>
+                    Done
+                  </button>
+                </div>
               </div>
             )}
-            <input
-              ref={linkFileInputRef}
-              type="file"
-              accept="image/*"
-              className="hiddenFileInput"
-              onChange={(event) => setLinkFile(event.target.files?.[0] ?? null)}
-            />
-
-            {(addingType === "image" || addingType === "pdf") && (
-              <input
-                type="file"
-                accept={addingType === "image" ? "image/*" : "application/pdf"}
-                onChange={(event) => setUploadFile(event.target.files?.[0] ?? null)}
-              />
-            )}
-
-            {addingType === "link" && linkFilePreview && (
-              <ImageSizeControl src={linkFilePreview} width={linkImageWidth} onChange={setLinkImageWidth} />
-            )}
-            <div className="editActions">
-              <button className="primaryButton" type="button" onClick={handleAdd} disabled={saving}>
-                {saving ? "Saving…" : "Add"}
-              </button>
-              <button
-                className="cancelButton"
-                type="button"
-                onClick={() => setAddingType(null)}
-                disabled={saving}
-              >
-                Cancel
-              </button>
-            </div>
           </div>
         )}
       </div>

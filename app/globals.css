@@ -1241,6 +1241,57 @@ a.searchResultLink:hover {
   gap: 20px;
 }
 
+.resourceCardLink {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resourceAdmin {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+
+.resourceAdminSelect {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  font: inherit;
+  font-size: 13px;
+}
+
+.resourceAdmin .removeButton {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.libraryAddBar { margin-top: 20px; }
+
+.libraryPicker { margin-top: 4px; }
+
+.libraryPickList {
+  margin: 12px 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.libraryPickList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 .resourceCard {
   --res: var(--blue);
   height: 100%;

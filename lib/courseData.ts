@@ -65,6 +65,9 @@ export type Week = {
   libraryImage?: string;
   libraryImageWidth?: number;
   libraryLinks: LibraryLink[];
+  // IDs of items from the shared library (lib/library.ts) shown on this week.
+  // Missing on older weeks, which fall back to their own libraryLinks' IDs.
+  resourceIds?: string[];
   published: boolean;
   extraActivities: ExtraActivity[];
 };

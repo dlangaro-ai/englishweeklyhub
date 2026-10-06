@@ -29,6 +29,7 @@ const EDITABLE_FIELDS = [
   "libraryImage",
   "libraryImageWidth",
   "libraryLinks",
+  "resourceIds",
   "published",
   "extraActivities"
 ] as const;
@@ -42,7 +43,7 @@ const IMAGE_WIDTH_FIELDS = new Set([
   "libraryImageWidth"
 ]);
 
-const MAX_LIBRARY_LINKS = 6;
+const MAX_LIBRARY_LINKS = 12;
 
 function validateLibraryLinks(links: unknown): string | null {
   if (!Array.isArray(links)) return "libraryLinks must be a list.";
@@ -113,6 +114,21 @@ export async function PATCH(
     const clamped = clampImageWidth(updates[key]);
     if (clamped === undefined) delete updates[key];
     else updates[key] = clamped;
+  }
+
+  if ("resourceIds" in updates) {
+    const ids = updates.resourceIds;
+    if (
+      !Array.isArray(ids) ||
+      ids.length > MAX_LIBRARY_LINKS ||
+      !ids.every((id) => typeof id === "string" && id.length < 80)
+    ) {
+      return NextResponse.json(
+        { error: `A week can show up to ${MAX_LIBRARY_LINKS} resources.` },
+        { status: 400 }
+      );
+    }
+    updates.resourceIds = Array.from(new Set(ids as string[]));
   }
 
   if ("libraryLinks" in updates) {

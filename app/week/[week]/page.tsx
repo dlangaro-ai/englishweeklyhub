@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import WeekView from "@/components/WeekView";
 import { getWeekByNumber } from "@/lib/getWeeks";
+import { loadLibrary } from "@/lib/library";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -22,5 +23,8 @@ export default async function WeekPage({
   // "Soon" badge on the dashboard is the signal, not a hard lock.
   if (!week) notFound();
 
-  return <WeekView week={week} isEditor={isEditor} />;
+  // The full library is only needed for the teacher's "Add from library" picker.
+  const libraryItems = isEditor ? await loadLibrary() : [];
+
+  return <WeekView week={week} isEditor={isEditor} libraryItems={libraryItems} />;
 }

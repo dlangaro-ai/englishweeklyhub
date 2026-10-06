@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Week } from "@/lib/courseData";
+import { LibraryLink, Week } from "@/lib/courseData";
 import EditableSection from "./EditableSection";
 import SummaryCard from "./SummaryCard";
 import BonusCard from "./BonusCard";
@@ -8,7 +8,15 @@ import InlineTextField from "./InlineTextField";
 import BookExtraImage from "./BookExtraImage";
 import LibraryCard from "./LibraryCard";
 
-export default function WeekView({ week, isEditor }: { week: Week; isEditor: boolean }) {
+export default function WeekView({
+  week,
+  isEditor,
+  libraryItems = []
+}: {
+  week: Week;
+  isEditor: boolean;
+  libraryItems?: LibraryLink[];
+}) {
   return (
     <main className="shell narrow">
       <Link href="/" className="backLink">← All weeks</Link>
@@ -103,6 +111,8 @@ export default function WeekView({ week, isEditor }: { week: Week; isEditor: boo
           image={week.libraryImage}
           imageWidth={week.libraryImageWidth}
           links={week.libraryLinks ?? []}
+          resourceIds={week.resourceIds ?? []}
+          libraryItems={libraryItems}
           isEditor={isEditor}
         />
       </section>
