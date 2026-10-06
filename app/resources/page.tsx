@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getAllWeeks } from "@/lib/getWeeks";
 import { LibraryLink } from "@/lib/courseData";
-import { imageWidthStyle } from "@/lib/imageSize";
 
 export const dynamic = "force-dynamic";
 
@@ -12,11 +11,21 @@ function idTimestamp(id: string): number {
   return match ? Number(match[1]) : 0;
 }
 
+type ResourceItem = LibraryLink & { week: number };
+
+const TYPE_LABELS = {
+  link: { icon: "🌐", label: "Website", cta: "Visit" },
+  image: { icon: "🖼️", label: "Image", cta: "View" },
+  pdf: { icon: "📄", label: "PDF", cta: "Open" }
+} as const;
+
+const TINTS = ["resBlue", "resSun", "resPink", "resPurple"];
+
 export default async function ResourcesPage() {
   const weeks = await getAllWeeks();
 
-  const allLinks: LibraryLink[] = weeks
-    .flatMap((week) => week.libraryLinks ?? [])
+  const allLinks: ResourceItem[] = weeks
+    .flatMap((week) => (week.libraryLinks ?? []).map((link) => ({ ...link, week: week.number })))
     .sort((a, b) => idTimestamp(b.id) - idTimestamp(a.id));
 
   return (
@@ -39,26 +48,36 @@ export default async function ResourcesPage() {
         </div>
       ) : (
         <ul className="resourcesPageGrid">
-          {allLinks.map((link) => (
-            <li key={link.id} className="resourcesPageItem">
-              {link.image ? (
-                <a href={link.href} target="_blank" rel="noreferrer" className="libraryLinkImageWrap">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={link.image}
-                    alt={link.title}
-                    className="bookImage"
-                    style={imageWidthStyle(link.imageWidth)}
-                  />
-                  <span className="libraryLinkCaption">{link.title}</span>
+          {allLinks.map((link, index) => {
+            const type = TYPE_LABELS[link.resourceType ?? "link"];
+            const title = link.title.replace(/^📄\s*/, "");
+
+            return (
+              <li key={link.id}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`resourceCard ${TINTS[index % TINTS.length]}`}
+                >
+                  <div className="resourceCardTop">
+                    <span className="resourceBadge">
+                      <span aria-hidden="true">{type.icon}</span> {type.label}
+                    </span>
+                    <span className="resourceWeek">WEEK {link.week}</span>
+                  </div>
+                  {link.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={link.image} alt="" className="resourceThumb" />
+                  ) : (
+                    <div className="resourceIcon" aria-hidden="true">{type.icon}</div>
+                  )}
+                  <h3 className="resourceTitle">{title}</h3>
+                  <span className="resourceOpen">{type.cta} ↗</span>
                 </a>
-              ) : (
-                <a href={link.href} target="_blank" rel="noreferrer" className="textLink">
-                  {link.title} ↗
-                </a>
-              )}
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
       )}
     </main>
