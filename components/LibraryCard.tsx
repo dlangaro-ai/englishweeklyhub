@@ -14,6 +14,14 @@ import AddResourceForm from "./AddResourceForm";
 
 const MAX_LINKS = 12;
 
+const RESOURCE_KINDS = {
+  link: { icon: "🌐", label: "Website", cta: "Visit" },
+  image: { icon: "🖼️", label: "Image", cta: "View" },
+  pdf: { icon: "📄", label: "PDF", cta: "Open" }
+} as const;
+
+const RESOURCE_TINTS = ["resBlue", "resSun", "resPink", "resPurple"];
+
 export default function LibraryCard({
   weekNumber,
   text,
@@ -256,19 +264,27 @@ export default function LibraryCard({
         />
 
         {links.length > 0 ? (
-          <ul className="libraryLinksList">
-            {links.map((link) =>
-              link.image ? (
-                <li key={link.id} className="libraryLinkButton">
-                  <a href={normalizeUrl(link.href)} target="_blank" rel="noreferrer" className="libraryLinkImageWrap">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={link.image}
-                      alt={link.title}
-                      className="bookImage"
-                      style={imageWidthStyle(link.imageWidth)}
-                    />
-                    <span className="libraryLinkCaption">{link.title}</span>
+          <ul className="weekResourceGrid">
+            {links.map((link, index) => {
+              const kind = RESOURCE_KINDS[link.resourceType ?? "link"];
+              return (
+                <li key={link.id} className={`weekResource ${RESOURCE_TINTS[index % RESOURCE_TINTS.length]}`}>
+                  <a
+                    href={normalizeUrl(link.href)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="weekResourceLink"
+                  >
+                    {link.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={link.image} alt="" className="weekResourceThumb" />
+                    ) : (
+                      <span className="weekResourceIcon" aria-hidden="true">{kind.icon}</span>
+                    )}
+                    <span className="weekResourceText">
+                      <span className="weekResourceTitle">{link.title.replace(/^📄\s*/, "")}</span>
+                      <span className="weekResourceKind">{kind.label} · {kind.cta} ↗</span>
+                    </span>
                   </a>
                   {isEditor && (
                     <button
@@ -276,30 +292,14 @@ export default function LibraryCard({
                       className="removeButton"
                       onClick={() => handleDetach(link.id)}
                       disabled={attachingId === link.id}
+                      title="Take off this week (stays in the library)"
                     >
-                      {attachingId === link.id ? "…" : "✕ Remove from week"}
+                      {attachingId === link.id ? "…" : "✕"}
                     </button>
                   )}
                 </li>
-              ) : (
-                <li key={link.id}>
-                  <a href={normalizeUrl(link.href)} target="_blank" rel="noreferrer" className="textLink">
-                    {link.resourceType === "pdf" ? "📄 " : ""}
-                    {link.title} ↗
-                  </a>
-                  {isEditor && (
-                    <button
-                      type="button"
-                      className="removeButton"
-                      onClick={() => handleDetach(link.id)}
-                      disabled={attachingId === link.id}
-                    >
-                      {attachingId === link.id ? "…" : "✕ Remove"}
-                    </button>
-                  )}
-                </li>
-              )
-            )}
+              );
+            })}
           </ul>
         ) : (
           !isEditor && <p className="infoText">No resources added yet.</p>

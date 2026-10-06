@@ -1674,3 +1674,88 @@ a.searchResultLink:hover {
   .weekInfoGrid { grid-template-columns: 1fr; }
   .summaryCard { grid-column: auto; }
 }
+
+.weekResourceGrid {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.weekResource {
+  --res: var(--blue);
+  position: relative;
+  border: 2px solid var(--line);
+  border-left: 6px solid var(--res);
+  border-radius: 16px;
+  background: var(--card);
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.weekResource:hover {
+  transform: translateY(-2px);
+  border-color: var(--res);
+  box-shadow: 0 10px 22px rgba(30, 41, 90, 0.12);
+}
+
+.weekResource.resBlue { --res: var(--blue); }
+.weekResource.resSun { --res: var(--sunny); }
+.weekResource.resPink { --res: var(--pink); }
+.weekResource.resPurple { --res: var(--accent); }
+
+.weekResourceLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+}
+
+.weekResourceIcon,
+.weekResourceThumb {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+}
+
+.weekResourceIcon {
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--res) 16%, white);
+  font-size: 26px;
+}
+
+.weekResourceThumb {
+  object-fit: cover;
+}
+
+.weekResourceText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.weekResourceTitle {
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.weekResourceKind {
+  color: var(--res);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.weekResource .removeButton {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
