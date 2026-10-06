@@ -1769,10 +1769,23 @@ a.searchResultLink:hover {
   font-weight: 800;
 }
 
-.weekResource .removeButton {
+.weekResourceTools {
   position: absolute;
   top: 6px;
   right: 6px;
+  display: flex;
+  gap: 4px;
+}
+
+.weekResourceTools .removeButton {
   padding: 2px 8px;
   font-size: 12px;
+}
+
+.weekResourceEditing {
+  grid-column: 1 / -1;
+}
+
+.weekResource:has(.weekResourceTools) .weekResourceLink {
+  padding-right: 74px;
 }

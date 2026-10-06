@@ -98,7 +98,7 @@ export default async function ResourcesPage() {
                     )}
                     <h3 className="resourceTitle">{title}</h3>
                   </a>
-                  {isEditor && <ResourceAdmin id={link.id} weeks={weekOptions} />}
+                  {isEditor && <ResourceAdmin item={link} weeks={weekOptions} />}
                 </div>
               </li>
             );

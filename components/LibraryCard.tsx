@@ -11,6 +11,7 @@ import { goToNextCard } from "@/lib/cardNav";
 import { normalizeUrl } from "@/lib/normalizeUrl";
 import Link from "next/link";
 import AddResourceForm from "./AddResourceForm";
+import EditResourceForm from "./EditResourceForm";
 
 const MAX_LINKS = 12;
 
@@ -48,6 +49,7 @@ export default function LibraryCard({
   const [draftText, setDraftText] = useState(text);
   const [textSaving, setTextSaving] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [attachingId, setAttachingId] = useState<string | null>(null);
   // Two-step delete done inline (first click arms, second click deletes) —
   // window.confirm() can be silently blocked by the browser.
@@ -267,6 +269,13 @@ export default function LibraryCard({
           <ul className="weekResourceGrid">
             {links.map((link, index) => {
               const kind = RESOURCE_KINDS[link.resourceType ?? "link"];
+              if (editingId === link.id) {
+                return (
+                  <li key={link.id} className="weekResourceEditing">
+                    <EditResourceForm item={link} onDone={() => setEditingId(null)} />
+                  </li>
+                );
+              }
               return (
                 <li key={link.id} className={`weekResource ${RESOURCE_TINTS[index % RESOURCE_TINTS.length]}`}>
                   <a
@@ -287,15 +296,25 @@ export default function LibraryCard({
                     </span>
                   </a>
                   {isEditor && (
-                    <button
-                      type="button"
-                      className="removeButton"
-                      onClick={() => handleDetach(link.id)}
-                      disabled={attachingId === link.id}
-                      title="Take off this week (stays in the library)"
-                    >
-                      {attachingId === link.id ? "…" : "✕"}
-                    </button>
+                    <div className="weekResourceTools">
+                      <button
+                        type="button"
+                        className="removeButton"
+                        onClick={() => setEditingId(link.id)}
+                        title="Edit this resource (changes it everywhere it is used)"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        type="button"
+                        className="removeButton"
+                        onClick={() => handleDetach(link.id)}
+                        disabled={attachingId === link.id}
+                        title="Take off this week (stays in the library)"
+                      >
+                        {attachingId === link.id ? "…" : "✕"}
+                      </button>
+                    </div>
                   )}
                 </li>
               );

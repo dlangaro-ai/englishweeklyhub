@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { LibraryLink } from "@/lib/courseData";
 import AddResourceForm from "./AddResourceForm";
+import EditResourceForm from "./EditResourceForm";
 
 export type WeekOption = { number: number; title: string; ids: string[] };
 
@@ -10,10 +12,12 @@ const MAX_PER_WEEK = 12;
 
 // Teacher-only controls under a card on the All Resources page: put the item
 // on a week, or delete it from the library (which also takes it off weeks).
-export function ResourceAdmin({ id, weeks }: { id: string; weeks: WeekOption[] }) {
+export function ResourceAdmin({ item, weeks }: { item: LibraryLink; weeks: WeekOption[] }) {
+  const id = item.id;
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [armed, setArmed] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   const addable = weeks.filter((week) => !week.ids.includes(id) && week.ids.length < MAX_PER_WEEK);
 
@@ -60,6 +64,14 @@ export function ResourceAdmin({ id, weeks }: { id: string; weeks: WeekOption[] }
     }
   }
 
+  if (editing) {
+    return (
+      <div className="resourceAdmin">
+        <EditResourceForm item={item} onDone={() => setEditing(false)} />
+      </div>
+    );
+  }
+
   return (
     <div className="resourceAdmin">
       <select
@@ -78,6 +90,9 @@ export function ResourceAdmin({ id, weeks }: { id: string; weeks: WeekOption[] }
           </option>
         ))}
       </select>
+      <button type="button" className="editButton" onClick={() => setEditing(true)} disabled={busy}>
+        ✏️ Edit
+      </button>
       <button
         type="button"
         className="removeButton"
