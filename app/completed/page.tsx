@@ -31,7 +31,7 @@ export default async function CompletedWeeksPage() {
         <div className="weekGrid">
           {completedWeeks.map((week) => {
             const state =
-              week.number === latestPublishedWeek ? "weekCardCurrent" : "weekCardPast weekCardGrey";
+              week.number === latestPublishedWeek ? "weekCardCurrent" : "tintBlue weekCardPast";
 
             return (
               <Link className={`weekCard ${state}`} href={`/week/${week.number}`} key={week.number}>
