@@ -11,12 +11,16 @@ function idTimestamp(id: string): number {
   return match ? Number(match[1]) : 0;
 }
 
-type ResourceItem = LibraryLink & { week: number };
+type ResourceItem = Omit<LibraryLink, "resourceType"> & {
+  resourceType?: LibraryLink["resourceType"] | "week";
+  week: number;
+};
 
 const TYPE_LABELS = {
   link: { icon: "🌐", label: "Website", cta: "Visit" },
   image: { icon: "🖼️", label: "Image", cta: "View" },
-  pdf: { icon: "📄", label: "PDF", cta: "Open" }
+  pdf: { icon: "📄", label: "PDF", cta: "Open" },
+  week: { icon: "📖", label: "Week resources", cta: "Open week" }
 } as const;
 
 const TINTS = ["resBlue", "resSun", "resPink", "resPurple"];
@@ -24,9 +28,25 @@ const TINTS = ["resBlue", "resSun", "resPink", "resPurple"];
 export default async function ResourcesPage() {
   const weeks = await getAllWeeks();
 
-  const allLinks: ResourceItem[] = weeks
+  // A week's main Resources picture is a resource too — it opens that week's
+  // Resources card, so replacing the picture there updates this page as well.
+  const weekPictures: ResourceItem[] = weeks
+    .filter((week) => week.libraryImage && week.published)
+    .sort((a, b) => b.number - a.number)
+    .map((week) => ({
+      id: `week-picture-${week.number}`,
+      title: `Week ${week.number} resources`,
+      href: `/week/${week.number}#library`,
+      image: week.libraryImage,
+      resourceType: "week" as const,
+      week: week.number
+    }));
+
+  const weekLinks: ResourceItem[] = weeks
     .flatMap((week) => (week.libraryLinks ?? []).map((link) => ({ ...link, week: week.number })))
     .sort((a, b) => idTimestamp(b.id) - idTimestamp(a.id));
+
+  const allLinks = [...weekPictures, ...weekLinks];
 
   return (
     <main className="shell narrow">
@@ -36,7 +56,7 @@ export default async function ResourcesPage() {
         <div>
           <p className="eyebrow">RESOURCES</p>
           <h1>All Resources</h1>
-          <p className="unitLabel">Every website added across the whole hub, in one place</p>
+          <p className="unitLabel">Every picture, website and PDF added across the whole hub, in one place</p>
         </div>
       </header>
 
@@ -56,7 +76,7 @@ export default async function ResourcesPage() {
               <li key={link.id}>
                 <a
                   href={link.href}
-                  target="_blank"
+                  target={link.resourceType === "week" ? undefined : "_blank"}
                   rel="noreferrer"
                   className={`resourceCard ${TINTS[index % TINTS.length]}`}
                 >
