@@ -15,11 +15,16 @@ export default function AboutPage() {
         </div>
       </header>
 
-      <article className="infoCard aboutCard">
-        <span className="infoIcon">💬</span>
-        <div className="infoCardBody">
-          <p className="infoLabel">WELCOME</p>
-          <h2>Welcome to TED ANK 5, your English 2 Weekly Hub!</h2>
+      <details className="infoCard aboutCard aboutFold">
+        <summary className="aboutFoldSummary">
+          <span className="infoIcon">💬</span>
+          <div className="infoCardBody">
+            <p className="infoLabel">WELCOME</p>
+            <h2>Welcome to TED ANK 5, your English 2 Weekly Hub!</h2>
+          </div>
+          <span className="aboutFoldChevron" aria-hidden="true">▾</span>
+        </summary>
+        <div className="aboutFoldBody">
           <p className="infoText">
             This page has been created by your English 2 teachers to share what we have been learning
             and doing in our lessons each week.
@@ -31,13 +36,18 @@ export default function AboutPage() {
           </p>
           <p className="aboutClosing">We hope you find it helpful and enjoy exploring! ✨</p>
         </div>
-      </article>
+      </details>
 
-      <article className="infoCard aboutCard materialsCard">
-        <span className="infoIcon">🎒</span>
-        <div className="infoCardBody">
-          <p className="infoLabel">WHAT YOU NEED</p>
-          <h2>Our Grade 5 Materials</h2>
+      <details className="infoCard aboutCard materialsCard aboutFold">
+        <summary className="aboutFoldSummary">
+          <span className="infoIcon">🎒</span>
+          <div className="infoCardBody">
+            <p className="infoLabel">WHAT YOU NEED</p>
+            <h2>Our Grade 5 Materials</h2>
+          </div>
+          <span className="aboutFoldChevron" aria-hidden="true">▾</span>
+        </summary>
+        <div className="aboutFoldBody">
           <p className="infoText">Please bring these to every English 2 lesson:</p>
           <ul className="materialsList">
             <li className="materialsItem">
@@ -77,7 +87,7 @@ export default function AboutPage() {
             </li>
           </ul>
         </div>
-      </article>
+      </details>
 
       <div className="aboutAvatars">
         {team.map((member) => (

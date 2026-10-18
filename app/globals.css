@@ -1218,6 +1218,57 @@ a.searchResultLink:hover {
   color: var(--navy);
 }
 
+.aboutFold {
+  display: block;
+  min-height: 0;
+  margin-top: 18px;
+}
+
+.aboutFoldSummary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.aboutFoldSummary::-webkit-details-marker { display: none; }
+
+.aboutFoldSummary h2 { margin: 0; }
+
+.aboutFoldChevron {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tint, var(--accent)) 16%, var(--card));
+  color: color-mix(in srgb, var(--tint, var(--accent)) 70%, var(--ink));
+  font-size: 22px;
+  transition: transform 200ms ease;
+}
+
+.aboutFold[open] .aboutFoldChevron { transform: rotate(180deg); }
+
+.aboutFoldSummary:hover .aboutFoldChevron {
+  background: color-mix(in srgb, var(--tint, var(--accent)) 28%, var(--card));
+}
+
+.aboutFoldBody {
+  padding-left: 82px;
+  animation: aboutFoldOpen 220ms ease;
+}
+
+@keyframes aboutFoldOpen {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 640px) {
+  .aboutFoldBody { padding-left: 0; }
+}
+
 .materialsCard {
   --tint: var(--orange);
   margin-top: 18px;
