@@ -8,7 +8,7 @@ export default function AboutPage() {
     <main className="shell narrow">
       <Link href="/" className="backLink">← All weeks</Link>
 
-      <header className="weekHero simpleWeekHero">
+      <header className="weekHero simpleWeekHero heroPurple">
         <div>
           <p className="eyebrow">ABOUT US</p>
           <h1>About TEDANK5</h1>
@@ -25,7 +25,7 @@ export default function AboutPage() {
             and doing in our lessons each week.
           </p>
           <p className="infoText">
-            As you know, all official information is available on the <strong>TED PORTAL</strong>. This
+            As you know, all official information is available on <strong>ETED</strong>. This
             page is designed to give you a simple overview of your English 2 lessons, along with extra
             activities for eager learners, useful resources, and important reminders.
           </p>
@@ -38,7 +38,7 @@ export default function AboutPage() {
         <div className="infoCardBody">
           <p className="infoLabel">WHAT YOU NEED</p>
           <h2>Our Grade 5 Materials</h2>
-          <p className="infoText">Please bring these to every English lesson:</p>
+          <p className="infoText">Please bring these to every English 2 lesson:</p>
           <ul className="materialsList">
             <li className="materialsItem">
               <span className="materialsIcon" aria-hidden="true">📚</span>
@@ -51,7 +51,7 @@ export default function AboutPage() {
               <span className="materialsIcon" aria-hidden="true">📓</span>
               <div>
                 <h3>A lined notebook</h3>
-                <p>Just for English, so all your work stays together.</p>
+                <p>Just for English 2, so all your work stays together.</p>
               </div>
             </li>
             <li className="materialsItem">
@@ -61,6 +61,17 @@ export default function AboutPage() {
                 <p>
                   For reading time, always keep a book from the library with you. When you finish it,
                   get a new one!
+                </p>
+              </div>
+            </li>
+            <li className="materialsItem">
+              <span className="materialsIcon" aria-hidden="true">📝</span>
+              <div>
+                <h3>A book review form</h3>
+                <p>
+                  When you finish a library book, you will be asked to fill in a <strong>book review
+                  form</strong>. It helps you think about what you read, practise writing in English,
+                  and share great books with your classmates.
                 </p>
               </div>
             </li>

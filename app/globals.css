@@ -678,9 +678,9 @@ a.searchResultLink:hover {
 .activityFootnote {
   margin: 28px 0 0;
   padding: 20px;
-  border: 1px solid var(--line);
+  border: 2px dashed color-mix(in srgb, var(--sunny) 55%, transparent);
   border-radius: 16px;
-  background: var(--card);
+  background: var(--sunny-soft);
 }
 
 .activityFootnoteText {
@@ -701,15 +701,21 @@ a.searchResultLink:hover {
 }
 
 .activityCard {
+  --tint: var(--pink);
   display: grid;
   grid-template-columns: 46px 1fr auto;
   align-items: center;
   gap: 18px;
   padding: 22px;
-  border: 1px solid var(--line);
+  border: 2px solid color-mix(in srgb, var(--tint) 28%, transparent);
+  border-left: 8px solid var(--tint);
   border-radius: 20px;
-  background: var(--card);
+  background: color-mix(in srgb, var(--tint) 7%, var(--card));
 }
+
+.activityCard:nth-child(4n + 2) { --tint: var(--blue); }
+.activityCard:nth-child(4n + 3) { --tint: var(--orange); }
+.activityCard:nth-child(4n + 4) { --tint: var(--accent); }
 
 .addActivityBar {
   display: flex;
@@ -781,27 +787,34 @@ a.searchResultLink:hover {
 }
 
 .activityIndex {
-  width: 42px;
+  width: 46px;
   aspect-ratio: 1;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: var(--card);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--tint, var(--accent)) 35%, transparent);
+  color: var(--tint, var(--accent));
+  font-size: 22px;
   font-weight: 900;
 }
 
 .activityType {
-  color: var(--accent);
-  font-size: 11px;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tint, var(--accent)) 78%, var(--ink));
+  color: #fff;
+  font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .activityBody h2 {
-  margin: 5px 0 0;
-  font-size: 20px;
+  margin: 8px 0 0;
+  font-size: 24px;
+  color: color-mix(in srgb, var(--tint, var(--accent)) 55%, var(--ink));
 }
 
 .activityBody p {
@@ -1011,7 +1024,37 @@ a.searchResultLink:hover {
 }
 
 
-.simpleWeekHero { align-items: center; }
+.simpleWeekHero {
+  --tint: var(--accent);
+  align-items: center;
+  border-top: 8px solid var(--tint);
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--tint) 14%, transparent) 0, transparent 55%),
+    rgba(255, 255, 255, 0.92);
+}
+
+.simpleWeekHero .eyebrow {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tint) 78%, var(--ink));
+  color: #fff;
+  font-size: 13px;
+}
+
+.simpleWeekHero h1 { color: color-mix(in srgb, var(--tint) 35%, var(--ink)); }
+
+.simpleWeekHero .unitLabel {
+  background: color-mix(in srgb, var(--tint) 14%, var(--card));
+  color: color-mix(in srgb, var(--tint) 60%, var(--ink));
+}
+
+/* Page colours match the homepage menu buttons. */
+.simpleWeekHero.heroGreen { --tint: var(--success); }
+.simpleWeekHero.heroPink { --tint: var(--pink); }
+.simpleWeekHero.heroOrange { --tint: var(--orange); }
+.simpleWeekHero.heroBlue { --tint: var(--blue); }
+.simpleWeekHero.heroPurple { --tint: var(--accent); }
 
 .inlineEditDisplay {
   display: inline-flex;
@@ -1203,6 +1246,7 @@ a.searchResultLink:hover {
 
 .materialsItem:nth-child(2) { --res: var(--success); }
 .materialsItem:nth-child(3) { --res: var(--pink); }
+.materialsItem:nth-child(4) { --res: var(--accent); }
 
 .materialsIcon {
   display: grid;

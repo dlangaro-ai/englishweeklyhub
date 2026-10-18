@@ -13,7 +13,7 @@ export default async function CompletedWeeksPage() {
     <main className="shell narrow">
       <Link href="/" className="backLink">← All weeks</Link>
 
-      <header className="weekHero simpleWeekHero">
+      <header className="weekHero simpleWeekHero heroGreen">
         <div>
           <p className="eyebrow">COMPLETED WEEKS</p>
           <h1>Ready to Open</h1>

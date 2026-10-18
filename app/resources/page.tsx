@@ -50,7 +50,7 @@ export default async function ResourcesPage() {
     <main className="shell narrow">
       <Link href="/" className="backLink">← All weeks</Link>
 
-      <header className="weekHero simpleWeekHero">
+      <header className="weekHero simpleWeekHero heroBlue">
         <div>
           <p className="eyebrow">RESOURCES</p>
           <h1>All Resources</h1>
