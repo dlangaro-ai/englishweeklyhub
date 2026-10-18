@@ -49,7 +49,7 @@ export default function WeekView({
 
         <EditableSection
           weekNumber={week.number}
-          icon="📚"
+          icon="books"
           label="BOOKS USED"
           heading="Books & Pages"
           field="books"
@@ -78,7 +78,7 @@ export default function WeekView({
 
         <EditableSection
           weekNumber={week.number}
-          icon="🏠"
+          icon="house"
           label="HOMEWORK"
           heading="Homework Pages"
           field="homework"

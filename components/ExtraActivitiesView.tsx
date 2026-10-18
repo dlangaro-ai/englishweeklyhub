@@ -11,6 +11,7 @@ import RichTextEditor from "./RichTextEditor";
 import ImageSizeControl from "./ImageSizeControl";
 import ActivityImageSize from "./ActivityImageSize";
 import ListActivityEditor from "./ListActivityEditor";
+import Icon, { IconName } from "./Icon";
 
 const iconFor = (type?: string) => {
   if (type === "video") return "▶️";
@@ -19,6 +20,15 @@ const iconFor = (type?: string) => {
   if (type === "image") return "🖼️";
   if (type === "list") return "📋";
   return "⭐";
+};
+
+const iconNameFor = (type?: string): IconName => {
+  if (type === "video") return "play";
+  if (type === "pdf") return "pdf";
+  if (type === "link") return "link";
+  if (type === "image") return "picture";
+  if (type === "list") return "list";
+  return "star";
 };
 
 const CAPS: Record<"link" | "image" | "pdf" | "list", number> = { link: 3, image: 3, pdf: 2, list: 5 };
@@ -195,7 +205,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
       <Link href={`/week/${week.number}`} className="backLink">← Week {week.number}</Link>
 
       <header className="skillHero">
-        <div className="skillIcon large">🎁</div>
+        <div className="skillIcon large"><Icon name="gift" size={72} /></div>
         <div>
           <p className="eyebrow">WEEK {week.number} · EAGER LEARNERS</p>
           <h1>Eager Learners</h1>
@@ -272,7 +282,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
       <section className="activityList">
         {week.extraActivities.length === 0 ? (
           <div className="emptyState compact">
-            <div className="emptyIcon">✨</div>
+            <div className="emptyIcon"><Icon name="sparkle" size={64} /></div>
             <h2>Nothing here yet</h2>
             <p>Check back soon — new activities will appear here.</p>
           </div>
@@ -280,7 +290,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
           week.extraActivities.map((activity, index) => {
             return (
               <article className="activityCard" key={activity.id}>
-                <div className="activityIndex">{iconFor(activity.resourceType)}</div>
+                <div className="activityIndex"><Icon name={iconNameFor(activity.resourceType)} size={30} /></div>
                 <div className="activityBody">
                   <span className="activityType">ACTIVITY {index + 1}</span>
                   <h2>{activity.title}</h2>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { team } from "@/lib/team";
+import Icon from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +18,7 @@ export default function AboutPage() {
 
       <details className="infoCard aboutCard aboutFold">
         <summary className="aboutFoldSummary">
-          <span className="infoIcon">💬</span>
+          <span className="infoIcon"><Icon name="chat" size={48} /></span>
           <div className="infoCardBody">
             <p className="infoLabel">WELCOME</p>
             <h2>Welcome to TED ANK 5, your English 2 Weekly Hub!</h2>
@@ -40,7 +41,7 @@ export default function AboutPage() {
 
       <details className="infoCard aboutCard materialsCard aboutFold">
         <summary className="aboutFoldSummary">
-          <span className="infoIcon">🎒</span>
+          <span className="infoIcon"><Icon name="backpack" size={48} /></span>
           <div className="infoCardBody">
             <p className="infoLabel">WHAT YOU NEED</p>
             <h2>Our Grade 5 Materials</h2>
@@ -51,21 +52,21 @@ export default function AboutPage() {
           <p className="infoText">Please bring these to every English 2 lesson:</p>
           <ul className="materialsList">
             <li className="materialsItem">
-              <span className="materialsIcon" aria-hidden="true">📚</span>
+              <span className="materialsIcon"><Icon name="books" size={32} /></span>
               <div>
                 <h3>Curious Kids books</h3>
                 <p>The <strong>Pupil&apos;s Book</strong> and the <strong>Activity Book</strong>.</p>
               </div>
             </li>
             <li className="materialsItem">
-              <span className="materialsIcon" aria-hidden="true">📓</span>
+              <span className="materialsIcon"><Icon name="notebook" size={32} /></span>
               <div>
                 <h3>A lined notebook</h3>
                 <p>Just for English 2, so all your work stays together.</p>
               </div>
             </li>
             <li className="materialsItem">
-              <span className="materialsIcon" aria-hidden="true">📖</span>
+              <span className="materialsIcon"><Icon name="libraryBook" size={32} /></span>
               <div>
                 <h3>A library book</h3>
                 <p>
@@ -75,7 +76,7 @@ export default function AboutPage() {
               </div>
             </li>
             <li className="materialsItem">
-              <span className="materialsIcon" aria-hidden="true">📝</span>
+              <span className="materialsIcon"><Icon name="review" size={32} /></span>
               <div>
                 <h3>A book review form</h3>
                 <p>

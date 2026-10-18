@@ -6,6 +6,7 @@ import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { LibraryAddBar, ResourceAdmin } from "@/components/ResourceAdmin";
 import { LibraryLink } from "@/lib/courseData";
 import { normalizeUrl } from "@/lib/normalizeUrl";
+import Icon from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
@@ -62,7 +63,7 @@ export default async function ResourcesPage() {
 
       {items.length === 0 ? (
         <div className="emptyState compact">
-          <div className="emptyIcon">📖</div>
+          <div className="emptyIcon"><Icon name="book" size={64} /></div>
           <h2>No resources added yet</h2>
           <p>{isEditor ? "Add your first resource above." : "Resources will show up here."}</p>
         </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Week, getLatestPublishedWeek } from "@/lib/courseData";
 import EditModeToggle from "./EditModeToggle";
 import TedAnk5Logo from "./TedAnk5Logo";
+import Icon from "./Icon";
 
 const terms = [
   { start: 0, count: 19, name: "Semester 1", emoji: "📘", tint: "tintBlue" },
@@ -149,19 +150,19 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         <div className="heroRight">
           <nav className="dashboardSidebarNav">
             <Link href="/completed" className="dashboardSidebarLink navGreen">
-              <span className="navIcon" aria-hidden="true">✅</span> Completed Weeks
+              <span className="navIcon"><Icon name="check" size={24} /></span> Completed Weeks
             </Link>
             <Link href="/vocabulary" className="dashboardSidebarLink navPink">
-              <span className="navIcon" aria-hidden="true">🔤</span> Vocabulary
+              <span className="navIcon"><Icon name="abc" size={24} /></span> Vocabulary
             </Link>
             <Link href="/extra-activities" className="dashboardSidebarLink navOrange">
-              <span className="navIcon" aria-hidden="true">🎁</span> Extra Activities
+              <span className="navIcon"><Icon name="gift" size={24} /></span> Extra Activities
             </Link>
             <Link href="/resources" className="dashboardSidebarLink navBlue">
-              <span className="navIcon" aria-hidden="true">📖</span> Resources
+              <span className="navIcon"><Icon name="book" size={24} /></span> Resources
             </Link>
             <Link href="/about" className="dashboardSidebarLink navPurple">
-              <span className="navIcon" aria-hidden="true">💬</span> About Us
+              <span className="navIcon"><Icon name="chat" size={24} /></span> About Us
             </Link>
           </nav>
           <div className="dashboardSearch">

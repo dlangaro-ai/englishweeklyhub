@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Week } from "@/lib/courseData";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle, imageAlignStyle } from "@/lib/imageSize";
+import Icon from "./Icon";
 
 // The "This Week" folder page: the full weekly message, with a way back.
 export default function SummaryView({ week }: { week: Week }) {
@@ -40,7 +41,7 @@ export default function SummaryView({ week }: { week: Week }) {
           </article>
         ) : (
           <div className="emptyState compact">
-            <div className="emptyIcon">✨</div>
+            <div className="emptyIcon"><Icon name="sparkle" size={64} /></div>
             <h2>Nothing added yet</h2>
             <p>Check back soon for this week&apos;s update.</p>
           </div>

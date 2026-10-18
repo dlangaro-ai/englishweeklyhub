@@ -6,6 +6,7 @@ import ImageSizeControl from "./ImageSizeControl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle, imageAlignStyle, ImageAlign } from "@/lib/imageSize";
 import { goToNextCard } from "@/lib/cardNav";
+import Icon from "./Icon";
 
 // The "This Week" card on the week page. The message is shown directly on
 // the card; the teacher edits it in place.
@@ -44,7 +45,7 @@ export default function SummaryCard({
       className="infoCard summaryCard cardClickable"
       onClick={!editable.editing ? (event) => goToNextCard(event, "books") : undefined}
     >
-      <span className="infoIcon">✨</span>
+      <span className="infoIcon"><Icon name="sparkle" size={48} /></span>
       <div className="infoCardBody">
         <div className="infoCardHead">
           <p className="infoLabel">THIS WEEK</p>

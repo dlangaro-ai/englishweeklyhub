@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEditableField } from "./useEditableField";
 import EditFormBody from "./EditFormBody";
 import { imageWidthStyle } from "@/lib/imageSize";
+import Icon from "./Icon";
 
 export default function BonusCard({
   weekNumber,
@@ -31,7 +32,7 @@ export default function BonusCard({
 
   return (
     <div id="bonus" className="infoCard skillsFolder">
-      <span className="infoIcon">🎁</span>
+      <span className="infoIcon"><Icon name="gift" size={48} /></span>
       <div className="infoCardBody">
         <div className="infoCardHead">
           <p className="infoLabel">EAGER LEARNERS</p>

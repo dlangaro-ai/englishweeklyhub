@@ -7,10 +7,11 @@ import ImageSizeControl from "./ImageSizeControl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle } from "@/lib/imageSize";
 import { goToNextCard } from "@/lib/cardNav";
+import Icon, { IconName } from "./Icon";
 
 type EditableSectionProps = {
   weekNumber: number;
-  icon: string;
+  icon: IconName;
   label: string;
   heading: string;
   field: string;
@@ -71,7 +72,7 @@ export default function EditableSection({
       className={`infoCard cardClickable ${cardClassName ?? ""}`}
       onClick={!editable.editing && nextAnchor ? (event) => goToNextCard(event, nextAnchor) : undefined}
     >
-      <span className="infoIcon">{icon}</span>
+      <span className="infoIcon"><Icon name={icon} size={48} /></span>
       <div className="infoCardBody">
         <div className="infoCardHead">
           <p className="infoLabel">{label}</p>

@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { getAllWeeks } from "@/lib/getWeeks";
 import { getLatestPublishedWeek } from "@/lib/courseData";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
+import Icon from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
@@ -32,7 +33,7 @@ export default async function ExtraActivitiesPage() {
 
       {weeksWithActivities.length === 0 ? (
         <div className="emptyState compact">
-          <div className="emptyIcon">🎁</div>
+          <div className="emptyIcon"><Icon name="gift" size={64} /></div>
           <h2>No extra activities yet</h2>
           <p>Activities added to any week&apos;s Eager Learners page will show up here.</p>
         </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllWeeks } from "@/lib/getWeeks";
 import { getLatestPublishedWeek } from "@/lib/courseData";
+import Icon from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +24,7 @@ export default async function CompletedWeeksPage() {
 
       {completedWeeks.length === 0 ? (
         <div className="emptyState compact">
-          <div className="emptyIcon">✅</div>
+          <div className="emptyIcon"><Icon name="check" size={64} /></div>
           <h2>No weeks published yet</h2>
           <p>Weeks you publish will show up here.</p>
         </div>

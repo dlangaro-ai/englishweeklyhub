@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { loadVocabulary } from "@/lib/vocabulary";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { VocabularyAddBar, VocabularyAdmin } from "@/components/VocabularyAdmin";
+import Icon from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
@@ -40,7 +41,7 @@ export default async function VocabularyPage() {
 
       {items.length === 0 ? (
         <div className="emptyState compact">
-          <div className="emptyIcon">🔤</div>
+          <div className="emptyIcon"><Icon name="abc" size={64} /></div>
           <h2>No vocabulary PDFs yet</h2>
           <p>{isEditor ? "Upload your first PDF above." : "Vocabulary PDFs will show up here."}</p>
         </div>
@@ -49,7 +50,7 @@ export default async function VocabularyPage() {
           {items.map((item, index) => (
             <li key={item.id} className={`vocabRow ${TINTS[index % TINTS.length]}`}>
               <a href={item.href} target="_blank" rel="noreferrer" className="vocabRowLink">
-                <span className="vocabRowIcon" aria-hidden="true">📄</span>
+                <span className="vocabRowIcon"><Icon name="pdf" size={28} /></span>
                 <span className="vocabRowTitle">{item.title}</span>
                 <span className="vocabRowBadge">PDF</span>
               </a>

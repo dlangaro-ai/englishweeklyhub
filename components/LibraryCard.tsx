@@ -12,6 +12,7 @@ import { normalizeUrl } from "@/lib/normalizeUrl";
 import Link from "next/link";
 import AddResourceForm from "./AddResourceForm";
 import EditResourceForm from "./EditResourceForm";
+import Icon from "./Icon";
 
 const MAX_LINKS = 12;
 
@@ -179,7 +180,7 @@ export default function LibraryCard({
       className="infoCard infoCardLibrary cardClickable"
       onClick={!editingText && !pickerOpen ? (event) => goToNextCard(event, "summary") : undefined}
     >
-      <span className="infoIcon">📖</span>
+      <span className="infoIcon"><Icon name="book" size={48} /></span>
       <div className="infoCardBody">
         <div className="infoCardHead">
           <p className="infoLabel">RESOURCES</p>
