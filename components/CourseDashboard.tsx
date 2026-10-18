@@ -147,6 +147,23 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
           </p>
         </div>
         <div className="heroRight">
+          <nav className="dashboardSidebarNav">
+            <Link href="/completed" className="dashboardSidebarLink">
+              <span aria-hidden="true">✅</span> Completed Weeks
+            </Link>
+            <Link href="/vocabulary" className="dashboardSidebarLink">
+              <span aria-hidden="true">🔤</span> Vocabulary
+            </Link>
+            <Link href="/extra-activities" className="dashboardSidebarLink">
+              <span aria-hidden="true">🎁</span> Extra Activities
+            </Link>
+            <Link href="/resources" className="dashboardSidebarLink">
+              <span aria-hidden="true">📖</span> Resources
+            </Link>
+            <Link href="/about" className="dashboardSidebarLink">
+              <span aria-hidden="true">💬</span> About Us
+            </Link>
+          </nav>
           <div className="dashboardSearch">
             <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
             <input
@@ -168,23 +185,6 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
               </button>
             )}
           </div>
-          <nav className="dashboardSidebarNav">
-            <Link href="/resources" className="dashboardSidebarLink">
-              <span aria-hidden="true">📖</span> Resources
-            </Link>
-            <Link href="/vocabulary" className="dashboardSidebarLink">
-              <span aria-hidden="true">🔤</span> Vocabulary
-            </Link>
-            <Link href="/completed" className="dashboardSidebarLink">
-              <span aria-hidden="true">✅</span> Completed Weeks
-            </Link>
-            <Link href="/extra-activities" className="dashboardSidebarLink">
-              <span aria-hidden="true">🎁</span> Extra Activities
-            </Link>
-            <Link href="/about" className="dashboardSidebarLink">
-              <span aria-hidden="true">💬</span> About Us
-            </Link>
-          </nav>
           <div className="heroProgress">
             <div className="heroProgressTrack">
               <div
