@@ -1298,6 +1298,73 @@ a.searchResultLink:hover {
 
 .libraryAddBar { margin-top: 20px; }
 
+.vocabList {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vocabRow {
+  --res: var(--blue);
+  padding: 8px;
+  border: 2px solid color-mix(in srgb, var(--res) 30%, transparent);
+  border-left: 8px solid var(--res);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--res) 8%, var(--card));
+}
+
+.vocabRow.resBlue { --res: var(--blue); }
+.vocabRow.resSun { --res: var(--sunny); }
+.vocabRow.resPink { --res: var(--pink); }
+.vocabRow.resPurple { --res: var(--accent); }
+
+.vocabRowLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 6px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.vocabRowLink:hover .vocabRowTitle { text-decoration: underline; }
+
+.vocabRowIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--card);
+  font-size: 20px;
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--res) 35%, transparent);
+}
+
+.vocabRowTitle {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+.vocabRowBadge {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--card);
+  color: color-mix(in srgb, var(--res) 65%, var(--ink));
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.vocabRow .resourceAdmin { margin: 8px 6px 2px; }
+
 .libraryPicker { margin-top: 4px; }
 
 .libraryPickList {

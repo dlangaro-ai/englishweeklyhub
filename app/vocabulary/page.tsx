@@ -45,22 +45,15 @@ export default async function VocabularyPage() {
           <p>{isEditor ? "Upload your first PDF above." : "Vocabulary PDFs will show up here."}</p>
         </div>
       ) : (
-        <ul className="resourcesPageGrid">
+        <ul className="vocabList">
           {items.map((item, index) => (
-            <li key={item.id}>
-              <div className={`resourceCard ${TINTS[index % TINTS.length]}`}>
-                <a href={item.href} target="_blank" rel="noreferrer" className="resourceCardLink">
-                  <div className="resourceCardTop">
-                    <span className="resourceBadge">
-                      <span aria-hidden="true">📄</span> PDF
-                    </span>
-                    <span className="resourceWeek">VOCABULARY</span>
-                  </div>
-                  <div className="resourceIcon" aria-hidden="true">🔤</div>
-                  <h3 className="resourceTitle">{item.title}</h3>
-                </a>
-                {isEditor && <VocabularyAdmin item={item} />}
-              </div>
+            <li key={item.id} className={`vocabRow ${TINTS[index % TINTS.length]}`}>
+              <a href={item.href} target="_blank" rel="noreferrer" className="vocabRowLink">
+                <span className="vocabRowIcon" aria-hidden="true">📄</span>
+                <span className="vocabRowTitle">{item.title}</span>
+                <span className="vocabRowBadge">PDF</span>
+              </a>
+              {isEditor && <VocabularyAdmin item={item} />}
             </li>
           ))}
         </ul>
