@@ -1107,23 +1107,49 @@ a.searchResultLink:hover {
   min-height: 180px;
 }
 
-.infoIcon { flex: 0 0 auto; font-size: 34px; }
+
+.infoIcon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tint) 16%, var(--card));
+  font-size: 34px;
+}
 
 .infoLabel {
   display: inline-flex;
   align-items: center;
   width: fit-content;
-  margin: 0 0 7px;
-  padding: 5px 14px;
+  margin: 0 0 8px;
+  padding: 6px 16px;
   border-radius: 999px;
-  background: var(--lavender);
-  color: var(--navy);
-  font-size: 11px;
+  background: color-mix(in srgb, var(--tint) 78%, var(--ink));
+  color: #fff;
+  font-size: 14px;
   font-weight: 900;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
 }
 
-.infoCard h2 { margin: 0 0 10px; font-size: 23px; }
+.infoCard h2 {
+  margin: 0 0 12px;
+  font-size: 32px;
+  line-height: 1.15;
+  color: color-mix(in srgb, var(--tint) 55%, var(--ink));
+}
+
+/* One colour per card on the week page. */
+.infoCard {
+  --tint: var(--accent);
+  border-top: 6px solid var(--tint);
+}
+.summaryCard { --tint: var(--accent); }
+.infoCardBooks { --tint: var(--blue); }
+.infoCardHomework { --tint: var(--orange); }
+.infoCard.skillsFolder { --tint: var(--pink); }
+.infoCardLibrary { --tint: var(--success); }
 
 .infoText, .simpleList {
   color: var(--muted);
@@ -1198,14 +1224,14 @@ a.searchResultLink:hover {
   font-weight: 800;
 }
 
-.infoCardBooks { border-color: #d6e8fe; }
+.infoCardBooks { border-color: #d6e8fe; border-top-color: var(--tint); }
 
 .bookExtraImage { margin-top: 14px; }
 .bookExtraImage .editImageButtons { margin-top: 10px; }
 
-.infoCardHomework { border-color: #fbe0bd; }
+.infoCardHomework { border-color: #fbe0bd; border-top-color: var(--tint); }
 
-.infoCardLibrary { border-color: #c9ecdc; }
+.infoCardLibrary { border-color: #c9ecdc; border-top-color: var(--tint); }
 
 .libraryLinksList {
   margin: 14px 0 0;
