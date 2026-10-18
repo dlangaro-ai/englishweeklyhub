@@ -1175,6 +1175,61 @@ a.searchResultLink:hover {
   color: var(--navy);
 }
 
+.materialsCard {
+  --tint: var(--orange);
+  margin-top: 18px;
+  background: linear-gradient(160deg, #ffffff 0%, var(--orange-soft) 140%);
+}
+
+.materialsList {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.materialsItem {
+  --res: var(--blue);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 2px solid color-mix(in srgb, var(--res) 30%, transparent);
+  border-left: 8px solid var(--res);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--res) 8%, var(--card));
+}
+
+.materialsItem:nth-child(2) { --res: var(--success); }
+.materialsItem:nth-child(3) { --res: var(--pink); }
+
+.materialsIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--card);
+  font-size: 26px;
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--res) 35%, transparent);
+}
+
+.materialsItem h3 {
+  margin: 0 0 2px;
+  font-size: 20px;
+  color: color-mix(in srgb, var(--res) 55%, var(--ink));
+}
+
+.materialsItem p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.materialsItem strong { color: var(--navy); }
+
 .aboutClosing {
   margin: 20px 0 0;
   padding-top: 16px;

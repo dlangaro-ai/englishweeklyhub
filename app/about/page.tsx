@@ -33,6 +33,41 @@ export default function AboutPage() {
         </div>
       </article>
 
+      <article className="infoCard aboutCard materialsCard">
+        <span className="infoIcon">🎒</span>
+        <div className="infoCardBody">
+          <p className="infoLabel">WHAT YOU NEED</p>
+          <h2>Our Grade 5 Materials</h2>
+          <p className="infoText">Please bring these to every English lesson:</p>
+          <ul className="materialsList">
+            <li className="materialsItem">
+              <span className="materialsIcon" aria-hidden="true">📚</span>
+              <div>
+                <h3>Curious Kids books</h3>
+                <p>The <strong>Pupil&apos;s Book</strong> and the <strong>Activity Book</strong>.</p>
+              </div>
+            </li>
+            <li className="materialsItem">
+              <span className="materialsIcon" aria-hidden="true">📓</span>
+              <div>
+                <h3>A lined notebook</h3>
+                <p>Just for English, so all your work stays together.</p>
+              </div>
+            </li>
+            <li className="materialsItem">
+              <span className="materialsIcon" aria-hidden="true">📖</span>
+              <div>
+                <h3>A library book</h3>
+                <p>
+                  For reading time, always keep a book from the library with you. When you finish it,
+                  get a new one!
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
       <div className="aboutAvatars">
         {team.map((member) => (
           <a className="aboutAvatar" href={`mailto:${member.email}`} title={member.email} key={member.name}>
