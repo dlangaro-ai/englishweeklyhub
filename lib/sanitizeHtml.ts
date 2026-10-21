@@ -31,8 +31,12 @@ export function sanitizeRichText(html: string): string {
     if (closing) return `</${tag}>`;
 
     const styleMatch = /style\s*=\s*"([^"]*)"/i.exec(attrs) ?? /style\s*=\s*'([^']*)'/i.exec(attrs);
+    // Font names with spaces arrive as &quot;Comic Sans MS&quot;; turn those
+    // into plain single quotes first, or the ";" inside &quot; splits them.
     const safeDeclarations = styleMatch
       ? styleMatch[1]
+          .replace(/&quot;/g, "'")
+          .replace(/&#39;/g, "'")
           .split(";")
           .map((decl) => decl.trim())
           .filter(Boolean)
