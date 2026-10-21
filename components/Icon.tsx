@@ -181,6 +181,16 @@ const ICONS = {
     </>
   ),
   star: <path d={starPath(24, 25, 18)} fill={YELLOW} />,
+  megaphone: (
+    <>
+      <path d="M38 13c3 3 4.5 7 4.5 11s-1.5 8-4.5 11" fill="none" stroke={ORANGE} strokeWidth="2.5" />
+      <path d="M41.5 8.5c4 4 6 9.5 6 15.5" fill="none" stroke={ORANGE} strokeWidth="2.2" opacity="0.6" />
+      <path d="M12 30l4 11a3 3 0 0 0 4 1.8l2-.8a3 3 0 0 0 1.7-3.8L21 31" fill={BLUE} />
+      <path d="M6 20h8l18-10v28L14 28H6a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2z" fill={YELLOW} />
+      <rect x="31" y="8" width="5" height="32" rx="2.5" fill={RED} />
+      <path d="M9 23h4" stroke={WHITE} strokeWidth="2.5" opacity="0.8" />
+    </>
+  ),
   calendar: (
     <>
       <rect x="6" y="10" width="36" height="32" rx="5" fill={WHITE} />
