@@ -19,7 +19,7 @@ export default async function ExtraActivitiesPage() {
 
   return (
     <main className="shell narrow">
-      <Link href="/" className="backLink">← All weeks</Link>
+      <Link href="/" className="backLink">← Home</Link>
 
       <header className="weekHero simpleWeekHero heroOrange">
         <div>

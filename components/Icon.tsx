@@ -181,6 +181,17 @@ const ICONS = {
     </>
   ),
   star: <path d={starPath(24, 25, 18)} fill={YELLOW} />,
+  calendar: (
+    <>
+      <rect x="6" y="10" width="36" height="32" rx="5" fill={WHITE} />
+      <path d="M6 15a5 5 0 0 1 5-5h26a5 5 0 0 1 5 5v5H6z" fill={RED} />
+      <path d="M15 6v8M33 6v8" strokeWidth="3.5" />
+      {[14, 24, 34].map((x) => [27, 35].map((y) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r="2.2" fill={BLUE} stroke="none" />
+      )))}
+      <path d={starPath(34, 35, 5.5)} fill={YELLOW} strokeWidth="2" />
+    </>
+  ),
   lock: (
     <>
       <path d="M16 22v-6a8 8 0 0 1 16 0v6" fill="none" strokeWidth="4" />

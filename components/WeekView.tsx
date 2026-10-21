@@ -19,7 +19,7 @@ export default function WeekView({
 }) {
   return (
     <main className="shell narrow">
-      <Link href="/" className="backLink">← All weeks</Link>
+      <Link href="/weeks" className="backLink">← All weeks</Link>
 
       <header className="weekHero simpleWeekHero">
         <div>

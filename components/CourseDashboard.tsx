@@ -2,18 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Week, getLatestPublishedWeek } from "@/lib/courseData";
+import { Week } from "@/lib/courseData";
 import EditModeToggle from "./EditModeToggle";
 import TedAnk5Logo from "./TedAnk5Logo";
 import Icon, { IconName } from "./Icon";
 
-const terms = [
-  { start: 0, count: 19, name: "Semester 1", emoji: "📘", tint: "tintBlue" },
-  { start: 19, count: 2, name: "Winter Break", emoji: "❄️", tint: "tintIce" },
-  { start: 21, count: 20, name: "Semester 2", emoji: "📗", tint: "tintSun" }
-];
 
 const HOME_TABS: { href: string; label: string; icon: IconName; tint: string }[] = [
+  { href: "/weeks", label: "All Weeks", icon: "calendar", tint: "navYellow" },
   { href: "/completed", label: "Completed Weeks", icon: "check", tint: "navGreen" },
   { href: "/vocabulary", label: "Vocabulary", icon: "abc", tint: "navPink" },
   { href: "/extra-activities", label: "Extra Activities", icon: "gift", tint: "navOrange" },
@@ -94,7 +90,6 @@ function highlight(text: string, query: string) {
 export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
   const [query, setQuery] = useState("");
   const readyCount = weeks.filter((week) => week.published).length;
-  const latestPublishedWeek = getLatestPublishedWeek(weeks);
 
   const trimmed = query.trim().toLowerCase();
 
@@ -111,40 +106,6 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         })
         .slice(0, 40)
     : [];
-  const hitWeeks = new Set(hits.map((hit) => hit.week));
-
-  function renderWeekCard(week: Week, tint: string) {
-    const clickable = week.published || isEditor;
-    const publishedState = week.published
-      ? week.number === latestPublishedWeek
-        ? " weekCardCurrent"
-        : " weekCardPast"
-      : "";
-    const cls = `weekCard ${tint}${publishedState}${hitWeeks.has(week.number) ? " weekCardMatch" : ""}`;
-
-    return clickable ? (
-      <Link className={cls} href={`/week/${week.number}`} key={week.number}>
-        <div className="weekTop">
-          <span className="weekNumber">WEEK {week.number}</span>
-          <span className={`weekStatus ${week.published ? "weekStatusReady" : ""}`}>
-            {week.published ? "Open ✓" : "Soon 🔒"}
-          </span>
-        </div>
-        <h3>{week.title}</h3>
-        <p>{week.unit}</p>
-      </Link>
-    ) : (
-      <div className={`${cls} weekCardMuted`} key={week.number}>
-        <div className="weekTop">
-          <span className="weekNumber">WEEK {week.number}</span>
-          <span className="weekStatus">Soon 🔒</span>
-        </div>
-        <h3>{week.title}</h3>
-        <p>{week.unit}</p>
-      </div>
-    );
-  }
-
   return (
     <main className="shell">
       <header className="hero">
@@ -161,7 +122,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
             <span className="heroProgressLabel">🚀 {readyCount}/{weeks.length}</span>
           </div>
           <p className="heroText">
-            Pick your week below to find this week&apos;s topic, books, homework and fun activities!
+            Choose a tab below to find your week, vocabulary, fun activities and more!
           </p>
         </div>
         <div className="heroRight">
@@ -225,18 +186,6 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         </div>
       )}
 
-      {terms.map(({ start, count, name, emoji, tint }) => (
-        <section className="termSection" key={start}>
-          <div className="sectionHeading">
-            <h2><span className="sectionEmoji">{emoji}</span> {name}</h2>
-            <span>Weeks {start + 1}–{start + count}</span>
-          </div>
-
-          <div className="weekGrid">
-            {weeks.slice(start, start + count).map((week) => renderWeekCard(week, tint))}
-          </div>
-        </section>
-      ))}
     </main>
   );
 }

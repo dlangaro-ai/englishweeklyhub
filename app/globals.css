@@ -211,7 +211,7 @@ h1 {
 
 .homeTabs {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin: 26px 0 8px;
 }
@@ -264,18 +264,15 @@ h1 {
 }
 
 .homeTab.navGreen { --tile: var(--success); }
+.homeTab.navYellow { --tile: var(--sunny); }
 .homeTab.navPink { --tile: var(--pink); }
 .homeTab.navOrange { --tile: var(--orange); }
 .homeTab.navBlue { --tile: var(--blue); }
 .homeTab.navPurple { --tile: var(--accent); }
 
-@media (max-width: 900px) {
-  .homeTabs { grid-template-columns: repeat(3, 1fr); row-gap: 22px; }
-}
 
 @media (max-width: 560px) {
   .homeTabs { grid-template-columns: repeat(2, 1fr); gap: 20px 12px; }
-  .homeTab:last-child { grid-column: 1 / -1; }
   .homeTab { min-height: 120px; }
   .homeTabIcon { width: 58px; height: 58px; }
   .homeTabLabel { font-size: 17px; }
@@ -1194,6 +1191,7 @@ a.searchResultLink:hover {
 
 /* Page colours match the homepage menu buttons. */
 .simpleWeekHero.heroGreen { --tint: var(--success); }
+.simpleWeekHero.heroYellow { --tint: var(--sunny); }
 .simpleWeekHero.heroPink { --tint: var(--pink); }
 .simpleWeekHero.heroOrange { --tint: var(--orange); }
 .simpleWeekHero.heroBlue { --tint: var(--blue); }

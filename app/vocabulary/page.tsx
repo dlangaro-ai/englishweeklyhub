@@ -27,7 +27,7 @@ export default async function VocabularyPage() {
 
   return (
     <main className="shell narrow">
-      <Link href="/" className="backLink">← All weeks</Link>
+      <Link href="/" className="backLink">← Home</Link>
 
       <header className="weekHero simpleWeekHero heroPink">
         <div>
