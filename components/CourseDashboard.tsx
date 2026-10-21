@@ -5,12 +5,20 @@ import Link from "next/link";
 import { Week, getLatestPublishedWeek } from "@/lib/courseData";
 import EditModeToggle from "./EditModeToggle";
 import TedAnk5Logo from "./TedAnk5Logo";
-import Icon from "./Icon";
+import Icon, { IconName } from "./Icon";
 
 const terms = [
   { start: 0, count: 19, name: "Semester 1", emoji: "📘", tint: "tintBlue" },
   { start: 19, count: 2, name: "Winter Break", emoji: "❄️", tint: "tintIce" },
   { start: 21, count: 20, name: "Semester 2", emoji: "📗", tint: "tintSun" }
+];
+
+const HOME_TABS: { href: string; label: string; icon: IconName; tint: string }[] = [
+  { href: "/completed", label: "Completed Weeks", icon: "check", tint: "navGreen" },
+  { href: "/vocabulary", label: "Vocabulary", icon: "abc", tint: "navPink" },
+  { href: "/extra-activities", label: "Extra Activities", icon: "gift", tint: "navOrange" },
+  { href: "/resources", label: "Resources", icon: "book", tint: "navBlue" },
+  { href: "/about", label: "About Us", icon: "chat", tint: "navPurple" }
 ];
 
 const stripHtml = (value: string) => value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
@@ -148,23 +156,6 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
           </p>
         </div>
         <div className="heroRight">
-          <nav className="dashboardSidebarNav">
-            <Link href="/completed" className="dashboardSidebarLink navGreen">
-              <span className="navIcon"><Icon name="check" size={24} /></span> Completed Weeks
-            </Link>
-            <Link href="/vocabulary" className="dashboardSidebarLink navPink">
-              <span className="navIcon"><Icon name="abc" size={24} /></span> Vocabulary
-            </Link>
-            <Link href="/extra-activities" className="dashboardSidebarLink navOrange">
-              <span className="navIcon"><Icon name="gift" size={24} /></span> Extra Activities
-            </Link>
-            <Link href="/resources" className="dashboardSidebarLink navBlue">
-              <span className="navIcon"><Icon name="book" size={24} /></span> Resources
-            </Link>
-            <Link href="/about" className="dashboardSidebarLink navPurple">
-              <span className="navIcon"><Icon name="chat" size={24} /></span> About Us
-            </Link>
-          </nav>
           <div className="dashboardSearch">
             <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
             <input
@@ -198,6 +189,15 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
           <EditModeToggle isEditor={isEditor} />
         </div>
       </header>
+
+      <nav className="homeTabs" aria-label="Main menu">
+        {HOME_TABS.map((tab) => (
+          <Link key={tab.href} href={tab.href} className={`homeTab ${tab.tint}`}>
+            <span className="homeTabIcon"><Icon name={tab.icon} size={44} /></span>
+            <span className="homeTabLabel">{tab.label}</span>
+          </Link>
+        ))}
+      </nav>
 
       {trimmed && (
         <div className="searchResults">
