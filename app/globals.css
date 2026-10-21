@@ -377,62 +377,73 @@ a.searchResultLink:hover {
 }
 
 .weekCard {
+  --tint: var(--accent);
+  position: relative;
+  display: block;
   min-height: 190px;
-  padding: 20px;
-  border: 2px solid var(--line);
+  padding: 18px 18px 20px;
+  border: 2px solid color-mix(in srgb, var(--tint) 28%, transparent);
+  border-top: 8px solid var(--tint);
   border-radius: 22px;
-  background: var(--card);
+  background: linear-gradient(160deg, #ffffff 0%, color-mix(in srgb, var(--tint) 16%, #ffffff) 140%);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--tint) 12%, transparent);
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
 }
 
+/* A rainbow of week colours, matching the cards on About Us. */
+.weekCard:nth-child(5n + 2) { --tint: var(--blue); }
+.weekCard:nth-child(5n + 3) { --tint: var(--orange); }
+.weekCard:nth-child(5n + 4) { --tint: var(--pink); }
+.weekCard:nth-child(5n + 5) { --tint: var(--success); }
+
 .weekCard:hover {
   transform: translateY(-4px) rotate(-1deg);
-  box-shadow: 0 14px 34px rgba(28, 36, 67, 0.12);
+  border-color: color-mix(in srgb, var(--tint) 55%, transparent);
+  border-top-color: var(--tint);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--tint) 25%, transparent);
 }
 
 .weekCard:nth-child(even):hover {
   transform: translateY(-4px) rotate(1deg);
 }
 
-.weekCard.tintBlue { border-top: 6px solid var(--blue); border-top-left-radius: 22px; border-top-right-radius: 22px; }
-.weekCard.tintBlue:hover { border-color: var(--blue); }
-.weekCard.tintBlue .weekNumber { color: var(--blue); }
-
-.weekCard.tintSun { border-top: 6px solid var(--sunny); }
-.weekCard.tintSun:hover { border-color: var(--sunny); }
-.weekCard.tintSun .weekNumber { color: #b8860b; }
-
-.weekCard.tintIce { border-top: 6px solid var(--pink); }
-.weekCard.tintIce:hover { border-color: var(--pink); }
-.weekCard.tintIce .weekNumber { color: var(--pink); }
-
+/* The newest open week glows so it's easy to find. */
 .weekCard.weekCardCurrent {
-  border-color: var(--accent);
   border-width: 3px;
-  background: var(--accent-soft);
-  box-shadow: 0 12px 30px rgba(108, 99, 255, 0.22);
+  border-top-width: 8px;
+  border-color: var(--tint);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--tint) 22%, transparent),
+    0 14px 30px color-mix(in srgb, var(--tint) 30%, transparent);
 }
 
-.weekCard.weekCardCurrent:hover {
-  border-color: var(--accent);
-}
-
-.weekCard.weekCardCurrent .weekNumber {
-  color: var(--accent);
+.weekCard.weekCardCurrent::after {
+  content: "★ NOW";
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--sunny);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
 }
 
 .weekCard.weekCardPast {
-  border-color: var(--muted);
-  opacity: 0.82;
+  opacity: 0.92;
 }
 
-.weekCard.weekCardPast:hover {
-  border-color: var(--muted);
+.weekCard.weekCardMatch {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
 .weekCardMuted {
-  opacity: 0.48;
+  opacity: 0.5;
   cursor: default;
+  filter: saturate(0.7);
 }
 
 .weekCardMuted:hover {
@@ -467,8 +478,27 @@ a.searchResultLink:hover {
   color: var(--accent);
 }
 
+.weekCard .weekNumber {
+  width: fit-content;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tint) 78%, var(--ink));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
 .weekStatus {
   color: var(--muted);
+}
+
+.weekCard .weekStatus {
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  font-size: 11px;
+  white-space: nowrap;
 }
 
 .weekStatusReady {
@@ -476,8 +506,10 @@ a.searchResultLink:hover {
 }
 
 .weekCard h3 {
-  margin: 26px 0 8px;
-  font-size: 19px;
+  margin: 22px 0 8px;
+  font-size: 21px;
+  line-height: 1.15;
+  color: color-mix(in srgb, var(--tint) 50%, var(--ink));
 }
 
 .weekCard p,
