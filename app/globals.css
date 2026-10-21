@@ -869,15 +869,42 @@ a.searchResultLink:hover {
 }
 
 .richTextToolbar {
+  position: sticky;
+  top: 8px;
+  z-index: 2;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #f4f5fa;
+}
+
+.richTextGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  padding-right: 8px;
+  border-right: 1px solid var(--line);
+}
+
+.richTextGroup:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.richTextFormatButton.isActive {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
 .richTextToolbar select,
 .richTextToolbar button {
-  padding: 8px 12px;
+  padding: 7px 10px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--card);
