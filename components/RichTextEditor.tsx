@@ -12,21 +12,29 @@ const FONT_SIZES = [
 const TEXT_COLORS = [
   { label: "Red", value: "#e53935" },
   { label: "Orange", value: "#f08a24" },
+  { label: "Gold", value: "#c99700" },
   { label: "Green", value: "#1f9d68" },
+  { label: "Teal", value: "#00897b" },
   { label: "Blue", value: "#2f8fef" },
+  { label: "Navy", value: "#1f2a44" },
   { label: "Purple", value: "#6c63ff" },
-  { label: "Pink", value: "#e84a86" }
+  { label: "Pink", value: "#e84a86" },
+  { label: "Brown", value: "#8d5a3b" },
+  { label: "Grey", value: "#697386" },
+  { label: "Black", value: "#000000" }
 ];
 const HIGHLIGHTS = [
   { label: "Yellow", value: "#fff176" },
   { label: "Green", value: "#c8f7c5" },
   { label: "Blue", value: "#cfe8ff" },
   { label: "Pink", value: "#ffd6e7" },
-  { label: "Orange", value: "#ffe0b2" }
+  { label: "Orange", value: "#ffe0b2" },
+  { label: "Purple", value: "#e4dbfb" }
 ];
 
 type StyleProp = "fontFamily" | "fontSize" | "color" | "backgroundColor";
 type ToggleState = Record<string, boolean>;
+type MenuId = "font" | "size" | "color" | "highlight";
 
 const TOGGLES = [
   "bold",
@@ -61,6 +69,18 @@ export default function RichTextEditor({
   const savedRangeRef = useRef<Range | null>(null);
   const [wordCount, setWordCount] = useState(0);
   const [active, setActive] = useState<ToggleState>({});
+  const [openMenu, setOpenMenu] = useState<MenuId | null>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
+
+  // Close an open menu when clicking anywhere else.
+  useEffect(() => {
+    if (!openMenu) return;
+    function onPointerDown(event: MouseEvent) {
+      if (!toolbarRef.current?.contains(event.target as Node)) setOpenMenu(null);
+    }
+    document.addEventListener("mousedown", onPointerDown);
+    return () => document.removeEventListener("mousedown", onPointerDown);
+  }, [openMenu]);
 
   useEffect(() => {
     const el = editorRef.current;
@@ -267,63 +287,108 @@ export default function RichTextEditor({
     );
   }
 
-  function picker(
-    title: string,
-    prop: StyleProp,
-    resetLabel: string,
-    options: { label: string; value: string }[],
-    swatch?: boolean
-  ) {
+  // Toolbar menus are plain buttons (not <select>s), so clicking them never
+  // takes the cursor out of the text.
+  function menu(id: MenuId, title: string, label: React.ReactNode, panel: React.ReactNode) {
+    const open = openMenu === id;
     return (
-      <select
-        title={title}
-        aria-label={title}
-        value=""
-        onChange={(event) => applyStyle(prop, event.target.value === "reset" ? "" : event.target.value)}
-      >
-        <option value="" disabled>
-          {title}
-        </option>
-        <option value="reset">{resetLabel}</option>
+      <div className="richTextMenu">
+        <button
+          type="button"
+          className={`richTextFormatButton richTextMenuButton${open ? " isActive" : ""}`}
+          title={title}
+          aria-label={title}
+          aria-expanded={open}
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => setOpenMenu(open ? null : id)}
+        >
+          {label} <span aria-hidden="true">▾</span>
+        </button>
+        {open && (
+          <div className="richTextMenuPanel" role="menu" onMouseDown={(event) => event.preventDefault()}>
+            {panel}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  function choose(prop: StyleProp, styleValue: string) {
+    setOpenMenu(null);
+    applyStyle(prop, styleValue);
+  }
+
+  function listPanel(prop: StyleProp, resetLabel: string, options: { label: string; value: string }[]) {
+    return (
+      <>
+        <button type="button" className="richTextMenuItem" onClick={() => choose(prop, "")}>
+          {resetLabel}
+        </button>
         {options.map((option) => (
-          <option
+          <button
             key={option.value}
-            value={option.value}
-            style={
-              swatch
-                ? prop === "color"
-                  ? { color: option.value }
-                  : { backgroundColor: option.value }
-                : prop === "fontFamily"
-                  ? { fontFamily: option.value }
-                  : undefined
-            }
+            type="button"
+            className="richTextMenuItem"
+            style={prop === "fontFamily" ? { fontFamily: option.value } : { fontSize: option.value }}
+            onClick={() => choose(prop, option.value)}
           >
-            {swatch ? "■ " : ""}
             {option.label}
-          </option>
+          </button>
         ))}
-      </select>
+      </>
+    );
+  }
+
+  function swatchPanel(prop: StyleProp, resetLabel: string, colors: { label: string; value: string }[]) {
+    return (
+      <>
+        <div className="richTextSwatches">
+          {colors.map((color) => (
+            <button
+              key={color.value}
+              type="button"
+              className="richTextSwatch"
+              title={color.label}
+              aria-label={color.label}
+              style={{ background: color.value }}
+              onClick={() => choose(prop, color.value)}
+            />
+          ))}
+        </div>
+        <button type="button" className="richTextMenuItem richTextMenuReset" onClick={() => choose(prop, "")}>
+          <span className="richTextSwatch richTextSwatchNone" aria-hidden="true" /> {resetLabel}
+        </button>
+      </>
     );
   }
 
   return (
     <div className="richTextEditor">
-      <div className="richTextToolbar" role="toolbar" aria-label="Text formatting">
+      <div className="richTextToolbar" role="toolbar" aria-label="Text formatting" ref={toolbarRef}>
         <div className="richTextGroup">
           {button("↶", "Undo (Ctrl+Z)", () => run("undo"))}
           {button("↷", "Redo (Ctrl+Y)", () => run("redo"))}
         </div>
         <div className="richTextGroup">
-          {picker("Font", "fontFamily", "Default font", FONT_FAMILIES.map((f) => ({ label: f, value: f })))}
-          {picker("Size", "fontSize", "Normal size", FONT_SIZES)}
+          {menu("font", "Font", "Font", listPanel("fontFamily", "Default font", FONT_FAMILIES.map((f) => ({ label: f, value: f }))))}
+          {menu("size", "Size", "Size", listPanel("fontSize", "Normal size", FONT_SIZES))}
         </div>
         <div className="richTextGroup">
           {button(<strong>B</strong>, "Bold (Ctrl+B)", () => run("bold"), active.bold)}
           {button(<em>I</em>, "Italic (Ctrl+I)", () => run("italic"), active.italic)}
           {button(<span style={{ textDecoration: "underline" }}>U</span>, "Underline (Ctrl+U)", () => run("underline"), active.underline)}
-          {picker("Text colour", "color", "Automatic colour", TEXT_COLORS, true)}
-          {picker("Highlight", "backgroundColor", "No highlight", HIGHLIGHTS, true)}
+          {menu(
+            "color",
+            "Text colour",
+            <span className="richTextColorIcon">A<span style={{ background: "linear-gradient(90deg, #e53935, #f08a24, #1f9d68, #2f8fef, #6c63ff)" }} /></span>,
+            swatchPanel("color", "Automatic", TEXT_COLORS)
+          )}
+          {menu(
+            "highlight",
+            "Highlight",
+            <span className="richTextHighlightIcon">ab</span>,
+            swatchPanel("backgroundColor", "No highlight", HIGHLIGHTS)
+          )}
           {button("⌫ Clear", "Clear formatting", () => run("removeFormat"))}
         </div>
         <div className="richTextGroup">

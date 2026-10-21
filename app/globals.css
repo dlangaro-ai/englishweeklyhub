@@ -2196,3 +2196,104 @@ a.searchResultLink:hover {
 .weekResource:has(.weekResourceTools) .weekResourceLink {
   padding-right: 74px;
 }
+
+/* Rich text editor menus: font / size lists and colour swatches. */
+.richTextMenu {
+  position: relative;
+}
+
+.richTextMenuButton span[aria-hidden="true"] {
+  font-size: 10px;
+  opacity: 0.6;
+}
+
+.richTextMenuPanel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  display: grid;
+  gap: 2px;
+  min-width: 180px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  box-shadow: 0 14px 34px rgba(28, 36, 67, 0.16);
+}
+
+.richTextToolbar .richTextMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.richTextToolbar .richTextMenuItem:hover {
+  background: var(--accent-soft);
+}
+
+.richTextSwatches {
+  display: grid;
+  grid-template-columns: repeat(6, 28px);
+  gap: 8px;
+  padding: 4px 2px 8px;
+}
+
+.richTextToolbar .richTextSwatch {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--line);
+  cursor: pointer;
+  transition: transform 120ms ease;
+}
+
+.richTextToolbar .richTextSwatch:hover {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.richTextToolbar .richTextSwatchNone {
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(135deg, #fff 45%, #e53935 45%, #e53935 55%, #fff 55%);
+}
+
+.richTextMenuReset {
+  border-top: 1px solid var(--line) !important;
+  border-radius: 0 0 8px 8px !important;
+}
+
+.richTextColorIcon {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.richTextColorIcon span {
+  width: 16px;
+  height: 4px;
+  margin-top: 2px;
+  border-radius: 2px;
+}
+
+.richTextHighlightIcon {
+  padding: 0 4px;
+  border-radius: 4px;
+  background: #fff176;
+  font-weight: 800;
+}
