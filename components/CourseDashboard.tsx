@@ -111,7 +111,18 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
       <header className="hero">
         <div className="heroTitleBlock">
           <p className="eyebrow">GRADE 5 ENGLISH · {weeks.length} WEEKS</p>
-          <TedAnk5Logo className="heroLogo" />
+          <a
+            href="#explore"
+            className="heroLogoLink"
+            title="Show this week's news and the menu"
+            onClick={(event) => {
+              event.preventDefault();
+              const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+              document.getElementById("explore")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+            }}
+          >
+            <TedAnk5Logo className="heroLogo" />
+          </a>
           <div className="heroProgress">
             <div className="heroProgressTrack">
               <div
@@ -176,16 +187,18 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         </div>
       )}
 
-      <BreakingNews weeks={weeks} />
+      <div id="explore" className="homeExplore">
+        <BreakingNews weeks={weeks} />
 
-      <nav className="homeTabs" aria-label="Main menu">
-        {HOME_TABS.map((tab) => (
-          <Link key={tab.href} href={tab.href} className={`homeTab ${tab.tint}`}>
-            <span className="homeTabIcon"><Icon name={tab.icon} size={44} /></span>
-            <span className="homeTabLabel">{tab.label}</span>
-          </Link>
-        ))}
-      </nav>
+        <nav className="homeTabs" aria-label="Main menu">
+          {HOME_TABS.map((tab) => (
+            <Link key={tab.href} href={tab.href} className={`homeTab ${tab.tint}`}>
+              <span className="homeTabIcon"><Icon name={tab.icon} size={44} /></span>
+              <span className="homeTabLabel">{tab.label}</span>
+            </Link>
+          ))}
+        </nav>
+      </div>
 
     </main>
   );

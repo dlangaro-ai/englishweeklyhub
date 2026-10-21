@@ -112,6 +112,21 @@ button {
   margin-top: 28px;
 }
 
+.heroLogoLink {
+  display: block;
+  border-radius: 24px;
+  transition: transform 180ms ease;
+}
+
+.heroLogoLink:hover { transform: scale(1.03) rotate(-1deg); }
+
+.heroLogoLink:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.homeExplore { scroll-margin-top: 16px; }
+
 .heroLogo {
   display: block;
   width: 100%;
