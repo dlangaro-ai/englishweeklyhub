@@ -6,6 +6,7 @@ import { Week } from "@/lib/courseData";
 import EditModeToggle from "./EditModeToggle";
 import TedAnk5Logo from "./TedAnk5Logo";
 import Icon, { IconName } from "./Icon";
+import BreakingNews from "./BreakingNews";
 
 
 const HOME_TABS: { href: string; label: string; icon: IconName; tint: string }[] = [
@@ -129,6 +130,8 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
           <EditModeToggle isEditor={isEditor} />
         </div>
       </header>
+
+      <BreakingNews weeks={weeks} />
 
       <nav className="homeTabs" aria-label="Main menu">
         {HOME_TABS.map((tab) => (
