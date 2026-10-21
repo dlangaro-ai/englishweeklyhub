@@ -6,7 +6,7 @@
   padding: 24px 16px 32px;
   text-align: center;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 :root {
@@ -138,9 +138,9 @@ button {
 .eyebrow {
   margin: 0 0 10px;
   color: var(--accent);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.08em;
 }
 
 h1 {
@@ -407,7 +407,7 @@ a.searchResultLink:hover {
 
 .searchResultWhere {
   color: var(--accent);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -514,14 +514,14 @@ a.searchResultLink:hover {
   border-radius: 999px;
   background: var(--sunny);
   color: var(--ink);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 900;
   letter-spacing: 0.08em;
 }
 
 .weekCard.weekCardPast {
-  opacity: 0.7;
-  filter: saturate(0.6);
+  opacity: 0.85;
+  filter: saturate(0.7);
   box-shadow: none;
 }
 
@@ -557,7 +557,7 @@ a.searchResultLink:hover {
 
 .weekTop {
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -566,7 +566,7 @@ a.searchResultLink:hover {
   flex-direction: column;
   gap: 4px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -580,7 +580,7 @@ a.searchResultLink:hover {
   border-radius: 999px;
   background: color-mix(in srgb, var(--tint) 78%, var(--ink));
   color: #fff;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 900;
   letter-spacing: 0.08em;
   white-space: nowrap;
@@ -594,7 +594,7 @@ a.searchResultLink:hover {
   padding: 3px 9px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.85);
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 
@@ -663,7 +663,7 @@ a.searchResultLink:hover {
 
 .progressCircle span {
   margin-top: 3px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -724,7 +724,7 @@ a.searchResultLink:hover {
   background: var(--card);
   color: var(--accent);
   font-weight: 800;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .skillsFolderLink:hover .openLabel {
@@ -743,7 +743,7 @@ a.searchResultLink:hover {
   background: var(--card);
   color: var(--accent);
   font-weight: 800;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .nextCardLink:hover {
@@ -934,7 +934,7 @@ a.searchResultLink:hover {
   border-radius: 999px;
   background: color-mix(in srgb, var(--tint, var(--accent)) 78%, var(--ink));
   color: #fff;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1194,7 +1194,7 @@ a.searchResultLink:hover {
   border-radius: 999px;
   background: color-mix(in srgb, var(--tint) 78%, var(--ink));
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .simpleWeekHero h1 { color: color-mix(in srgb, var(--tint) 35%, var(--ink)); }
@@ -1262,7 +1262,7 @@ a.searchResultLink:hover {
   border-radius: 999px;
   background: var(--accent-soft);
   color: var(--accent);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 900;
   letter-spacing: 0.06em;
 }
@@ -1691,7 +1691,7 @@ a.searchResultLink:hover {
   border-radius: 999px;
   background: var(--card);
   color: color-mix(in srgb, var(--res) 65%, var(--ink));
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -1752,13 +1752,13 @@ a.searchResultLink:hover {
   border-radius: 999px;
   background: var(--lavender);
   color: var(--navy);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
 .resourceWeek {
   color: var(--res);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 900;
   letter-spacing: 0.06em;
 }
@@ -1803,7 +1803,7 @@ a.searchResultLink:hover {
   border-radius: 999px;
   background: var(--accent);
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -2219,7 +2219,7 @@ a.searchResultLink:hover {
 
 .weekResourceKind {
   color: var(--res);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -2396,7 +2396,7 @@ a.searchResultLink:hover {
   border-radius: 999px;
   background: #e8590c;
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 900;
   letter-spacing: 0.1em;
 }
@@ -2457,10 +2457,37 @@ a.searchResultLink:hover {
 
 /* Headlines gliding along the bottom of the Big News card. */
 .newsTicker {
-  overflow: hidden;
+  display: flex;
+  align-items: center;
   border-top: 2px dashed #ffe08a;
   background: rgba(255, 246, 214, 0.75);
 }
+
+.newsTickerWindow {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.newsTickerToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  margin: 6px 10px;
+  padding: 7px 14px;
+  border: 2px solid #f2c94c;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.newsTickerToggle:hover { background: #fff4d6; }
+
+.newsTicker.isPaused .newsTickerTrack { animation-play-state: paused; }
 
 .newsTickerTrack {
   display: flex;

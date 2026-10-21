@@ -38,7 +38,7 @@ export default async function CompletedWeeksPage() {
               <Link className={`weekCard ${state}`} href={`/week/${week.number}`} key={week.number}>
                 <div className="weekTop">
                   <span className="weekNumber">WEEK {week.number}</span>
-                  <span className="weekStatus weekStatusReady">Open ✓</span>
+                  <span className="weekStatus weekStatusReady">Open <span aria-hidden="true">✓</span></span>
                 </div>
                 <h3>{week.title}</h3>
                 <p>{week.unit}</p>

@@ -35,7 +35,7 @@ export default function BonusCard({
       <span className="infoIcon"><Icon name="gift" size={48} /></span>
       <div className="infoCardBody">
         <div className="infoCardHead">
-          <p className="infoLabel">EAGER LEARNERS</p>
+          <p className="infoLabel">EXTRA ACTIVITIES</p>
           {isEditor && !editable.editing && (
             <button className="editButton" type="button" onClick={editable.startEdit}>
               ✏️ Edit
@@ -45,13 +45,13 @@ export default function BonusCard({
 
         {editable.editing ? (
           <>
-            <h2>Eager Learners</h2>
+            <h2>Extra Activities</h2>
             <EditFormBody editable={editable} isList={false} />
           </>
         ) : (
           <>
             <Link href={`/week/${weekNumber}/skills`} className="skillsFolderLink">
-              <h2>Eager Learners</h2>
+              <h2>Extra Activities</h2>
               <p className="infoText">{text}</p>
               {image && (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -65,7 +65,7 @@ export default function BonusCard({
                   }}
                 />
               )}
-              <span className="openLabel">Open folder</span>
+              <span className="openLabel">See the activities →</span>
             </Link>
           </>
         )}

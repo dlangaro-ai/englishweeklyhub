@@ -58,12 +58,12 @@ function weekHits(week: Week, query: string): SearchHit[] {
   add("This week", stripHtml(week.summary), `${weekHref}/this-week`);
   add("Books", stripHtml(week.books), `${weekHref}#books`);
   add("Homework", stripHtml(week.homework), `${weekHref}#homework`);
-  add("Bonus", week.bonusText, `${weekHref}#bonus`);
+  add("Extra Activities", week.bonusText, `${weekHref}#bonus`);
   add("Resources", stripHtml(week.libraryText), `${weekHref}#library`);
   (week.libraryLinks ?? []).forEach((link) => add("Resources", link.title, `${weekHref}#library`));
   week.extraActivities.forEach((activity) => {
-    add("Eager Learners", activity.title, `${weekHref}/skills`);
-    add("Eager Learners", stripHtml(activity.description ?? ""), `${weekHref}/skills`);
+    add("Extra Activities", activity.title, `${weekHref}/skills`);
+    add("Extra Activities", stripHtml(activity.description ?? ""), `${weekHref}/skills`);
   });
 
   return hits;
@@ -130,7 +130,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
                 style={{ width: `${weeks.length ? (readyCount / weeks.length) * 100 : 0}%` }}
               />
             </div>
-            <span className="heroProgressLabel">🚀 {readyCount}/{weeks.length}</span>
+            <span className="heroProgressLabel"><span aria-hidden="true">🚀 </span>{readyCount} of {weeks.length} weeks open</span>
           </div>
           <p className="heroText">
             Choose a tab below to find your week, vocabulary, fun activities and more!

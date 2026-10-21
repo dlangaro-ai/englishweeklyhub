@@ -4,7 +4,7 @@ import { useState } from "react";
 import RichTextEditor from "./RichTextEditor";
 import { listActivityToHtml } from "@/lib/sanitizeHtml";
 
-// Rich-text editor for a "list" Eager Learners activity. Seeds from either the
+// Rich-text editor for a "list" extra activity. Seeds from either the
 // legacy "one item per line" text or previously-saved HTML.
 export default function ListActivityEditor({
   initialText,

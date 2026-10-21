@@ -33,7 +33,7 @@ export default function AboutPage() {
           <p className="infoText">
             As you know, all official information is available on <strong>ETED</strong>. This
             page is designed to give you a simple overview of your English 2 lessons, along with extra
-            activities for eager learners, useful resources, and important reminders.
+            activities, useful resources, and important reminders.
           </p>
           <p className="aboutClosing">We hope you find it helpful and enjoy exploring! ✨</p>
         </div>

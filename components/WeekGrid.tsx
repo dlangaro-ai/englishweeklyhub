@@ -26,7 +26,7 @@ export default function WeekGrid({ weeks, isEditor }: { weeks: Week[]; isEditor:
         <div className="weekTop">
           <span className="weekNumber">WEEK {week.number}</span>
           <span className={`weekStatus ${week.published ? "weekStatusReady" : ""}`}>
-            {week.published ? "Open ✓" : "Soon 🔒"}
+            {week.published ? <>Open <span aria-hidden="true">✓</span></> : <>Soon <span aria-hidden="true">🔒</span></>}
           </span>
         </div>
         <h3>{week.title}</h3>
@@ -36,7 +36,7 @@ export default function WeekGrid({ weeks, isEditor }: { weeks: Week[]; isEditor:
       <div className={`${cls} weekCardMuted`} key={week.number}>
         <div className="weekTop">
           <span className="weekNumber">WEEK {week.number}</span>
-          <span className="weekStatus">Soon 🔒</span>
+          <span className="weekStatus">Soon <span aria-hidden="true">🔒</span></span>
         </div>
         <h3>{week.title}</h3>
         <p>{week.unit}</p>
