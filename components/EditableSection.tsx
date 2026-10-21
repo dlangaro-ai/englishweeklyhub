@@ -159,7 +159,7 @@ export default function EditableSection({
               <img
                 className="bookImage"
                 src={image}
-                alt=""
+                alt={`Picture for ${heading}`}
                 style={imageWidthStyle(imageWidth)}
                 onError={(event) => {
                   event.currentTarget.style.display = "none";

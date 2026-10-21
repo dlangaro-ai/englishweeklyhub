@@ -33,7 +33,7 @@ export default function SummaryView({ week }: { week: Week }) {
                 <img
                   className="bookImage"
                   src={week.summaryImage}
-                  alt=""
+                  alt="Picture for this week"
                   style={{ ...imageWidthStyle(week.summaryImageWidth), ...imageAlignStyle(week.summaryImageAlign) }}
                 />
               )}

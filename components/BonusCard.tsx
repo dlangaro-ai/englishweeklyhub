@@ -58,7 +58,7 @@ export default function BonusCard({
                 <img
                   className="bookImage"
                   src={image}
-                  alt=""
+                  alt="Picture for this week's extra activities"
                   style={imageWidthStyle(imageWidth)}
                   onError={(event) => {
                     event.currentTarget.style.display = "none";

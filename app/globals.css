@@ -2469,3 +2469,16 @@ a.searchResultLink:hover {
   .bigNewsIcon { width: 72px; height: 72px; }
   .bigNewsTitle { font-size: 26px; }
 }
+
+/* Hidden on screen, still read out by screen readers. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

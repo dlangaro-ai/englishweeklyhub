@@ -112,7 +112,7 @@ export default function SummaryCard({
               <img
                 className="bookImage"
                 src={image}
-                alt=""
+                alt="Picture for this week"
                 style={{ ...imageWidthStyle(imageWidth), ...imageAlignStyle(imageAlign) }}
                 onError={(event) => {
                   event.currentTarget.style.display = "none";

@@ -89,7 +89,7 @@ export default function BookExtraImage({
     <div className="bookExtraImage">
       {image && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={image} alt="" className="bookImage" style={imageWidthStyle(imageWidth)} />
+        <img src={image} alt="Book pages for this week" className="bookImage" style={imageWidthStyle(imageWidth)} />
       )}
       {isEditor && (
         <div className="editImageButtons">

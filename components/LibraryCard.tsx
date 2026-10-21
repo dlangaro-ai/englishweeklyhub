@@ -220,7 +220,7 @@ export default function LibraryCard({
           <img
             className="bookImage"
             src={image}
-            alt=""
+            alt="Picture for this week's resources"
             style={imageWidthStyle(imageWidth)}
             onError={(event) => {
               event.currentTarget.style.display = "none";

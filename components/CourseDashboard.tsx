@@ -110,6 +110,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
     <main className="shell">
       <header className="hero">
         <div className="heroTitleBlock">
+          <h1 className="srOnly">TEDANK5 — My English Hub</h1>
           <p className="eyebrow">GRADE 5 ENGLISH · {weeks.length} WEEKS</p>
           <a
             href="#explore"
