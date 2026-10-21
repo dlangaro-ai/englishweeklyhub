@@ -13,9 +13,10 @@ export default async function ExtraActivitiesPage() {
   const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
   const latestPublishedWeek = getLatestPublishedWeek(weeks);
 
-  const weeksWithActivities = weeks.filter(
-    (week) => week.extraActivities.length > 0 && (week.published || isEditor)
-  );
+  // The current week comes first; the rest keep their usual order.
+  const weeksWithActivities = weeks
+    .filter((week) => week.extraActivities.length > 0 && (week.published || isEditor))
+    .sort((a, b) => Number(b.number === latestPublishedWeek) - Number(a.number === latestPublishedWeek));
 
   return (
     <main className="shell narrow">
