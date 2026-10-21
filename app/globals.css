@@ -433,7 +433,14 @@ a.searchResultLink:hover {
 }
 
 .weekCard.weekCardPast {
-  opacity: 0.92;
+  opacity: 0.7;
+  filter: saturate(0.6);
+  box-shadow: none;
+}
+
+.weekCard.weekCardPast:hover {
+  opacity: 1;
+  filter: none;
 }
 
 .weekCard.weekCardMatch {
@@ -442,9 +449,10 @@ a.searchResultLink:hover {
 }
 
 .weekCardMuted {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: default;
-  filter: saturate(0.7);
+  filter: saturate(0.4);
+  box-shadow: none;
 }
 
 .weekCardMuted:hover {
