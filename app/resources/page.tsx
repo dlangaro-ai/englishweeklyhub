@@ -106,6 +106,9 @@ export default async function ResourcesPage() {
           })}
         </ul>
       )}
+      <Link href="/" className="homepageButton">
+        🏠 Homepage
+      </Link>
     </main>
   );
 }

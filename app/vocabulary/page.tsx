@@ -59,6 +59,9 @@ export default async function VocabularyPage() {
           ))}
         </ul>
       )}
+      <Link href="/" className="homepageButton">
+        🏠 Homepage
+      </Link>
     </main>
   );
 }

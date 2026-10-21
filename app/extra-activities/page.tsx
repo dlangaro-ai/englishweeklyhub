@@ -62,6 +62,9 @@ export default async function ExtraActivitiesPage() {
           })}
         </div>
       )}
+      <Link href="/" className="homepageButton">
+        🏠 Homepage
+      </Link>
     </main>
   );
 }

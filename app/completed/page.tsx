@@ -47,6 +47,9 @@ export default async function CompletedWeeksPage() {
           })}
         </div>
       )}
+      <Link href="/" className="homepageButton">
+        🏠 Homepage
+      </Link>
     </main>
   );
 }

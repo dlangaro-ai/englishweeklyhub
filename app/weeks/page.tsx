@@ -29,6 +29,9 @@ export default async function WeeksPage() {
       </header>
 
       <WeekGrid weeks={weeks} isEditor={isEditor} />
+      <Link href="/" className="homepageButton">
+        🏠 Homepage
+      </Link>
     </main>
   );
 }

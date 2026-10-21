@@ -99,6 +99,9 @@ export default function AboutPage() {
           </a>
         ))}
       </div>
+      <Link href="/" className="homepageButton">
+        🏠 Homepage
+      </Link>
     </main>
   );
 }
