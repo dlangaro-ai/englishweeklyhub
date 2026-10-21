@@ -2348,17 +2348,21 @@ a.searchResultLink:hover {
 /* "Big news" card on the homepage, built from the current week. */
 .bigNews {
   position: relative;
-  display: flex;
-  align-items: center;
-  gap: 22px;
+  overflow: hidden;
   margin-top: 22px;
-  padding: 24px 28px;
   border: 3px solid #ffe08a;
   border-radius: 28px;
   background:
     radial-gradient(circle at 100% 0%, #ffe4ee 0, transparent 45%),
     linear-gradient(135deg, #fffbea 0%, #ffffff 70%);
   box-shadow: 0 7px 0 #f2c94c, 0 16px 30px rgba(255, 183, 3, 0.18);
+}
+
+.bigNewsMain {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 24px 28px;
 }
 
 .bigNewsIcon {
@@ -2451,12 +2455,59 @@ a.searchResultLink:hover {
 .bigNewsChip.navOrange { --tile: var(--orange); }
 .bigNewsChip.navPink { --tile: var(--pink); }
 
+/* Headlines gliding along the bottom of the Big News card. */
+.newsTicker {
+  overflow: hidden;
+  border-top: 2px dashed #ffe08a;
+  background: rgba(255, 246, 214, 0.75);
+}
+
+.newsTickerTrack {
+  display: flex;
+  width: max-content;
+  animation: newsTicker 45s linear infinite;
+}
+
+.newsTicker:hover .newsTickerTrack,
+.newsTicker:focus-within .newsTickerTrack { animation-play-state: paused; }
+
+.newsTickerGroup {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.newsTickerItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 0;
+  color: var(--ink);
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.newsTickerItem strong { color: #e8590c; }
+
+.newsTickerItem:hover { text-decoration: underline; }
+
+.newsTickerStar {
+  margin: 0 22px;
+  color: var(--sunny);
+  font-size: 18px;
+}
+
+@keyframes newsTicker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bigNewsIcon { animation: none; }
+  .newsTickerTrack { animation: none; }
 }
 
 @media (max-width: 640px) {
-  .bigNews {
+  .bigNewsMain {
     flex-direction: column;
     align-items: flex-start;
     gap: 14px;
