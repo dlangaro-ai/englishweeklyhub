@@ -151,32 +151,6 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
         <div className="heroTitleBlock">
           <p className="eyebrow">GRADE 5 ENGLISH · {weeks.length} WEEKS</p>
           <TedAnk5Logo className="heroLogo" />
-          <p className="heroText">
-            Pick your week below to find this week&apos;s topic, books, homework and fun activities!
-          </p>
-        </div>
-        <div className="heroRight">
-          <div className="dashboardSearch">
-            <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
-            <input
-              type="text"
-              className="dashboardSearchInput"
-              placeholder="Search all weeks…"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              aria-label="Search all weeks"
-            />
-            {query && (
-              <button
-                type="button"
-                className="dashboardSearchClear"
-                onClick={() => setQuery("")}
-                aria-label="Clear search"
-              >
-                ✕
-              </button>
-            )}
-          </div>
           <div className="heroProgress">
             <div className="heroProgressTrack">
               <div
@@ -186,6 +160,11 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
             </div>
             <span className="heroProgressLabel">🚀 {readyCount}/{weeks.length}</span>
           </div>
+          <p className="heroText">
+            Pick your week below to find this week&apos;s topic, books, homework and fun activities!
+          </p>
+        </div>
+        <div className="heroRight">
           <EditModeToggle isEditor={isEditor} />
         </div>
       </header>
@@ -198,6 +177,28 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
           </Link>
         ))}
       </nav>
+
+      <div className="dashboardSearch homeSearch">
+        <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
+        <input
+          type="text"
+          className="dashboardSearchInput"
+          placeholder="Search all weeks…"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          aria-label="Search all weeks"
+        />
+        {query && (
+          <button
+            type="button"
+            className="dashboardSearchClear"
+            onClick={() => setQuery("")}
+            aria-label="Clear search"
+          >
+            ✕
+          </button>
+        )}
+      </div>
 
       {trimmed && (
         <div className="searchResults">
