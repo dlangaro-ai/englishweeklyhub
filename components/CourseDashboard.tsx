@@ -8,7 +8,6 @@ import TedAnk5Logo from "./TedAnk5Logo";
 import Icon, { IconName } from "./Icon";
 import BreakingNews from "./BreakingNews";
 
-
 const HOME_TABS: { href: string; label: string; icon: IconName; tint: string }[] = [
   { href: "/weeks", label: "All Weeks", icon: "calendar", tint: "navYellow" },
   { href: "/completed", label: "Completed Weeks", icon: "check", tint: "navGreen" },
@@ -127,42 +126,30 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
           </p>
         </div>
         <div className="heroRight">
+          <div className="dashboardSearch homeSearch">
+            <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
+            <input
+              type="text"
+              className="dashboardSearchInput"
+              placeholder="Search all weeks…"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              aria-label="Search all weeks"
+            />
+            {query && (
+              <button
+                type="button"
+                className="dashboardSearchClear"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+              >
+                ✕
+              </button>
+            )}
+          </div>
           <EditModeToggle isEditor={isEditor} />
         </div>
       </header>
-
-      <BreakingNews weeks={weeks} />
-
-      <nav className="homeTabs" aria-label="Main menu">
-        {HOME_TABS.map((tab) => (
-          <Link key={tab.href} href={tab.href} className={`homeTab ${tab.tint}`}>
-            <span className="homeTabIcon"><Icon name={tab.icon} size={44} /></span>
-            <span className="homeTabLabel">{tab.label}</span>
-          </Link>
-        ))}
-      </nav>
-
-      <div className="dashboardSearch homeSearch">
-        <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
-        <input
-          type="text"
-          className="dashboardSearchInput"
-          placeholder="Search all weeks…"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          aria-label="Search all weeks"
-        />
-        {query && (
-          <button
-            type="button"
-            className="dashboardSearchClear"
-            onClick={() => setQuery("")}
-            aria-label="Clear search"
-          >
-            ✕
-          </button>
-        )}
-      </div>
 
       {trimmed && (
         <div className="searchResults">
@@ -188,6 +175,17 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
           )}
         </div>
       )}
+
+      <BreakingNews weeks={weeks} />
+
+      <nav className="homeTabs" aria-label="Main menu">
+        {HOME_TABS.map((tab) => (
+          <Link key={tab.href} href={tab.href} className={`homeTab ${tab.tint}`}>
+            <span className="homeTabIcon"><Icon name={tab.icon} size={44} /></span>
+            <span className="homeTabLabel">{tab.label}</span>
+          </Link>
+        ))}
+      </nav>
 
     </main>
   );

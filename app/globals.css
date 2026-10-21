@@ -1988,9 +1988,8 @@ a.searchResultLink:hover {
   top: 22px;
   right: 24px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 14px;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Progress bar sits centred under the LEARN · PRACTICE · GROW tagline. */
@@ -2003,17 +2002,25 @@ a.searchResultLink:hover {
 
 .heroTitleBlock .heroProgressLabel { font-size: 16px; }
 
-/* Big search bar between the menu tabs and the weeks. */
+/* Search bar in the top-right corner of the homepage title box. */
 .homeSearch {
-  width: min(620px, 100%);
-  height: 54px;
-  margin: 22px auto 6px;
-  padding: 0 20px;
+  width: 280px;
+  height: 46px;
+  padding: 0 16px;
   border: 2px solid color-mix(in srgb, var(--accent) 30%, white);
-  box-shadow: 0 6px 18px rgba(108, 99, 255, 0.12);
+  box-shadow: 0 4px 14px rgba(108, 99, 255, 0.12);
 }
 
-.homeSearch .dashboardSearchInput { font-size: 17px; }
+.homeSearch .dashboardSearchInput { font-size: 15px; }
+
+@media (max-width: 760px) {
+  .hero .heroRight {
+    position: static;
+    order: -1;
+    width: 100%;
+  }
+  .homeSearch { flex: 1; width: auto; }
+}
 
 .editModeLink {
   font-size: 20px;
