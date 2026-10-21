@@ -78,10 +78,10 @@ export default function AboutPage() {
             <li className="materialsItem">
               <span className="materialsIcon"><Icon name="review" size={32} /></span>
               <div>
-                <h3>A book review form</h3>
+                <h3>Book Report</h3>
                 <p>
-                  When you finish a library book, you will be asked to fill in a <strong>book review
-                  form</strong>. It helps you think about what you read, practise writing in English,
+                  When you finish a library book, you will be asked to write a <strong>book
+                  report</strong>. It helps you think about what you read, practise writing in English,
                   and share great books with your classmates.
                 </p>
               </div>
