@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Week, getLatestPublishedWeek } from "@/lib/courseData";
 import Icon, { IconName } from "./Icon";
-import NewsTicker from "./NewsTicker";
 
 const stripHtml = (value: string) => value.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
 
@@ -12,8 +11,7 @@ function shorten(text: string, max: number) {
 
 // "Big news" card on the homepage, built from the newest published week:
 // the week's title, one short line about it, colourful shortcuts to its
-// books, homework and extra activities, and a gently scrolling
-// strip of headlines along the bottom.
+// books, homework and extra activities.
 export default function BreakingNews({ weeks }: { weeks: Week[] }) {
   const currentNumber = getLatestPublishedWeek(weeks);
   const week = weeks.find((candidate) => candidate.number === currentNumber);
@@ -30,28 +28,6 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
       tint: "navPink"
     }
   ].filter(Boolean) as { icon: IconName; label: string; href: string; tint: string }[];
-
-  // Little headlines that slide across the bottom of the card.
-  const headlines: { icon: IconName; label: string; text: string; href: string }[] = [
-    summary && { icon: "sparkle" as const, label: "This week", text: summary, href: `/week/${week.number}/this-week` },
-    stripHtml(week.books) && { icon: "books" as const, label: "Books", text: shorten(stripHtml(week.books), 90), href: `/week/${week.number}#books` },
-    stripHtml(week.homework) && { icon: "house" as const, label: "Homework", text: shorten(stripHtml(week.homework), 90), href: `/week/${week.number}#homework` },
-    week.extraActivities.length > 0 && {
-      icon: "gift" as const,
-      label: "Extra Activities",
-      text: `${week.extraActivities.length} fun ${week.extraActivities.length === 1 ? "activity" : "activities"} waiting for you!`,
-      href: `/week/${week.number}/skills`
-    }
-  ].filter(Boolean) as { icon: IconName; label: string; text: string; href: string }[];
-
-  const ticker = (copy: boolean) =>
-    headlines.map((item) => (
-      <Link className="newsTickerItem" href={item.href} key={item.label} tabIndex={copy ? -1 : undefined}>
-        <Icon name={item.icon} size={22} />
-        <strong>{item.label}:</strong> {item.text}
-        <span className="newsTickerStar" aria-hidden="true">★</span>
-      </Link>
-    ));
 
   return (
     <section className="bigNews" aria-label="Big news this week">
@@ -77,16 +53,6 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
           </div>
         </div>
       </div>
-
-      {headlines.length > 0 && (
-        <NewsTicker>
-          {/* Two copies side by side so the headlines loop without a gap. */}
-          <div className="newsTickerTrack">
-            <div className="newsTickerGroup">{ticker(false)}</div>
-            <div className="newsTickerGroup" aria-hidden="true">{ticker(true)}</div>
-          </div>
-        </NewsTicker>
-      )}
     </section>
   );
 }

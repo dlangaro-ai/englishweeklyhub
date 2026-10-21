@@ -2455,82 +2455,8 @@ a.searchResultLink:hover {
 .bigNewsChip.navOrange { --tile: var(--orange); }
 .bigNewsChip.navPink { --tile: var(--pink); }
 
-/* Headlines gliding along the bottom of the Big News card. */
-.newsTicker {
-  display: flex;
-  align-items: center;
-  border-top: 2px dashed #ffe08a;
-  background: rgba(255, 246, 214, 0.75);
-}
-
-.newsTickerWindow {
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-}
-
-.newsTickerToggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  flex: 0 0 auto;
-  margin: 6px 10px;
-  padding: 7px 14px;
-  border: 2px solid #f2c94c;
-  border-radius: 999px;
-  background: #fff;
-  color: var(--ink);
-  font-size: 15px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.newsTickerToggle:hover { background: #fff4d6; }
-
-.newsTicker.isPaused .newsTickerTrack { animation-play-state: paused; }
-
-.newsTickerTrack {
-  display: flex;
-  width: max-content;
-  animation: newsTicker 45s linear infinite;
-}
-
-.newsTicker:hover .newsTickerTrack,
-.newsTicker:focus-within .newsTickerTrack { animation-play-state: paused; }
-
-.newsTickerGroup {
-  display: flex;
-  flex: 0 0 auto;
-}
-
-.newsTickerItem {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 0;
-  color: var(--ink);
-  font-size: 15px;
-  white-space: nowrap;
-}
-
-.newsTickerItem strong { color: #e8590c; }
-
-.newsTickerItem:hover { text-decoration: underline; }
-
-.newsTickerStar {
-  margin: 0 22px;
-  color: var(--sunny);
-  font-size: 18px;
-}
-
-@keyframes newsTicker {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .bigNewsIcon { animation: none; }
-  .newsTickerTrack { animation: none; }
 }
 
 @media (max-width: 640px) {
