@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Week, getLatestPublishedWeek } from "@/lib/courseData";
-import Icon from "./Icon";
+import Icon, { IconName } from "./Icon";
 
 const stripHtml = (value: string) => value.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
 
@@ -9,57 +9,48 @@ function shorten(text: string, max: number) {
   return `${text.slice(0, max).replace(/\s+\S*$/, "")}…`;
 }
 
-// "Breaking news" strip on the homepage, built from the newest published week:
-// a headline that links to the week, plus a scrolling ticker of its key bits.
+// "Big news" card on the homepage, built from the newest published week:
+// the week's title, one short line about it, and colourful shortcuts to
+// its books, homework and Eager Learners activities.
 export default function BreakingNews({ weeks }: { weeks: Week[] }) {
   const currentNumber = getLatestPublishedWeek(weeks);
   const week = weeks.find((candidate) => candidate.number === currentNumber);
   if (!week) return null;
 
-  const summary = stripHtml(week.summary);
-  const items = [
-    summary && { icon: "sparkle" as const, label: "This week", text: shorten(summary, 140), href: `/week/${week.number}/this-week` },
-    stripHtml(week.books) && { icon: "books" as const, label: "Books", text: shorten(stripHtml(week.books), 90), href: `/week/${week.number}#books` },
-    stripHtml(week.homework) && { icon: "house" as const, label: "Homework", text: shorten(stripHtml(week.homework), 90), href: `/week/${week.number}#homework` },
+  const summary = shorten(stripHtml(week.summary), 150);
+  const shortcuts: { icon: IconName; label: string; href: string; tint: string }[] = [
+    stripHtml(week.books) && { icon: "books" as const, label: "Books", href: `/week/${week.number}#books`, tint: "navBlue" },
+    stripHtml(week.homework) && { icon: "house" as const, label: "Homework", href: `/week/${week.number}#homework`, tint: "navOrange" },
     week.extraActivities.length > 0 && {
       icon: "gift" as const,
-      label: "Eager Learners",
-      text: `${week.extraActivities.length} fun ${week.extraActivities.length === 1 ? "activity" : "activities"} to try!`,
-      href: `/week/${week.number}/skills`
+      label: `${week.extraActivities.length} fun ${week.extraActivities.length === 1 ? "activity" : "activities"}`,
+      href: `/week/${week.number}/skills`,
+      tint: "navPink"
     }
-  ].filter(Boolean) as { icon: "sparkle" | "books" | "house" | "gift"; label: string; text: string; href: string }[];
-
-  const ticker = (copy: boolean) =>
-    items.map((item) => (
-      <Link className="newsTickerItem" href={item.href} key={item.label} tabIndex={copy ? -1 : undefined}>
-        <Icon name={item.icon} size={22} />
-        <strong>{item.label}:</strong> {item.text}
-      </Link>
-    ));
+  ].filter(Boolean) as { icon: IconName; label: string; href: string; tint: string }[];
 
   return (
-    <section className="breakingNews" aria-label="Breaking news">
-      <div className="breakingNewsHead">
-        <span className="breakingNewsBadge">
-          <span className="breakingNewsDot" aria-hidden="true" /> BREAKING NEWS
-        </span>
-        <Link href={`/week/${week.number}`} className="breakingNewsHeadline">
-          <span className="breakingNewsWeek">WEEK {week.number}</span>
-          <span className="breakingNewsTitle">{week.title}</span>
-          {week.unit && <span className="breakingNewsUnit">{week.unit}</span>}
-          <span className="breakingNewsMore">Read more →</span>
-        </Link>
+    <section className="bigNews" aria-label="Big news this week">
+      <div className="bigNewsIcon">
+        <Icon name="megaphone" size={58} />
       </div>
 
-      {items.length > 0 && (
-        <div className="newsTicker">
-          {/* Two copies side by side so the scroll loops without a gap. */}
-          <div className="newsTickerTrack">
-            <div className="newsTickerGroup">{ticker(false)}</div>
-            <div className="newsTickerGroup" aria-hidden="true">{ticker(true)}</div>
-          </div>
+      <div className="bigNewsBody">
+        <p className="bigNewsLabel">BIG NEWS · WEEK {week.number}</p>
+        <h2 className="bigNewsTitle">{week.title}</h2>
+        {summary && <p className="bigNewsText">{summary}</p>}
+
+        <div className="bigNewsLinks">
+          <Link href={`/week/${week.number}`} className="bigNewsGo">
+            Let&apos;s go! →
+          </Link>
+          {shortcuts.map((shortcut) => (
+            <Link key={shortcut.label} href={shortcut.href} className={`bigNewsChip ${shortcut.tint}`}>
+              <Icon name={shortcut.icon} size={22} /> {shortcut.label}
+            </Link>
+          ))}
         </div>
-      )}
+      </div>
     </section>
   );
 }
