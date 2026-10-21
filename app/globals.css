@@ -409,6 +409,7 @@ a.searchResultLink:hover {
 
 /* The newest open week glows so it's easy to find. */
 .weekCard.weekCardCurrent {
+  padding-bottom: 46px;
   border-width: 3px;
   border-top-width: 8px;
   border-color: var(--tint);
@@ -486,7 +487,8 @@ a.searchResultLink:hover {
   color: #fff;
   font-size: 12px;
   font-weight: 900;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 
 .weekStatus {
