@@ -47,7 +47,7 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
       <span className="bigNewsSticker" aria-hidden="true">NEW!</span>
       <div className="bigNewsMain">
         <div className="bigNewsIcon">
-          <Icon name="megaphone" size={58} />
+          <Icon name="megaphone" size={46} />
         </div>
 
         <div className="bigNewsBody">
