@@ -47,9 +47,6 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
             </div>
             <span className="heroProgressLabel"><span aria-hidden="true">🚀 </span>{readyCount} of {weeks.length} weeks open</span>
           </div>
-          <p className="heroText">
-            Choose a tab below to find your week, vocabulary, fun activities and more!
-          </p>
         </div>
         <div className="heroRight">
           <EditModeToggle isEditor={isEditor} />
