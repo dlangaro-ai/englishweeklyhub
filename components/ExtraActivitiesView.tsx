@@ -289,11 +289,15 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
         ) : (
           week.extraActivities.map((activity, index) => {
             return (
-              <article className="activityCard" key={activity.id}>
-                <div className="activityIndex"><Icon name={iconNameFor(activity.resourceType)} size={30} /></div>
+              <details className="activityCard activityFold" key={activity.id}>
+                <summary className="activityFoldSummary">
+                  <span className="activityIndex"><Icon name={iconNameFor(activity.resourceType)} size={30} /></span>
+                  <span className="activityType activityTypeButton">ACTIVITY {index + 1}</span>
+                  <span className="activityFoldTitle">{activity.title}</span>
+                  <span className="aboutFoldChevron" aria-hidden="true">▾</span>
+                </summary>
+                <div className="activityFoldBody">
                 <div className="activityBody">
-                  <span className="activityType">ACTIVITY {index + 1}</span>
-                  <h2>{activity.title}</h2>
                   {activity.resourceType === "list" ? (
                     editingListId === activity.id ? (
                       <ListActivityEditor
@@ -370,7 +374,8 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
                     </button>
                   </div>
                 )}
-              </article>
+                </div>
+              </details>
             );
           })
         )}
