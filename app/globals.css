@@ -3523,3 +3523,17 @@ a:hover > .activityCountButton,
   .activityFoldSummary .aboutFoldChevron { margin-left: auto; }
   .activityFoldBody { padding: 0 14px 16px; }
 }
+
+/* Home menu: every tile is the same size; a short last row is centred. */
+.homeTabs { display: flex; flex-wrap: wrap; justify-content: center; --tab-cols: 3; --tab-gap: 14px; gap: var(--tab-gap); }
+.homeTabs > .homeTab,
+.homeTabs > .homeTab:last-child:nth-child(n) {
+  grid-column: auto;
+  flex: 0 0 calc((100% - (var(--tab-cols) - 1) * var(--tab-gap)) / var(--tab-cols));
+  min-width: 0;
+}
+@media (min-width: 901px) { .homeTabs { --tab-cols: 4; } }
+@media (max-width: 560px) {
+  .homeTabs { --tab-cols: 2; --tab-gap: 12px; row-gap: 20px; }
+  .homeTabs > .homeTab { min-height: 150px; }
+}
