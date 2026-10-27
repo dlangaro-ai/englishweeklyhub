@@ -3485,50 +3485,6 @@ a:hover > .activityCountButton,
   .activityCountArrow { display: none; }
 }
 
-/* Extra Activities: one fold-out card per week (click → its activities open) */
-.weekFolds { display: grid; gap: 14px; margin-top: 18px; }
-.weekFold { --tint: var(--orange); min-height: 0; margin-top: 0; display: block; padding: 18px 22px; }
-.weekFoldCurrent { border-color: color-mix(in srgb, var(--tint) 45%, var(--line)); }
-.weekFold .aboutFoldSummary { gap: 16px; }
-.weekFold .infoCardBody h2 { font-size: 22px; }
-.weekFold .activityCountButton { margin-top: 0; margin-left: auto; flex: 0 0 auto; }
-.weekFoldNumber {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  width: 64px;
-  height: 64px;
-  border-radius: 18px;
-  background: color-mix(in srgb, var(--tint) 14%, var(--card));
-  color: color-mix(in srgb, var(--tint) 75%, var(--ink));
-  font-family: var(--font-heading);
-  font-size: 26px;
-  font-weight: 800;
-  line-height: 1;
-}
-.weekFoldNumber small { display: block; font-size: 11px; letter-spacing: 0.12em; margin-bottom: -6px; }
-.weekFoldBody { padding-left: 80px; margin-top: 14px; display: grid; gap: 14px; }
-.weekFoldActivity {
-  display: flex;
-  gap: 14px;
-  padding: 16px;
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--tint) 6%, var(--card));
-  border: 1px solid var(--line);
-}
-.weekFoldActivity h3 { margin: 8px 0 6px; font-size: 19px; }
-.weekFoldActivityIcon { flex: 0 0 auto; color: color-mix(in srgb, var(--tint) 75%, var(--ink)); }
-.weekFoldMore { font-weight: 800; color: color-mix(in srgb, var(--tint) 75%, var(--ink)); text-decoration: underline; text-underline-offset: 3px; }
-
-@media (max-width: 640px) {
-  .weekFold { padding: 14px; }
-  .weekFold .aboutFoldSummary { flex-wrap: wrap; gap: 10px 12px; }
-  .weekFold .aboutFoldChevron { margin-left: auto; }
-  .weekFold .activityCountButton { margin-left: 76px; order: 5; }
-  .weekFoldNumber { width: 56px; height: 56px; }
-  .weekFoldBody { padding-left: 0; }
-}
-
 /* Each activity is a button: click "ACTIVITY 1" and it opens */
 .activityFold { display: block; padding: 0; }
 .activityFoldSummary {

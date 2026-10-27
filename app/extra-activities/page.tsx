@@ -5,7 +5,6 @@ import { getLatestPublishedWeek } from "@/lib/courseData";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import Icon from "@/components/Icon";
 import TeacherEmails from "@/components/TeacherEmails";
-import WeekActivitiesFold from "@/components/WeekActivitiesFold";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +28,7 @@ export default async function ExtraActivitiesPage() {
           <p className="eyebrow">FOR EAGER LEARNERS</p>
           <h1>Extra Activities</h1>
           <p className="unitLabel">
-            Click a week to open its extra activities. When you finish, <a href="#teachers">email your work to your English 2 teachers</a>.
+            Pick a week to see its extra activities. When you finish, <a href="#teachers">email your work to your English 2 teachers</a>.
           </p>
         </div>
       </header>
@@ -41,10 +40,29 @@ export default async function ExtraActivitiesPage() {
           <p>Extra activities for each week will show up here.</p>
         </div>
       ) : (
-        <div className="weekFolds">
-          {weeksWithActivities.map((week) => (
-            <WeekActivitiesFold key={week.number} week={week} current={week.number === latestPublishedWeek} />
-          ))}
+        <div className="weekGrid">
+          {weeksWithActivities.map((week) => {
+            const publishedState = week.published
+              ? week.number === latestPublishedWeek
+                ? "weekCardCurrent"
+                : "weekCardPast"
+              : "tintSun";
+
+            return (
+              <Link className={`weekCard ${publishedState}`} href={`/week/${week.number}/skills`} key={week.number}>
+                <div className="weekTopStacked">
+                  <span className="weekNumber">WEEK {week.number}</span>
+                </div>
+                <h3>{week.title}</h3>
+                <p>{week.unit}</p>
+                <span className="activityCountButton">
+                  <span className="activityCountNumber">{week.extraActivities.length}</span>
+                  <span>{week.extraActivities.length === 1 ? "activity" : "activities"}</span>
+                  <span className="activityCountArrow" aria-hidden="true">→</span>
+                </span>
+              </Link>
+            );
+          })}
         </div>
       )}
       <TeacherEmails id="teachers" />
