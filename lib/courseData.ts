@@ -134,7 +134,6 @@ const starterWeeks: Week[] = [
     libraryText: "",
     libraryLinks: [],
     published: true,
-    summaryButtons: [{ id: "t1", label: "STUDY TIPS", href: "/study-tips" }, { id: "t2", label: "Wordwall", href: "https://wordwall.net" }, { id: "t3", label: "Vocabulary", href: "/vocabulary" }],
     extraActivities: [
       {
         id: "w3-extra-1",
