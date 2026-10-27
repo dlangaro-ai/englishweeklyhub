@@ -3448,3 +3448,39 @@ body { background: var(--paper); }
 /* "email your work to your English 2 teachers" links down to the avatars */
 .unitLabel a { text-decoration: underline; text-underline-offset: 3px; font-weight: 800; }
 .activityFootnote { scroll-margin-top: calc(var(--nav-h) + 16px); }
+
+/* A clear "you have N activities" button (Extra Activities page and week page) */
+.activityCountButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 5px 16px 5px 5px;
+  border-radius: 999px;
+  background: #c9600f;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1;
+  transition: filter 150ms ease, transform 150ms ease;
+}
+
+.activityCountNumber {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff;
+  color: #c9600f;
+  font-size: 21px;
+}
+
+a:hover > .activityCountButton,
+.skillsFolderLink:hover .activityCountButton { filter: brightness(1.08); }
+
+@media (max-width: 640px) {
+  .activityCountButton { padding-right: 12px; font-size: 15px; }
+  .activityCountArrow { display: none; }
+}

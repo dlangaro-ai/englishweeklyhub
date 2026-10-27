@@ -52,12 +52,14 @@ export default async function ExtraActivitiesPage() {
               <Link className={`weekCard ${publishedState}`} href={`/week/${week.number}/skills`} key={week.number}>
                 <div className="weekTopStacked">
                   <span className="weekNumber">WEEK {week.number}</span>
-                  <span className="weekStatus">
-                    {week.extraActivities.length} {week.extraActivities.length === 1 ? "activity" : "activities"}
-                  </span>
                 </div>
                 <h3>{week.title}</h3>
                 <p>{week.unit}</p>
+                <span className="activityCountButton">
+                  <span className="activityCountNumber">{week.extraActivities.length}</span>
+                  <span>{week.extraActivities.length === 1 ? "activity" : "activities"}</span>
+                  <span className="activityCountArrow" aria-hidden="true">→</span>
+                </span>
               </Link>
             );
           })}

@@ -103,6 +103,7 @@ export default function WeekView({
           text={week.bonusText}
           image={week.bonusImage}
           imageWidth={week.bonusImageWidth}
+          activityCount={week.extraActivities.length}
           isEditor={isEditor}
         />
 

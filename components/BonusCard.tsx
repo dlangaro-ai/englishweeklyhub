@@ -11,12 +11,14 @@ export default function BonusCard({
   text,
   image,
   imageWidth,
+  activityCount,
   isEditor
 }: {
   weekNumber: number;
   text: string;
   image?: string;
   imageWidth?: number;
+  activityCount: number;
   isEditor: boolean;
 }) {
   const editable = useEditableField({
@@ -65,7 +67,15 @@ export default function BonusCard({
                   }}
                 />
               )}
-              <span className="openLabel">See the activities →</span>
+              {activityCount > 0 ? (
+                <span className="activityCountButton">
+                  <span className="activityCountNumber">{activityCount}</span>
+                  <span>{activityCount === 1 ? "activity" : "activities"}</span>
+                  <span className="activityCountArrow" aria-hidden="true">→</span>
+                </span>
+              ) : (
+                <span className="openLabel">See the activities →</span>
+              )}
             </Link>
           </>
         )}
