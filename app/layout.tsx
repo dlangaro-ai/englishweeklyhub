@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Baloo_2 } from "next/font/google";
 import "./globals.css";
+import SiteNav from "@/components/SiteNav";
 
 const baloo = Baloo_2({
   subsets: ["latin"],
@@ -45,6 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={baloo.variable}>
       <body>
+        <SiteNav />
         {children}
         <footer className="siteFooter">
           © {new Date().getFullYear()} English Weekly Hub — DL. All rights reserved.
