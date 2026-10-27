@@ -1,6 +1,6 @@
 const NAVY = "#1f2a44";
 const GREEN = "#3fa34d";
-const PILL = "#e2f1e4";
+const PILL = "#e9e4fa";
 
 export default function TedAnk5Logo({ className }: { className?: string }) {
   return (
