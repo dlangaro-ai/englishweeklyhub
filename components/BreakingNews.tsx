@@ -31,7 +31,6 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
 
   return (
     <section className="bigNews" aria-label="Big news this week">
-      <span className="bigNewsSticker" aria-hidden="true">NEW!</span>
       <div className="bigNewsMain">
         <div className="bigNewsIcon">
           <Icon name="megaphone" size={58} />
@@ -39,7 +38,7 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
 
         <div className="bigNewsBody">
           <p className="bigNewsLabel">BIG NEWS · WEEK {week.number}</p>
-          <h2 className="bigNewsTitle"><span>{week.title}</span></h2>
+          <h2 className="bigNewsTitle">{week.title}</h2>
           {summary && <p className="bigNewsText">{summary}</p>}
 
           <div className="bigNewsLinks">

@@ -1,6 +1,6 @@
 const NAVY = "#1f2a44";
 const GREEN = "#3fa34d";
-const LAVENDER = "#e4dbfb";
+const PILL = "#e2f1e4";
 
 export default function TedAnk5Logo({ className }: { className?: string }) {
   return (
@@ -24,7 +24,7 @@ export default function TedAnk5Logo({ className }: { className?: string }) {
       </text>
 
       {/* my english hub pill */}
-      <rect x="170" y="90" width="300" height="50" rx="25" fill={LAVENDER} />
+      <rect x="170" y="90" width="300" height="50" rx="25" fill={PILL} />
       <text
         x="320"
         y="124"
