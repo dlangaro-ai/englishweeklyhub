@@ -3,6 +3,7 @@ import { Week } from "@/lib/courseData";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle, imageAlignStyle } from "@/lib/imageSize";
 import Icon from "./Icon";
+import SummaryButtons from "./SummaryButtons";
 
 // The "This Week" folder page: the full weekly message, with a way back.
 export default function SummaryView({ week }: { week: Week }) {
@@ -37,6 +38,7 @@ export default function SummaryView({ week }: { week: Week }) {
                   style={{ ...imageWidthStyle(week.summaryImageWidth), ...imageAlignStyle(week.summaryImageAlign) }}
                 />
               )}
+              <SummaryButtons buttons={week.summaryButtons ?? []} />
             </div>
           </article>
         ) : (

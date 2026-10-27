@@ -44,6 +44,7 @@ export default function WeekView({
           image={week.summaryImage}
           imageWidth={week.summaryImageWidth}
           imageAlign={week.summaryImageAlign}
+          summaryButtons={week.summaryButtons}
           isEditor={isEditor}
         />
 

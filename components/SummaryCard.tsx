@@ -1,7 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useEditableField } from "./useEditableField";
 import RichTextEditor from "./RichTextEditor";
+import SummaryButtons from "./SummaryButtons";
+import SummaryButtonsEditor from "./SummaryButtonsEditor";
+import { SummaryButton } from "@/lib/courseData";
 import ImageSizeControl from "./ImageSizeControl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle, imageAlignStyle, ImageAlign } from "@/lib/imageSize";
@@ -16,6 +20,7 @@ export default function SummaryCard({
   image,
   imageWidth,
   imageAlign,
+  summaryButtons,
   isEditor
 }: {
   weekNumber: number;
@@ -23,8 +28,10 @@ export default function SummaryCard({
   image?: string;
   imageWidth?: number;
   imageAlign?: ImageAlign;
+  summaryButtons?: SummaryButton[];
   isEditor: boolean;
 }) {
+  const [buttons, setButtons] = useState<SummaryButton[]>(summaryButtons ?? []);
   const editable = useEditableField({
     weekNumber,
     field: "summary",
@@ -36,8 +43,14 @@ export default function SummaryCard({
     initialImage: image,
     initialImageWidth: imageWidth,
     initialImageAlign: imageAlign,
-    maxWords: 300
+    maxWords: 300,
+    extraPayload: { summaryButtons: buttons }
   });
+
+  function startEdit() {
+    setButtons(summaryButtons ?? []);
+    editable.startEdit();
+  }
 
   return (
     <article
@@ -50,7 +63,7 @@ export default function SummaryCard({
         <div className="infoCardHead">
           <p className="infoLabel">THIS WEEK</p>
           {isEditor && !editable.editing && (
-            <button className="editButton" type="button" onClick={editable.startEdit}>
+            <button className="editButton" type="button" onClick={startEdit}>
               ✏️ Edit
             </button>
           )}
@@ -60,6 +73,7 @@ export default function SummaryCard({
         {editable.editing ? (
           <div className="editForm">
             <RichTextEditor value={editable.text} onChange={editable.setText} maxWords={300} />
+            <SummaryButtonsEditor buttons={buttons} onChange={setButtons} />
             <div className="editImageRow">
               {editable.imagePreview && (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -123,6 +137,8 @@ export default function SummaryCard({
         ) : (
           <p className="infoText">Check back soon for this week&apos;s update.</p>
         )}
+
+        {!editable.editing && <SummaryButtons buttons={summaryButtons ?? []} />}
       </div>
     </article>
   );
