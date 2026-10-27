@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { loadWeeks, saveWeeks } from "@/lib/blob";
-import { ExtraActivity, LibraryLink, Week } from "@/lib/courseData";
+import { ExtraActivity, LibraryLink, SummaryButton, Week } from "@/lib/courseData";
 import { normalizeUrl } from "@/lib/normalizeUrl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
 import { clampImageWidth, IMAGE_ALIGNS } from "@/lib/imageSize";
@@ -14,6 +14,7 @@ const EDITABLE_FIELDS = [
   "summaryImage",
   "summaryImageWidth",
   "summaryImageAlign",
+  "summaryButtons",
   "books",
   "bookImage",
   "bookImageWidth",
@@ -42,6 +43,22 @@ const IMAGE_WIDTH_FIELDS = new Set([
   "bonusImageWidth",
   "libraryImageWidth"
 ]);
+
+const MAX_SUMMARY_BUTTONS = 8;
+
+function validateSummaryButtons(buttons: unknown): string | null {
+  if (!Array.isArray(buttons)) return "summaryButtons must be a list.";
+  if (buttons.length > MAX_SUMMARY_BUTTONS) {
+    return `You can only have up to ${MAX_SUMMARY_BUTTONS} buttons.`;
+  }
+  for (const button of buttons) {
+    const candidate = button as Partial<SummaryButton>;
+    if (!candidate?.label?.trim() || !candidate?.href?.trim()) {
+      return "Each button needs a name and a destination.";
+    }
+  }
+  return null;
+}
 
 const MAX_LIBRARY_LINKS = 12;
 
@@ -129,6 +146,18 @@ export async function PATCH(
       );
     }
     updates.resourceIds = Array.from(new Set(ids as string[]));
+  }
+
+  if ("summaryButtons" in updates) {
+    const validationError = validateSummaryButtons(updates.summaryButtons);
+    if (validationError) {
+      return NextResponse.json({ error: validationError }, { status: 400 });
+    }
+    updates.summaryButtons = (updates.summaryButtons as SummaryButton[]).map((button) => ({
+      id: String(button.id || `button-${Date.now()}`),
+      label: button.label.trim().slice(0, 40),
+      href: normalizeUrl(button.href)
+    }));
   }
 
   if ("libraryLinks" in updates) {

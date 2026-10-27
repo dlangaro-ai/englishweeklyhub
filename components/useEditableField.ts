@@ -16,6 +16,8 @@ type UseEditableFieldArgs = {
   initialImageAlign?: ImageAlign;
   imageAlignField?: string;
   maxWords?: number;
+  // Extra fields saved together with the text (e.g. summaryButtons).
+  extraPayload?: Record<string, unknown>;
 };
 
 export function useEditableField({
@@ -29,7 +31,8 @@ export function useEditableField({
   imageWidthField,
   initialImageAlign,
   imageAlignField,
-  maxWords
+  maxWords,
+  extraPayload
 }: UseEditableFieldArgs) {
   const [editing, setEditing] = useState(false);
   const [text, setText] = useState(initialText);
@@ -103,6 +106,8 @@ export function useEditableField({
           ? text.split("\n").map((line) => line.trim()).filter(Boolean)
           : text
       };
+
+      if (extraPayload) Object.assign(payload, extraPayload);
 
       if (uploadedUrl) payload[imageField] = uploadedUrl;
       else if (imageRemoved) payload[imageField] = null;

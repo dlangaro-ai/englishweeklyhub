@@ -26,6 +26,7 @@
   --sunny-soft: #fff3d6;
   --pink: #ff6b9d;
   --pink-soft: #ffe4ee;
+  --teal: #14b8a6;
   --navy: #1f2a44;
   --lavender: #e4dbfb;
   --font-heading: "Baloo 2", Arial, sans-serif;
@@ -284,10 +285,16 @@ h1 {
 .homeTab.navOrange { --tile: var(--orange); }
 .homeTab.navBlue { --tile: var(--blue); }
 .homeTab.navPurple { --tile: var(--accent); }
+.homeTab.navTeal { --tile: var(--teal); }
+
+/* A lone last tile fills its row instead of leaving a gap. */
+.homeTabs > .homeTab:last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
 
 
 @media (max-width: 560px) {
   .homeTabs { grid-template-columns: repeat(2, 1fr); gap: 20px 12px; }
+  .homeTabs > .homeTab:last-child:nth-child(3n + 1) { grid-column: auto; }
+  .homeTabs > .homeTab:last-child:nth-child(2n + 1) { grid-column: 1 / -1; }
   .homeTab { min-height: 120px; }
   .homeTabIcon { width: 58px; height: 58px; }
   .homeTabLabel { font-size: 17px; }
@@ -1211,6 +1218,7 @@ a.searchResultLink:hover {
 .simpleWeekHero.heroOrange { --tint: var(--orange); }
 .simpleWeekHero.heroBlue { --tint: var(--blue); }
 .simpleWeekHero.heroPurple { --tint: var(--accent); }
+.simpleWeekHero.heroTeal { --tint: var(--teal); }
 
 .inlineEditDisplay {
   display: inline-flex;

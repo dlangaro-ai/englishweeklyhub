@@ -9,6 +9,7 @@
 //   title      -> short, friendly week title students see on their card
 //   unit       -> the topic/unit name shown under the title
 //   summary      / summaryImage  -> "This week" text + optional picture
+//   summaryButtons -> link buttons under the "This week" message
 //   books        / bookImage     -> "Books used" rich text + optional picture
 //   homework     / homeworkImage -> "Homework" rich text + optional picture
 //   bonusText    / bonusImage    -> "Bonus" teaser text + optional picture
@@ -26,6 +27,14 @@ export type ExtraActivity = {
   resourceType?: "link" | "video" | "pdf" | "activity" | "image" | "list";
   // Display width in px for an image-type activity (unset = CSS default).
   imageWidth?: number;
+};
+
+// A button shown under the "What's happening this week" message. href is a
+// site page ("/study-tips") or a full website address.
+export type SummaryButton = {
+  id: string;
+  label: string;
+  href: string;
 };
 
 export type LibraryLink = {
@@ -50,6 +59,7 @@ export type Week = {
   summaryImage?: string;
   summaryImageWidth?: number;
   summaryImageAlign?: "left" | "center" | "right";
+  summaryButtons?: SummaryButton[];
   books: string;
   bookImage?: string;
   bookImageWidth?: number;
