@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Week, getLatestPublishedWeek } from "@/lib/courseData";
 import Icon, { IconName } from "./Icon";
+import { SITE_PAGES } from "@/lib/sitePages";
 
 const stripHtml = (value: string) => value.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
 
@@ -29,6 +30,18 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
     }
   ].filter(Boolean) as { icon: IconName; label: string; href: string; tint: string }[];
 
+  // Buttons added to this week's "What's happening this week" message show here
+  // too: coloured like the page they lead to, or navy for another website.
+  const buttons = (week.summaryButtons ?? []).map((button) => {
+    const page = SITE_PAGES.find((item) => item.href === button.href);
+    return {
+      ...button,
+      icon: (page?.icon ?? "link") as IconName,
+      tint: page?.tint ?? "navExternal",
+      external: !button.href.startsWith("/")
+    };
+  });
+
   return (
     <section className="bigNews" aria-label="Big news this week">
       <span className="bigNewsSticker" aria-hidden="true">NEW!</span>
@@ -46,6 +59,23 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
             <Link href={`/week/${week.number}`} className="bigNewsGo">
               Let&apos;s go! →
             </Link>
+            {buttons.map((button) =>
+              button.external ? (
+                <a
+                  key={button.id}
+                  href={button.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`bigNewsChip ${button.tint}`}
+                >
+                  <Icon name={button.icon} size={22} /> {button.label} <span aria-hidden="true">↗</span>
+                </a>
+              ) : (
+                <Link key={button.id} href={button.href} className={`bigNewsChip ${button.tint}`}>
+                  <Icon name={button.icon} size={22} /> {button.label}
+                </Link>
+              )
+            )}
             {shortcuts.map((shortcut) => (
               <Link key={shortcut.label} href={shortcut.href} className={`bigNewsChip ${shortcut.tint}`}>
                 <Icon name={shortcut.icon} size={22} /> {shortcut.label}

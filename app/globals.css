@@ -3437,3 +3437,10 @@ body { background: var(--paper); }
   .bigNewsSticker { top: 8px; right: 10px; width: 54px; height: 54px; font-size: 14px; }
   .bigNewsMain { padding: 18px 18px 20px; }
 }
+
+/* Big News chips for teacher-added buttons: tinted like the page they open */
+.bigNewsChip.navYellow { --tile: var(--sunny); }
+.bigNewsChip.navGreen { --tile: var(--success); }
+.bigNewsChip.navPurple { --tile: var(--accent); }
+.bigNewsChip.navTeal { --tile: var(--teal); }
+.bigNewsChip.navExternal { --tile: var(--navy); }
