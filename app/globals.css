@@ -3024,7 +3024,7 @@ a.searchResultLink:hover {
   text-align: center;
 }
 
-.hero .heroLogoLink { width: min(300px, 100%); margin: 0 auto; }
+.hero .heroLogoLink { width: min(380px, 100%); margin: 0 auto; }
 .hero .heroLogo { max-width: none; width: 100%; }
 
 .hero .eyebrow {
@@ -3082,7 +3082,7 @@ a.searchResultLink:hover {
   .hero .editModeBadge { flex: 1 1 100%; }
 
   .hero .eyebrow { position: static; margin: 4px 0 0; text-align: center; }
-  .hero .heroLogoLink { width: min(290px, 82%); }
+  .hero .heroLogoLink { width: min(320px, 88%); }
   .hero .heroText { display: none; }
   .heroTitleBlock .heroProgress { width: 100%; }
 }
