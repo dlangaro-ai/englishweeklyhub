@@ -20,6 +20,21 @@ function animateScrollTo(targetY: number, duration: number) {
   requestAnimationFrame(step);
 }
 
+// Smoothly scrolls to the element with this id (and puts it in the URL hash,
+// so `:target` styling still highlights it).
+export function scrollToCard(anchor: string) {
+  const el = document.getElementById(anchor);
+  if (!el) return;
+
+  const scrollMarginTop = parseFloat(getComputedStyle(el).scrollMarginTop || "0");
+  const targetY = el.getBoundingClientRect().top + window.scrollY - scrollMarginTop;
+
+  animateScrollTo(targetY, SCROLL_DURATION_MS);
+  // Updates the URL fragment without pushState's own scroll — only our
+  // animation moves the page.
+  window.history.pushState(null, "", `#${anchor}`);
+}
+
 // Shared click handler for "click anywhere on this card to jump to the next
 // one" — used by the week-page cards. Ignores clicks that land on (or inside)
 // a real interactive element, so links, buttons, inputs and the rich-text
@@ -31,14 +46,5 @@ export function goToNextCard(event: React.MouseEvent<HTMLElement>, anchor: strin
     return;
   }
 
-  const el = document.getElementById(anchor);
-  if (!el) return;
-
-  const scrollMarginTop = parseFloat(getComputedStyle(el).scrollMarginTop || "0");
-  const targetY = el.getBoundingClientRect().top + window.scrollY - scrollMarginTop;
-
-  animateScrollTo(targetY, SCROLL_DURATION_MS);
-  // Updates the URL fragment (so `.infoCard:target` still highlights the
-  // card) without pushState's own scroll — only our animation moves the page.
-  window.history.pushState(null, "", `#${anchor}`);
+  scrollToCard(anchor);
 }

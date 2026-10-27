@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Icon from "@/components/Icon";
+import TipCard from "@/components/TipCard";
 
 export const dynamic = "force-dynamic";
 
@@ -24,7 +25,7 @@ export default function StudyTipsPage() {
         </div>
       </header>
 
-      <section className="tipsIntro">
+      <TipCard as="section" id="tips-intro" nextId="tip-1" nextLabel="First tip" className="tipsIntro">
         <span className="tipsIntroIcon"><Icon name="bulb" size={56} /></span>
         <div>
           <p><strong>Dear Grade 5 Students,</strong></p>
@@ -37,10 +38,10 @@ export default function StudyTipsPage() {
             English learners.
           </p>
         </div>
-      </section>
+      </TipCard>
 
       <ol className="tipsList">
-        <li className="tipCard">
+        <TipCard id="tip-1" nextId="tip-2" className="tipCard">
           <span className="tipNumber">1</span>
           <div className="tipBody">
             <h2>Your Books Need to Go Home!</h2>
@@ -54,9 +55,9 @@ export default function StudyTipsPage() {
               of growing up.
             </p>
           </div>
-        </li>
+        </TipCard>
 
-        <li className="tipCard">
+        <TipCard id="tip-2" nextId="tip-3" className="tipCard">
           <span className="tipNumber">2</span>
           <div className="tipBody">
             <h2>Just 15 Minutes Every Other Day!</h2>
@@ -93,9 +94,9 @@ export default function StudyTipsPage() {
             </div>
             <p>This helps you develop your reading, speaking, and understanding skills.</p>
           </div>
-        </li>
+        </TipCard>
 
-        <li className="tipCard">
+        <TipCard id="tip-3" nextId="tip-4" className="tipCard">
           <span className="tipNumber">3</span>
           <div className="tipBody">
             <h2>Pay Attention to What Your Teacher Teaches!</h2>
@@ -117,9 +118,9 @@ export default function StudyTipsPage() {
               <strong>Don’t just write whatever comes to mind. Show what you have learned!</strong>
             </p>
           </div>
-        </li>
+        </TipCard>
 
-        <li className="tipCard">
+        <TipCard id="tip-4" nextId="tips-remember" nextLabel="Remember!" className="tipCard">
           <span className="tipNumber">4</span>
           <div className="tipBody">
             <h2>Learning Takes Time – Be Patient and Consistent!</h2>
@@ -137,10 +138,10 @@ export default function StudyTipsPage() {
               practised it regularly.
             </p>
           </div>
-        </li>
+        </TipCard>
       </ol>
 
-      <section className="tipsRemember">
+      <section id="tips-remember" className="tipsRemember">
         <p className="tipsRememberLabel">REMEMBER!</p>
         <h2>Little and often is better than a lot at the last minute!</h2>
         <p>
