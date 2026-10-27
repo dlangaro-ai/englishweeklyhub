@@ -4,6 +4,7 @@ import { getAllWeeks } from "@/lib/getWeeks";
 import { getLatestPublishedWeek } from "@/lib/courseData";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import Icon from "@/components/Icon";
+import TeacherEmails from "@/components/TeacherEmails";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +28,7 @@ export default async function ExtraActivitiesPage() {
           <p className="eyebrow">FOR EAGER LEARNERS</p>
           <h1>Extra Activities</h1>
           <p className="unitLabel">
-            Pick a week to see its extra activities. When you finish, email your work to your English 2 teachers.
+            Pick a week to see its extra activities. When you finish, <a href="#teachers">email your work to your English 2 teachers</a>.
           </p>
         </div>
       </header>
@@ -62,6 +63,8 @@ export default async function ExtraActivitiesPage() {
           })}
         </div>
       )}
+      <TeacherEmails id="teachers" />
+
       <Link href="/" className="homepageButton">
         🏠 Homepage
       </Link>

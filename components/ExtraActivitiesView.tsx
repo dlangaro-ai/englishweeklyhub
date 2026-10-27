@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { ExtraActivity, Week } from "@/lib/courseData";
 import { listActivityToHtml, sanitizeRichText } from "@/lib/sanitizeHtml";
 import { imageWidthStyle } from "@/lib/imageSize";
-import { team } from "@/lib/team";
 import RichTextEditor from "./RichTextEditor";
+import TeacherEmails from "./TeacherEmails";
 import ImageSizeControl from "./ImageSizeControl";
 import ActivityImageSize from "./ActivityImageSize";
 import ListActivityEditor from "./ListActivityEditor";
@@ -376,20 +376,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
         )}
       </section>
 
-      <div className="activityFootnote">
-        <p className="activityFootnoteText">
-          📧 Some activities ask you to send your work by email — here are your English 2 teachers:
-        </p>
-        <div className="aboutAvatars">
-          {team.map((member) => (
-            <a className="aboutAvatar" href={`mailto:${member.email}`} title={member.email} key={member.email}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={member.image} alt="" className="aboutAvatarImg" />
-              <p className="aboutAvatarName">{member.name}</p>
-            </a>
-          ))}
-        </div>
-      </div>
+      <TeacherEmails />
     </main>
   );
 }

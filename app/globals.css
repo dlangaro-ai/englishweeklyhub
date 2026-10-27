@@ -3444,3 +3444,7 @@ body { background: var(--paper); }
 .bigNewsChip.navPurple { --tile: var(--accent); }
 .bigNewsChip.navTeal { --tile: var(--teal); }
 .bigNewsChip.navExternal { --tile: var(--navy); }
+
+/* "email your work to your English 2 teachers" links down to the avatars */
+.unitLabel a { text-decoration: underline; text-underline-offset: 3px; font-weight: 800; }
+.activityFootnote { scroll-margin-top: calc(var(--nav-h) + 16px); }
