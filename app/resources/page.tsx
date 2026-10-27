@@ -53,8 +53,8 @@ export default async function ResourcesPage() {
 
       <header className="weekHero simpleWeekHero heroBlue">
         <div>
-          <p className="eyebrow">RESOURCES</p>
-          <h1>All Resources</h1>
+          <p className="eyebrow">RESOURCES & LIBRARY</p>
+          <h1>Resources & Library</h1>
           <p className="unitLabel">Our library of websites, pictures and PDFs, ready to use any week</p>
         </div>
       </header>

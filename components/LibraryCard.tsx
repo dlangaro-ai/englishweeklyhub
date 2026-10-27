@@ -183,14 +183,14 @@ export default function LibraryCard({
       <span className="infoIcon"><Icon name="book" size={48} /></span>
       <div className="infoCardBody">
         <div className="infoCardHead">
-          <p className="infoLabel">RESOURCES</p>
+          <p className="infoLabel">RESOURCES & LIBRARY</p>
           {isEditor && !editingText && (
             <button className="editButton" type="button" onClick={startEditingText}>
               ✏️ Edit
             </button>
           )}
         </div>
-        <h2>Resources</h2>
+        <h2>Resources & Library</h2>
 
         {editingText ? (
           <div className="editForm">

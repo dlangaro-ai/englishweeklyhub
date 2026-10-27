@@ -13,7 +13,7 @@ const HOME_TABS: { href: string; label: string; icon: IconName; tint: string }[]
   { href: "/completed", label: "Completed Weeks", icon: "check", tint: "navGreen" },
   { href: "/vocabulary", label: "Vocabulary", icon: "abc", tint: "navPink" },
   { href: "/extra-activities", label: "Extra Activities", icon: "gift", tint: "navOrange" },
-  { href: "/resources", label: "Resources", icon: "book", tint: "navBlue" },
+  { href: "/resources", label: "Resources & Library", icon: "book", tint: "navBlue" },
   { href: "/about", label: "About Us", icon: "chat", tint: "navPurple" }
 ];
 
@@ -59,8 +59,8 @@ function weekHits(week: Week, query: string): SearchHit[] {
   add("Books", stripHtml(week.books), `${weekHref}#books`);
   add("Homework", stripHtml(week.homework), `${weekHref}#homework`);
   add("Extra Activities", week.bonusText, `${weekHref}#bonus`);
-  add("Resources", stripHtml(week.libraryText), `${weekHref}#library`);
-  (week.libraryLinks ?? []).forEach((link) => add("Resources", link.title, `${weekHref}#library`));
+  add("Resources & Library", stripHtml(week.libraryText), `${weekHref}#library`);
+  (week.libraryLinks ?? []).forEach((link) => add("Resources & Library", link.title, `${weekHref}#library`));
   week.extraActivities.forEach((activity) => {
     add("Extra Activities", activity.title, `${weekHref}/skills`);
     add("Extra Activities", stripHtml(activity.description ?? ""), `${weekHref}/skills`);
