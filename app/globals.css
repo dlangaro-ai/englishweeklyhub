@@ -3068,8 +3068,12 @@ a.searchResultLink:hover {
     order: -1;
     width: 100%;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
   }
+
+  .hero .homeSearch { flex: 1 1 200px; width: auto; }
+  .hero .editModeBadge { flex: 1 1 100%; }
 
   .hero .heroTitleBlock {
     grid-template-columns: 1fr;
