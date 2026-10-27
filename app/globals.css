@@ -2797,3 +2797,47 @@ a.searchResultLink:hover {
   .tipNumber { width: 40px; height: 40px; font-size: 22px; }
   .tipsIntro { padding: 20px 18px; }
 }
+
+/* Study Tips cards: click anywhere to scroll to the next one. */
+.tipsIntro,
+.tipCard,
+.tipsRemember { scroll-margin-top: 20px; }
+
+.tipClickable {
+  position: relative;
+  padding-bottom: 54px;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.tipClickable:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(28, 36, 67, 0.09);
+}
+
+.tipCard:target {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--res) 30%, transparent);
+}
+
+.tipsIntro:target {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--teal) 30%, transparent);
+}
+
+.tipNext {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--res, var(--teal)) 18%, white);
+  color: color-mix(in srgb, var(--res, var(--teal)) 70%, var(--ink));
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.tipNext:hover {
+  background: color-mix(in srgb, var(--res, var(--teal)) 30%, white);
+}
