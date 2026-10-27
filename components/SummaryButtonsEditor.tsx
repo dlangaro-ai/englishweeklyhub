@@ -22,20 +22,17 @@ export default function SummaryButtonsEditor({
 
   const atCap = buttons.length >= MAX_BUTTONS;
 
-  function pickTarget(value: string) {
-    setTarget(value);
-    // Suggest the page's name as the button text if none has been typed yet.
-    const page = SITE_PAGES.find((item) => item.href === value);
-    if (page && !label.trim()) setLabel(page.label);
-  }
+  const targetPage = SITE_PAGES.find((page) => page.href === target);
 
   function addButton() {
     const href = target === OTHER_WEBSITE ? url.trim() : target;
-    if (!label.trim() || !href) {
+    // Left empty, a button to a site page is named after that page.
+    const name = label.trim() || targetPage?.label || "";
+    if (!name || !href) {
       alert("Please give the button a name and choose where it goes.");
       return;
     }
-    onChange([...buttons, { id: `button-${Date.now()}`, label: label.trim(), href }]);
+    onChange([...buttons, { id: `button-${Date.now()}`, label: name, href }]);
     setLabel("");
     setUrl("");
   }
@@ -73,7 +70,7 @@ export default function SummaryButtonsEditor({
         <div className="summaryButtonsAdd">
           <input
             className="editTextarea"
-            placeholder="Button name, e.g. STUDY TIPS"
+            placeholder={targetPage ? `Button name (empty = “${targetPage.label}”)` : "Button name"}
             value={label}
             maxLength={40}
             onChange={(event) => setLabel(event.target.value)}
@@ -81,7 +78,7 @@ export default function SummaryButtonsEditor({
           <select
             className="summaryButtonsSelect"
             value={target}
-            onChange={(event) => pickTarget(event.target.value)}
+            onChange={(event) => setTarget(event.target.value)}
             aria-label="Where the button goes"
           >
             {SITE_PAGES.map((page) => (
