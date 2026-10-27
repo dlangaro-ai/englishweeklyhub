@@ -10,7 +10,7 @@ const OTHER_WEBSITE = "__website";
 // not yet added can still be included when the teacher presses Save.
 export type ButtonDraft = { label: string; target: string; url: string };
 
-export const EMPTY_DRAFT: ButtonDraft = { label: "", target: SITE_PAGES[0].href, url: "" };
+export const EMPTY_DRAFT: ButtonDraft = { label: "", target: "", url: "" };
 
 // True once the teacher has actually typed something into the new-button form.
 export function hasTypedDraft(draft: ButtonDraft): boolean {
@@ -20,6 +20,7 @@ export function hasTypedDraft(draft: ButtonDraft): boolean {
 // Turns the form into a button; null if it's not complete yet. Left empty, a
 // button to a site page is named after that page.
 export function buildButton(draft: ButtonDraft): SummaryButton | null {
+  if (!draft.target) return null; // no destination chosen yet
   const page = SITE_PAGES.find((item) => item.href === draft.target);
   const href = draft.target === OTHER_WEBSITE ? draft.url.trim() : draft.target;
   const name = draft.label.trim() || page?.label || "";
@@ -48,7 +49,7 @@ export default function SummaryButtonsEditor({
   function addButton() {
     const button = buildButton(draft);
     if (!button) {
-      alert("Please give the button a name and choose where it goes.");
+      alert("Please give the button a name and choose where it goes (the list under the name).");
       return;
     }
     onChange([...buttons, button]);
@@ -99,6 +100,9 @@ export default function SummaryButtonsEditor({
             onChange={(event) => onDraftChange({ ...draft, target: event.target.value })}
             aria-label="Where the button goes"
           >
+            <option value="" disabled>
+              Choose where it goes…
+            </option>
             {SITE_PAGES.map((page) => (
               <option key={page.href} value={page.href}>
                 {page.label}

@@ -59,7 +59,7 @@ export default function SummaryCard({
     if (!hasTypedDraft(draft)) return editable.save();
     const pending = buildButton(draft);
     if (!pending) {
-      alert("Finish the new link button (name and where it goes), or clear its name, before saving.");
+      alert("Finish the new link button — choose where it goes — or clear its name, before saving.");
       return;
     }
     return editable.saveWith({ summaryButtons: [...buttons, pending] });
