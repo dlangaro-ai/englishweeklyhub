@@ -1,40 +1,58 @@
 "use client";
 
-import { useState } from "react";
 import { SummaryButton } from "@/lib/courseData";
 import { SITE_PAGES } from "@/lib/sitePages";
 
 const MAX_BUTTONS = 8;
 const OTHER_WEBSITE = "__website";
 
+// The "new button" form. It lives in the parent so a button that was typed but
+// not yet added can still be included when the teacher presses Save.
+export type ButtonDraft = { label: string; target: string; url: string };
+
+export const EMPTY_DRAFT: ButtonDraft = { label: "", target: SITE_PAGES[0].href, url: "" };
+
+// True once the teacher has actually typed something into the new-button form.
+export function hasTypedDraft(draft: ButtonDraft): boolean {
+  return draft.label.trim() !== "" || (draft.target === OTHER_WEBSITE && draft.url.trim() !== "");
+}
+
+// Turns the form into a button; null if it's not complete yet. Left empty, a
+// button to a site page is named after that page.
+export function buildButton(draft: ButtonDraft): SummaryButton | null {
+  const page = SITE_PAGES.find((item) => item.href === draft.target);
+  const href = draft.target === OTHER_WEBSITE ? draft.url.trim() : draft.target;
+  const name = draft.label.trim() || page?.label || "";
+  if (!name || !href) return null;
+  return { id: `button-${Date.now()}`, label: name, href };
+}
+
 // Edit-mode controls for the link buttons under the "This week" message.
 // Changes are held in the parent and saved together with the message text.
 export default function SummaryButtonsEditor({
   buttons,
-  onChange
+  onChange,
+  draft,
+  onDraftChange
 }: {
   buttons: SummaryButton[];
   onChange: (buttons: SummaryButton[]) => void;
+  draft: ButtonDraft;
+  onDraftChange: (draft: ButtonDraft) => void;
 }) {
-  const [label, setLabel] = useState("");
-  const [target, setTarget] = useState(SITE_PAGES[0].href);
-  const [url, setUrl] = useState("");
-
+  const { label, target, url } = draft;
   const atCap = buttons.length >= MAX_BUTTONS;
-
   const targetPage = SITE_PAGES.find((page) => page.href === target);
+  const pending = hasTypedDraft(draft);
 
   function addButton() {
-    const href = target === OTHER_WEBSITE ? url.trim() : target;
-    // Left empty, a button to a site page is named after that page.
-    const name = label.trim() || targetPage?.label || "";
-    if (!name || !href) {
+    const button = buildButton(draft);
+    if (!button) {
       alert("Please give the button a name and choose where it goes.");
       return;
     }
-    onChange([...buttons, { id: `button-${Date.now()}`, label: name, href }]);
-    setLabel("");
-    setUrl("");
+    onChange([...buttons, button]);
+    onDraftChange({ ...draft, label: "", url: "" });
   }
 
   function destinationName(href: string) {
@@ -73,12 +91,12 @@ export default function SummaryButtonsEditor({
             placeholder={targetPage ? `Button name (empty = “${targetPage.label}”)` : "Button name"}
             value={label}
             maxLength={40}
-            onChange={(event) => setLabel(event.target.value)}
+            onChange={(event) => onDraftChange({ ...draft, label: event.target.value })}
           />
           <select
             className="summaryButtonsSelect"
             value={target}
-            onChange={(event) => setTarget(event.target.value)}
+            onChange={(event) => onDraftChange({ ...draft, target: event.target.value })}
             aria-label="Where the button goes"
           >
             {SITE_PAGES.map((page) => (
@@ -93,12 +111,17 @@ export default function SummaryButtonsEditor({
               className="editTextarea"
               placeholder="https://..."
               value={url}
-              onChange={(event) => setUrl(event.target.value)}
+              onChange={(event) => onDraftChange({ ...draft, url: event.target.value })}
             />
           )}
           <button type="button" className="addActivityButton" onClick={addButton}>
             ➕ Add button
           </button>
+          {pending && (
+            <p className="summaryButtonsPending">
+              ⚠️ This button isn’t added yet — press “Add button” (Save will add it too).
+            </p>
+          )}
         </div>
       )}
     </div>

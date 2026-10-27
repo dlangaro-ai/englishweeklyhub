@@ -75,7 +75,7 @@ export function useEditableField({
     setImageAlign(undefined);
   }
 
-  async function save() {
+  async function doSave(extra?: Record<string, unknown>) {
     if (maxWords) {
       const plainText = text.replace(/<[^>]+>/g, " ");
       const words = plainText.trim() ? plainText.trim().split(/\s+/).length : 0;
@@ -108,6 +108,7 @@ export function useEditableField({
       };
 
       if (extraPayload) Object.assign(payload, extraPayload);
+      if (extra) Object.assign(payload, extra);
 
       if (uploadedUrl) payload[imageField] = uploadedUrl;
       else if (imageRemoved) payload[imageField] = null;
@@ -143,6 +144,10 @@ export function useEditableField({
     }
   }
 
+  const save = () => doSave();
+  // Save, overriding some extra fields with values only known right now.
+  const saveWith = (extra: Record<string, unknown>) => doSave(extra);
+
   return {
     editing,
     text,
@@ -160,6 +165,7 @@ export function useEditableField({
     cancelEdit,
     handleFileChange,
     handleRemoveImage,
-    save
+    save,
+    saveWith
   };
 }

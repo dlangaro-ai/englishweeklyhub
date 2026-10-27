@@ -2989,3 +2989,13 @@ a.searchResultLink:hover {
 @media print {
   .siteNav { display: none; }
 }
+
+.summaryButtonsPending {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--sunny-soft);
+  color: color-mix(in srgb, var(--sunny) 35%, var(--ink));
+  font-size: 13px;
+  font-weight: 700;
+}

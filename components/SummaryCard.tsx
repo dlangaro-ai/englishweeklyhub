@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useEditableField } from "./useEditableField";
 import RichTextEditor from "./RichTextEditor";
 import SummaryButtons from "./SummaryButtons";
-import SummaryButtonsEditor from "./SummaryButtonsEditor";
+import SummaryButtonsEditor, { buildButton, EMPTY_DRAFT, hasTypedDraft } from "./SummaryButtonsEditor";
 import { SummaryButton } from "@/lib/courseData";
 import ImageSizeControl from "./ImageSizeControl";
 import { sanitizeRichText } from "@/lib/sanitizeHtml";
@@ -32,6 +32,7 @@ export default function SummaryCard({
   isEditor: boolean;
 }) {
   const [buttons, setButtons] = useState<SummaryButton[]>(summaryButtons ?? []);
+  const [draft, setDraft] = useState(EMPTY_DRAFT);
   const editable = useEditableField({
     weekNumber,
     field: "summary",
@@ -49,7 +50,19 @@ export default function SummaryCard({
 
   function startEdit() {
     setButtons(summaryButtons ?? []);
+    setDraft(EMPTY_DRAFT);
     editable.startEdit();
+  }
+
+  // A button that was typed but not yet added is added as part of Save.
+  function save() {
+    if (!hasTypedDraft(draft)) return editable.save();
+    const pending = buildButton(draft);
+    if (!pending) {
+      alert("Finish the new link button (name and where it goes), or clear its name, before saving.");
+      return;
+    }
+    return editable.saveWith({ summaryButtons: [...buttons, pending] });
   }
 
   return (
@@ -73,7 +86,7 @@ export default function SummaryCard({
         {editable.editing ? (
           <div className="editForm">
             <RichTextEditor value={editable.text} onChange={editable.setText} maxWords={300} />
-            <SummaryButtonsEditor buttons={buttons} onChange={setButtons} />
+            <SummaryButtonsEditor buttons={buttons} onChange={setButtons} draft={draft} onDraftChange={setDraft} />
             <div className="editImageRow">
               {editable.imagePreview && (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -107,7 +120,7 @@ export default function SummaryCard({
               />
             )}
             <div className="editActions">
-              <button className="primaryButton" type="button" onClick={editable.save} disabled={editable.saving}>
+              <button className="primaryButton" type="button" onClick={save} disabled={editable.saving}>
                 {editable.saving ? "Saving…" : "Save"}
               </button>
               <button className="cancelButton" type="button" onClick={editable.cancelEdit} disabled={editable.saving}>
