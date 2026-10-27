@@ -2592,3 +2592,208 @@ a.searchResultLink:hover {
   color: var(--muted);
   font-size: 13px;
 }
+
+/* ── Study Tips page ── */
+.tipsIntro {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-top: 24px;
+  padding: 24px 26px;
+  border: 2px solid color-mix(in srgb, var(--teal) 30%, var(--line));
+  border-radius: 24px;
+  background: linear-gradient(160deg, #ffffff 0%, color-mix(in srgb, var(--teal) 14%, white) 140%);
+}
+
+.tipsIntroIcon { flex: 0 0 auto; }
+
+.tipsIntro p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.tipsIntro p:last-child { margin-bottom: 0; }
+.tipsIntro strong { color: var(--navy); }
+
+.tipsList {
+  display: grid;
+  gap: 18px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tipCard {
+  --res: var(--blue);
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 22px 24px;
+  border: 2px solid color-mix(in srgb, var(--res) 30%, transparent);
+  border-left: 10px solid var(--res);
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--res) 7%, var(--card));
+}
+
+.tipCard:nth-child(2) { --res: var(--success); }
+.tipCard:nth-child(3) { --res: var(--pink); }
+.tipCard:nth-child(4) { --res: var(--accent); }
+
+.tipNumber {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--res);
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--res) 60%, var(--ink));
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.tipBody { min-width: 0; }
+
+.tipBody h2 {
+  margin: 4px 0 10px;
+  font-size: 24px;
+  color: color-mix(in srgb, var(--res) 55%, var(--ink));
+}
+
+.tipBody p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.tipBody p:last-child { margin-bottom: 0; }
+.tipBody strong { color: var(--navy); }
+
+.tipSteps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 14px 0 16px;
+}
+
+.tipStep {
+  --step: var(--sunny);
+  padding: 16px 18px;
+  border: 2px solid color-mix(in srgb, var(--step) 45%, white);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--step) 14%, white);
+}
+
+.tipStepTwo { --step: var(--orange); }
+
+.tipBody .tipStepTime {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--step) 70%, var(--ink));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.tipStep h3 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: var(--navy);
+}
+
+.tipStep ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.tipStep li + li { margin-top: 6px; }
+
+.tipsRemember {
+  margin-top: 22px;
+  padding: 26px 28px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, var(--teal), color-mix(in srgb, var(--teal) 55%, var(--accent)));
+  box-shadow: 0 8px 0 color-mix(in srgb, var(--teal) 55%, var(--ink));
+  color: #fff;
+  text-align: center;
+}
+
+.tipsRememberLabel {
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.tipsRemember h2 {
+  margin: 0 0 12px;
+  font-size: clamp(24px, 4vw, 32px);
+  line-height: 1.15;
+}
+
+.tipsRemember p { margin: 0 0 10px; font-size: 17px; line-height: 1.6; }
+.tipsRemember .tipsRememberClosing { margin: 6px 0 0; font-size: 19px; font-weight: 800; }
+
+.tipsQuotes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 28px 0 8px;
+}
+
+.tipQuote {
+  --note: var(--success);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  min-height: 150px;
+  margin: 0;
+  padding: 20px 18px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--note) 16%, white);
+  box-shadow: 0 8px 18px rgba(28, 36, 67, 0.13);
+  text-align: center;
+  transform: rotate(-2deg);
+}
+
+.tipQuote:nth-child(2) { --note: var(--sunny); transform: rotate(1.5deg); }
+.tipQuote:nth-child(3) { --note: var(--accent); transform: rotate(-1deg); }
+
+.tipQuote blockquote {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: color-mix(in srgb, var(--note) 40%, var(--ink));
+}
+
+.tipQuote figcaption {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .tipSteps { grid-template-columns: 1fr; }
+  .tipsQuotes { grid-template-columns: 1fr; }
+  .tipQuote { min-height: 0; transform: none !important; }
+  .tipCard { padding: 18px 16px; gap: 12px; }
+  .tipNumber { width: 40px; height: 40px; font-size: 22px; }
+  .tipsIntro { padding: 20px 18px; }
+}
