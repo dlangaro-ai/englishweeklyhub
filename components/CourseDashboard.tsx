@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Week } from "@/lib/courseData";
 import EditModeToggle from "./EditModeToggle";
@@ -18,95 +17,9 @@ const HOME_TABS: { href: string; label: string; icon: IconName; tint: string }[]
   { href: "/about", label: "About Us", icon: "chat", tint: "navPurple" }
 ];
 
-const stripHtml = (value: string) => value.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-
-type SearchHit = {
-  week: number;
-  where: string;
-  snippet: string;
-  href: string;
-};
-
-const SNIPPET_PAD = 44;
-
-function snippetAround(text: string, at: number, length: number): string {
-  const start = Math.max(0, at - SNIPPET_PAD);
-  const end = Math.min(text.length, at + length + SNIPPET_PAD);
-  return (
-    (start > 0 ? "… " : "") +
-    text.slice(start, end).trim() +
-    (end < text.length ? " …" : "")
-  );
-}
-
-// Walk a week's content for the query and report each place it turns up — the
-// section, a snippet of the text, and a link that lands on that spot. Callers
-// decide which weeks to search (students only get published ones).
-function weekHits(week: Week, query: string): SearchHit[] {
-  const hits: SearchHit[] = [];
-  const weekHref = `/week/${week.number}`;
-
-  const add = (where: string, raw: string, href: string) => {
-    const text = raw.trim();
-    if (!text) return;
-    const at = text.toLowerCase().indexOf(query);
-    if (at === -1) return;
-    hits.push({ week: week.number, where, snippet: snippetAround(text, at, query.length), href });
-  };
-
-  add("Title", `Week ${week.number} — ${week.title}`, weekHref);
-  add("Topic", week.unit, weekHref);
-  add("This week", stripHtml(week.summary), `${weekHref}/this-week`);
-  add("Books", stripHtml(week.books), `${weekHref}#books`);
-  add("Homework", stripHtml(week.homework), `${weekHref}#homework`);
-  add("Extra Activities", week.bonusText, `${weekHref}#bonus`);
-  add("Resources & Library", stripHtml(week.libraryText), `${weekHref}#library`);
-  (week.libraryLinks ?? []).forEach((link) => add("Resources & Library", link.title, `${weekHref}#library`));
-  week.extraActivities.forEach((activity) => {
-    add("Extra Activities", activity.title, `${weekHref}/skills`);
-    add("Extra Activities", stripHtml(activity.description ?? ""), `${weekHref}/skills`);
-  });
-
-  return hits;
-}
-
-function highlight(text: string, query: string) {
-  if (!query) return text;
-  const lower = text.toLowerCase();
-  const nodes: React.ReactNode[] = [];
-  let cursor = 0;
-  let found = lower.indexOf(query);
-  let key = 0;
-
-  while (found !== -1) {
-    if (found > cursor) nodes.push(text.slice(cursor, found));
-    nodes.push(<mark key={key++}>{text.slice(found, found + query.length)}</mark>);
-    cursor = found + query.length;
-    found = lower.indexOf(query, cursor);
-  }
-  nodes.push(text.slice(cursor));
-  return nodes;
-}
-
 export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
-  const [query, setQuery] = useState("");
   const readyCount = weeks.filter((week) => week.published).length;
 
-  const trimmed = query.trim().toLowerCase();
-
-  const seen = new Set<string>();
-  const hits = trimmed
-    ? weeks
-        .filter((week) => week.published || isEditor)
-        .flatMap((week) => weekHits(week, trimmed))
-        .filter((hit) => {
-          const key = `${hit.week}|${hit.where}`;
-          if (seen.has(key)) return false;
-          seen.add(key);
-          return true;
-        })
-        .slice(0, 40)
-    : [];
   return (
     <main className="shell">
       <header className="hero">
@@ -139,55 +52,9 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
           </p>
         </div>
         <div className="heroRight">
-          <div className="dashboardSearch homeSearch">
-            <span className="dashboardSearchIcon" aria-hidden="true">🔍</span>
-            <input
-              type="text"
-              className="dashboardSearchInput"
-              placeholder="Search all weeks…"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              aria-label="Search all weeks"
-            />
-            {query && (
-              <button
-                type="button"
-                className="dashboardSearchClear"
-                onClick={() => setQuery("")}
-                aria-label="Clear search"
-              >
-                ✕
-              </button>
-            )}
-          </div>
           <EditModeToggle isEditor={isEditor} />
         </div>
       </header>
-
-      {trimmed && (
-        <div className="searchResults">
-          {hits.length === 0 ? (
-            <p className="dashboardSearchCount">No weeks match your search.</p>
-          ) : (
-            <>
-              <p className="dashboardSearchCount">
-                {hits.length}
-                {hits.length === 40 ? "+" : ""} {hits.length === 1 ? "result" : "results"} — tap to jump to it
-              </p>
-              <ul className="searchResultsList">
-                {hits.map((hit) => (
-                  <li key={`${hit.week}-${hit.where}`}>
-                    <Link href={hit.href} className="searchResultLink">
-                      <span className="searchResultWhere">Week {hit.week} · {hit.where}</span>
-                      <span className="searchResultSnippet">{highlight(hit.snippet, trimmed)}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
-      )}
 
       <div id="explore" className="homeExplore">
         <BreakingNews weeks={weeks} />
