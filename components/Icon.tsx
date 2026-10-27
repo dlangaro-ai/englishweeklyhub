@@ -181,6 +181,15 @@ const ICONS = {
     </>
   ),
   star: <path d={starPath(24, 25, 18)} fill={YELLOW} />,
+  bulb: (
+    <>
+      <path d="M24 4.5a13.5 13.5 0 0 0-7.7 24.6c1.4 1 2.2 2.4 2.2 4V35h11v-1.9c0-1.6.8-3 2.2-4A13.5 13.5 0 0 0 24 4.5z" fill={YELLOW} />
+      <rect x="18.5" y="35" width="11" height="7.5" rx="2.8" fill={BLUE} />
+      <path d="M21.5 39h5" stroke={WHITE} strokeWidth="2" opacity="0.8" />
+      <path d="M20 22l4 5 4-5" fill="none" stroke={ORANGE} strokeWidth="2.6" />
+      <path d="M16.5 15a8 8 0 0 1 5-4" fill="none" stroke={WHITE} strokeWidth="2.5" opacity="0.85" />
+    </>
+  ),
   megaphone: (
     <>
       <path d="M38 13c3 3 4.5 7 4.5 11s-1.5 8-4.5 11" fill="none" stroke={ORANGE} strokeWidth="2.5" />

@@ -14,6 +14,7 @@ const HOME_TABS: { href: string; label: string; icon: IconName; tint: string }[]
   { href: "/vocabulary", label: "Vocabulary", icon: "abc", tint: "navPink" },
   { href: "/extra-activities", label: "Extra Activities", icon: "gift", tint: "navOrange" },
   { href: "/resources", label: "Resources & Library", icon: "book", tint: "navBlue" },
+  { href: "/study-tips", label: "Study Tips", icon: "bulb", tint: "navTeal" },
   { href: "/about", label: "About Us", icon: "chat", tint: "navPurple" }
 ];
 
