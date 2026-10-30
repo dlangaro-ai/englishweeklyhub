@@ -3539,3 +3539,25 @@ a:hover > .activityCountButton,
   letter-spacing: 0.2em;
 }
 .siteNavBrand { font-weight: 900; letter-spacing: -0.04em; font-size: 24px; }
+
+/* ── Whole Big News card is one big link to "What's happening this week";
+   the buttons inside sit above it and go to their own places. ── */
+.homeExplore .bigNewsMain { position: static; z-index: auto; }
+.bigNewsCover { color: inherit; }
+.bigNewsCover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.bigNewsCover:focus-visible { outline: none; }
+.bigNewsCover:focus-visible::after { outline: 3px solid var(--accent); outline-offset: -3px; }
+.bigNewsLinks > * { position: relative; z-index: 2; }
+.bigNewsSticker { pointer-events: none; }
+.bigNews { transition: transform 150ms ease, box-shadow 150ms ease; }
+.bigNews:has(.bigNewsCover:hover) { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(244, 194, 69, 0.22); }
+@media (prefers-reduced-motion: reduce) {
+  .bigNews { transition: none; }
+  .bigNews:has(.bigNewsCover:hover) { transform: none; }
+}
