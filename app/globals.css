@@ -3494,3 +3494,41 @@ a:hover > .activityCountButton,
   .homeExplore .bigNewsChip { min-height: 60px; padding: 10px 16px; }
   .homeExplore .bigNewsGo { padding-inline: 24px; }
 }
+
+/* ── TEDANK5 logo, as in the reference design ── */
+.tedLogo,
+.siteNavBrand {
+  font-family: var(--font-logo), "Nunito", "Arial Rounded MT Bold", system-ui, sans-serif;
+}
+
+.tedLogo {
+  font-size: clamp(40px, 7vw, 62px);
+  text-align: center;
+  color: var(--navy);
+}
+.tedLogoWord {
+  font-size: 1em;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+.tedLogoWord span,
+.siteNavBrand span { color: #3ca653; }
+.tedLogoPill {
+  width: 100%;
+  max-width: 5.6em;
+  margin: 0.25em auto 0;
+  padding: 0.38em 0.4em;
+  border-radius: 999px;
+  background: #eae4ff;
+  font-size: 0.42em;
+  font-weight: 900;
+  line-height: 1.2;
+}
+.tedLogoTagline {
+  margin-top: 0.9em;
+  font-size: 0.2em;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+}
+.siteNavBrand { font-weight: 900; letter-spacing: -0.04em; font-size: 24px; }

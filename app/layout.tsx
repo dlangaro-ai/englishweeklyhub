@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Baloo_2 } from "next/font/google";
+import { Baloo_2, Nunito } from "next/font/google";
 import "./globals.css";
 import SiteNav from "@/components/SiteNav";
 
@@ -7,6 +7,13 @@ const baloo = Baloo_2({
   subsets: ["latin"],
   weight: ["600", "700", "800"],
   variable: "--font-heading"
+});
+
+// Heavy rounded face used for the TEDANK5 logo (header and home page).
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["900"],
+  variable: "--font-logo"
 });
 
 const siteUrl = "https://tedank5.vercel.app";
@@ -44,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={baloo.variable}>
+    <html lang="en" className={`${baloo.variable} ${nunito.variable}`}>
       <body>
         <SiteNav />
         {children}
