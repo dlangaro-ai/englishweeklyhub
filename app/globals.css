@@ -3426,3 +3426,218 @@ a:hover > .activityCountButton,
   .homeTabs { --tab-cols: 2; --tab-gap: 12px; row-gap: 20px; }
   .homeTabs > .homeTab { min-height: 150px; }
 }
+
+/* ══ TEDANK5 home layout — matches the reference design ══════════════════
+   Top bar: logo left, search + menu icons right, menu is a dropdown card at
+   every screen size. Home page: 900px column, big rounded hero card, big
+   yellow "Big news" card with large pill buttons, white menu cards. */
+:root { --nav-h: 76px; }
+
+/* ── Top bar ── */
+.siteNav {
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid #e5e9f1;
+}
+.siteNavInner { justify-content: space-between; max-width: none; padding: 0 5%; }
+.siteNavBrand { font-size: clamp(25px, 4vw, 36px); font-weight: 800; letter-spacing: -0.04em; }
+.siteNavActions { margin: 0 0 0 auto; gap: 8px; }
+.siteNavSearch { width: 48px; height: 48px; }
+.siteNavSearch svg { width: 26px; height: 26px; }
+.siteNavToggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  width: 48px;
+  height: 48px;
+  padding: 0 11px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.siteNavToggle span {
+  display: block;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--navy);
+  transition: transform 200ms ease;
+}
+.siteNavToggle.isOpen span:first-child { transform: translateY(5px) rotate(45deg); }
+.siteNavToggle.isOpen span:last-child { transform: translateY(-5px) rotate(-45deg); }
+
+.siteNavLinks {
+  position: absolute;
+  top: calc(var(--nav-h) - 6px);
+  right: 5%;
+  left: auto;
+  width: min(320px, calc(100vw - 40px));
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #e3e7ef;
+  border-radius: 18px;
+  box-shadow: 0 14px 35px rgba(32, 44, 73, 0.13);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 180ms;
+}
+.siteNavLinks.isOpen {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.siteNavLink {
+  padding: 12px;
+  border-radius: 10px;
+  border-bottom: 0;
+  font-size: 18px;
+}
+.siteNavLink:hover { background: #f4f5fb; }
+.siteNavLink.isActive::after { display: none; }
+.siteNavLink.isActive { background: var(--accent-soft); }
+
+/* ── Home page column ── */
+.homeShell { width: min(900px, calc(100% - 36px)); padding: 45px 0 60px; }
+
+/* ── Hero card ── */
+.homeShell .hero {
+  display: block;
+  padding: 38px 28px;
+  border: 2px solid #e5e8f1;
+  border-radius: 58px;
+  background: linear-gradient(145deg, #fff, #f7f8fc);
+  box-shadow: 0 10px 32px rgba(37, 49, 77, 0.03);
+}
+.homeShell .hero .eyebrow {
+  position: static;
+  margin: 0 30px 26px;
+  text-align: center;
+  color: #5e687f;
+  font-size: clamp(15px, 3vw, 26px);
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.homeShell .hero .heroLogoLink { width: min(560px, 100%); margin: 0 auto; }
+.homeShell .hero .heroRight { position: absolute; top: 20px; right: 22px; width: auto; }
+.homeShell .heroTitleBlock .heroProgress {
+  width: 100%;
+  gap: 15px;
+  margin: 28px 0 0;
+}
+.homeShell .heroTitleBlock .heroProgressTrack { height: 20px; background: #e3ebe6; }
+.homeShell .heroProgressFill { background: #3ca653; }
+.homeShell .heroTitleBlock .heroProgressLabel {
+  color: #337d41;
+  font-size: clamp(14px, 2.7vw, 24px);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+/* ── Big news card ── */
+.homeShell .bigNews {
+  margin-top: 44px;
+  padding: 35px;
+  border: 5px solid #ffdf7b;
+  border-radius: 55px;
+  background: linear-gradient(135deg, #fffbee, #fff 76%);
+  box-shadow: none;
+}
+.homeShell .bigNewsMain { display: block; padding: 0; }
+.homeShell .bigNewsIcon {
+  width: 110px;
+  height: 110px;
+  box-shadow: 0 8px 20px rgba(244, 194, 69, 0.19);
+}
+.homeShell .bigNewsIcon svg { width: 58px; height: 58px; }
+.homeShell .bigNewsSticker {
+  top: 35px;
+  right: 35px;
+  padding: 17px 22px;
+  background: #ff4e70;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.homeShell .bigNewsLabel {
+  margin: 28px 0 0;
+  padding: 9px 23px;
+  background: #f05a0b;
+  font-size: clamp(15px, 2.6vw, 24px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.homeShell .bigNewsTitle { margin: 18px 0; font-size: clamp(30px, 5vw, 44px); }
+.homeShell .bigNewsText { margin: 0; color: #6c778e; font-size: clamp(19px, 3.5vw, 32px); line-height: 1.55; }
+.homeShell .bigNewsLinks { gap: 16px; margin-top: 32px; }
+.homeShell .bigNewsGo,
+.homeShell .bigNewsChip {
+  min-height: 72px;
+  justify-content: center;
+  gap: 9px;
+  padding: 13px 22px;
+  border-radius: 999px;
+  font-size: clamp(17px, 2.8vw, 26px);
+  font-weight: 900;
+}
+.homeShell .bigNewsGo {
+  display: inline-flex;
+  align-items: center;
+  padding-inline: 38px;
+  background: #6a5cff;
+  box-shadow: 0 5px 0 #403a9c;
+}
+.homeShell .bigNewsChip { border-width: 4px; }
+.homeShell .bigNewsChip svg { width: 30px; height: 30px; }
+
+/* ── Menu cards (same 7 pages, white card look) ── */
+.homeShell .homeTabs { --tab-gap: 18px; margin: 28px 0 0; }
+.homeShell .homeTab {
+  min-height: 130px;
+  gap: 12px;
+  padding: 20px 12px;
+  border: 2px solid #e4e9f2;
+  border-radius: 26px;
+  background: #fff;
+  box-shadow: none;
+  color: var(--navy);
+}
+.homeShell .homeTab:hover,
+.homeShell .homeTab:nth-child(even):hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--tile) 55%, white);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--tile) 18%, transparent);
+}
+.homeShell .homeTab:active { transform: translateY(1px); box-shadow: none; }
+.homeShell .homeTabIcon {
+  width: 62px;
+  height: 62px;
+  background: color-mix(in srgb, var(--tile) 16%, white);
+  box-shadow: none;
+}
+.homeShell .homeTabLabel { font-size: 20px; }
+
+@media (max-width: 560px) {
+  .homeShell { width: min(900px, calc(100% - 36px)); padding: 35px 0 45px; }
+  .homeShell .hero { padding: 34px 20px 28px; border-radius: 42px; }
+  .homeShell .hero .eyebrow { margin: 14px 0 22px; letter-spacing: 1px; }
+  .homeShell .heroTitleBlock .heroProgress { gap: 10px; }
+  .homeShell .heroTitleBlock .heroProgressLabel { font-size: 14px; }
+  .homeShell .bigNews { padding: 27px 24px 32px; border-radius: 42px; }
+  .homeShell .bigNewsIcon { width: 90px; height: 90px; }
+  .homeShell .bigNewsIcon svg { width: 48px; height: 48px; }
+  .homeShell .bigNewsSticker { top: 27px; right: 24px; padding: 13px 16px; font-size: 15px; }
+  .homeShell .bigNewsLinks { gap: 13px; }
+  .homeShell .bigNewsGo,
+  .homeShell .bigNewsChip { min-height: 60px; padding: 10px 16px; }
+  .homeShell .bigNewsGo { padding-inline: 24px; }
+  .homeShell .homeTabs { --tab-gap: 12px; }
+  .homeShell .homeTab { min-height: 120px; }
+}
+@media (max-width: 370px) {
+  .homeShell .bigNews { padding-inline: 18px; }
+  .homeShell .heroTitleBlock .heroProgressLabel { font-size: 12px; }
+}
