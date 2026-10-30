@@ -3518,10 +3518,12 @@ a:hover > .activityCountButton,
 .tedLogoPill {
   /* "My English Hub" pill: same look and proportions as before the logo
      change (Baloo font, about as wide as the wordmark). */
-  width: 100%;
-  max-width: 8.8em;
+  width: fit-content;
+  min-width: 9.6em;
+  max-width: 100%;
   margin: 0.4em auto 0;
-  padding: 0.3em 1em;
+  padding: 0.3em 1.2em;
+  white-space: nowrap;
   border-radius: 999px;
   background: #e9e4fa;
   color: var(--navy);
