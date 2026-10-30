@@ -3427,75 +3427,73 @@ a:hover > .activityCountButton,
   .homeTabs > .homeTab { min-height: 150px; }
 }
 
-/* ── Big news: a wide, low headline banner — icon on the left, story and
+/* ── Big news: a wide, slim headline banner — icon on the left, story and
    buttons filling the width beside it. ── */
 .homeExplore .bigNews {
-  margin-top: 18px;
-  border: 4px solid #ffdf7b;
-  border-radius: 36px;
+  margin-top: 14px;
+  border: 3px solid #ffdf7b;
+  border-radius: 26px;
   background: linear-gradient(135deg, #fffbee, #fff 76%);
   box-shadow: none;
 }
 .homeExplore .bigNewsMain {
   display: flex;
   align-items: center;
-  gap: 28px;
-  padding: 22px 30px;
+  gap: 18px;
+  padding: 14px 22px;
 }
 .homeExplore .bigNewsIcon {
-  width: 92px;
-  height: 92px;
-  box-shadow: 0 6px 16px rgba(244, 194, 69, 0.19);
+  width: 64px;
+  height: 64px;
+  box-shadow: 0 4px 12px rgba(244, 194, 69, 0.19);
 }
-.homeExplore .bigNewsIcon svg { width: 48px; height: 48px; }
+.homeExplore .bigNewsIcon svg { width: 34px; height: 34px; }
 .homeExplore .bigNewsSticker {
-  top: 18px;
-  right: 24px;
-  padding: 9px 16px;
+  top: 12px;
+  right: 16px;
+  padding: 5px 12px;
   background: #ff4e70;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.06em;
 }
 .homeExplore .bigNewsLabel {
-  margin: 0 0 6px;
-  padding: 6px 18px;
+  margin: 0 0 4px;
+  padding: 3px 12px;
   background: #f05a0b;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.08em;
 }
-.homeExplore .bigNewsTitle { margin: 0; font-size: clamp(26px, 3.4vw, 38px); }
-.homeExplore .bigNewsText { margin: 6px 0 0; color: #6c778e; font-size: clamp(16px, 1.8vw, 20px); line-height: 1.45; }
-.homeExplore .bigNewsLinks { gap: 12px; margin-top: 14px; }
+.homeExplore .bigNewsTitle { margin: 0; font-size: clamp(20px, 2.4vw, 26px); }
+.homeExplore .bigNewsText { margin: 3px 0 0; color: #6c778e; font-size: 15px; line-height: 1.4; }
+.homeExplore .bigNewsLinks { gap: 8px; margin-top: 10px; }
 .homeExplore .bigNewsGo,
 .homeExplore .bigNewsChip {
-  min-height: 50px;
+  min-height: 38px;
   justify-content: center;
-  gap: 8px;
-  padding: 8px 20px;
+  gap: 6px;
+  padding: 4px 14px;
   border-radius: 999px;
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 15px;
+  font-weight: 800;
 }
 .homeExplore .bigNewsGo {
   display: inline-flex;
   align-items: center;
-  padding-inline: 30px;
+  padding-inline: 20px;
   background: #6a5cff;
-  box-shadow: 0 4px 0 #403a9c;
+  box-shadow: 0 3px 0 #403a9c;
 }
-.homeExplore .bigNewsChip { border-width: 3px; }
-.homeExplore .bigNewsChip svg { width: 26px; height: 26px; }
+.homeExplore .bigNewsChip { border-width: 2px; padding-left: 8px; }
+.homeExplore .bigNewsChip svg { width: 20px; height: 20px; }
 
 @media (max-width: 640px) {
-  .homeExplore .bigNews { border-radius: 30px; }
-  .homeExplore .bigNewsMain { flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px 18px 22px; }
-  .homeExplore .bigNewsIcon { width: 64px; height: 64px; }
-  .homeExplore .bigNewsIcon svg { width: 36px; height: 36px; }
-  .homeExplore .bigNewsSticker { top: 14px; right: 14px; }
-  .homeExplore .bigNewsGo,
-  .homeExplore .bigNewsChip { min-height: 44px; padding: 6px 14px; font-size: 16px; }
+  .homeExplore .bigNews { border-radius: 22px; }
+  .homeExplore .bigNewsMain { flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px 14px 16px; }
+  .homeExplore .bigNewsIcon { width: 48px; height: 48px; }
+  .homeExplore .bigNewsIcon svg { width: 28px; height: 28px; }
+  .homeExplore .bigNewsSticker { top: 10px; right: 12px; }
 }
 
 /* ── TEDANK5 logo, as in the reference design ── */
@@ -3518,14 +3516,18 @@ a:hover > .activityCountButton,
 .tedLogoWord span,
 .siteNavBrand span { color: #3ca653; }
 .tedLogoPill {
+  /* "My English Hub" pill: same look and proportions as before the logo
+     change (Baloo font, about as wide as the wordmark). */
   width: 100%;
-  max-width: 13.3em;
-  margin: 0.6em auto 0;
-  padding: 0.4em 1em;
+  max-width: 8.8em;
+  margin: 0.4em auto 0;
+  padding: 0.3em 1em;
   border-radius: 999px;
-  background: #eae4ff;
+  background: #e9e4fa;
+  color: var(--navy);
+  font-family: var(--font-heading), Arial, sans-serif;
   font-size: 0.42em;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 1.2;
 }
 .tedLogoTagline {
