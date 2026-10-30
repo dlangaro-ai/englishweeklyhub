@@ -21,7 +21,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
   const readyCount = weeks.filter((week) => week.published).length;
 
   return (
-    <main className="shell homeShell">
+    <main className="shell">
       <header className="hero">
         <div className="heroTitleBlock">
           <h1 className="srOnly">TEDANK5 — My English Hub</h1>
