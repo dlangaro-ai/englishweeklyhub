@@ -3641,3 +3641,20 @@ a:hover > .activityCountButton,
   .homeShell .bigNews { padding-inline: 18px; }
   .homeShell .heroTitleBlock .heroProgressLabel { font-size: 12px; }
 }
+
+/* ── One column width on every page, so the header, cards and grids line up
+   with the home page instead of jumping between 860px and 1180px. ── */
+.shell,
+.narrow {
+  width: min(900px, calc(100% - 36px));
+}
+.shell { padding-top: 45px; padding-bottom: 60px; }
+@media (max-width: 560px) {
+  .shell { padding-top: 35px; padding-bottom: 45px; }
+}
+
+/* Week cards fill the shared column evenly instead of a fixed five across. */
+.weekGrid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+@media (max-width: 640px) {
+  .weekGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
