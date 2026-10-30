@@ -3519,9 +3519,9 @@ a:hover > .activityCountButton,
 .siteNavBrand span { color: #3ca653; }
 .tedLogoPill {
   width: 100%;
-  max-width: 5.6em;
-  margin: 0.25em auto 0;
-  padding: 0.38em 0.4em;
+  max-width: 13.3em;
+  margin: 0.6em auto 0;
+  padding: 0.4em 1em;
   border-radius: 999px;
   background: #eae4ff;
   font-size: 0.42em;
