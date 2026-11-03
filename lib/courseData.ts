@@ -175,14 +175,6 @@ export function getWeek(number: number) {
   return weeks.find((week) => week.number === number);
 }
 
-// How the school year splits into blocks of weeks (start is a 0-based index
-// into the weeks list). Shared by the All Weeks page and the home timeline.
-export const TERMS = [
-  { start: 0, count: 19, name: "Semester 1" },
-  { start: 19, count: 2, name: "Winter Break" },
-  { start: 21, count: 20, name: "Semester 2" }
-];
-
 // The highest week number currently published — used to mark the "current"
 // week card (bright green) apart from already-published past weeks (muted).
 // Pure/client-safe: keep this here rather than lib/getWeeks.ts, which pulls
