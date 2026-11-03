@@ -4,17 +4,18 @@ import Link from "next/link";
 import { Week } from "@/lib/courseData";
 import EditModeToggle from "./EditModeToggle";
 import TedAnk5Logo from "./TedAnk5Logo";
-import Icon, { IconName } from "./Icon";
-import BreakingNews from "./BreakingNews";
+import LineIcon, { LineIconName } from "./LineIcon";
+import ThisWeekCard from "./ThisWeekCard";
+import WeekTimeline from "./WeekTimeline";
 
-const HOME_TABS: { href: string; label: string; icon: IconName; tint: string }[] = [
-  { href: "/weeks", label: "All Weeks", icon: "calendar", tint: "navYellow" },
-  { href: "/completed", label: "Completed Weeks", icon: "check", tint: "navGreen" },
-  { href: "/vocabulary", label: "Vocabulary", icon: "abc", tint: "navPink" },
-  { href: "/extra-activities", label: "Extra Activities", icon: "gift", tint: "navOrange" },
-  { href: "/resources", label: "Resources & Library", icon: "book", tint: "navBlue" },
-  { href: "/study-tips", label: "Study Tips", icon: "bulb", tint: "navTeal" },
-  { href: "/about", label: "About Us", icon: "chat", tint: "navPurple" }
+const HOME_TABS: { href: string; label: string; icon: LineIconName }[] = [
+  { href: "/weeks", label: "All Weeks", icon: "calendar" },
+  { href: "/completed", label: "Completed Weeks", icon: "check" },
+  { href: "/vocabulary", label: "Vocabulary", icon: "abc" },
+  { href: "/extra-activities", label: "Extra Activities", icon: "gift" },
+  { href: "/resources", label: "Resources & Library", icon: "book" },
+  { href: "/study-tips", label: "Study Tips", icon: "bulb" },
+  { href: "/about", label: "About Us", icon: "chat" }
 ];
 
 export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
@@ -54,13 +55,16 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
       </header>
 
       <div id="explore" className="homeExplore">
-        <BreakingNews weeks={weeks} />
+        <ThisWeekCard weeks={weeks} />
 
-        <nav className="homeTabs" aria-label="Main menu">
+        <WeekTimeline weeks={weeks} isEditor={isEditor} />
+
+        <h2 className="homeSectionTitle homeExploreTitle">Explore</h2>
+        <nav className="homeMenu" aria-label="Main menu">
           {HOME_TABS.map((tab) => (
-            <Link key={tab.href} href={tab.href} className={`homeTab ${tab.tint}`}>
-              <span className="homeTabIcon"><Icon name={tab.icon} size={44} /></span>
-              <span className="homeTabLabel">{tab.label}</span>
+            <Link key={tab.href} href={tab.href} className="homeMenuItem">
+              <LineIcon name={tab.icon} />
+              <span>{tab.label}</span>
             </Link>
           ))}
         </nav>

@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { Week, getLatestPublishedWeek } from "@/lib/courseData";
+import { TERMS, Week, getLatestPublishedWeek } from "@/lib/courseData";
 
-const terms = [
-  { start: 0, count: 19, name: "Semester 1", emoji: "📘", tint: "tintBlue" },
-  { start: 19, count: 2, name: "Winter Break", emoji: "❄️", tint: "tintIce" },
-  { start: 21, count: 20, name: "Semester 2", emoji: "📗", tint: "tintSun" }
+const TERM_STYLES = [
+  { emoji: "📘", tint: "tintBlue" },
+  { emoji: "❄️", tint: "tintIce" },
+  { emoji: "📗", tint: "tintSun" }
 ];
+
+const terms = TERMS.map((term, index) => ({ ...term, ...TERM_STYLES[index] }));
 
 // Every week of the year, grouped by semester. Students can open published
 // weeks; the teacher (isEditor) can open all of them.
