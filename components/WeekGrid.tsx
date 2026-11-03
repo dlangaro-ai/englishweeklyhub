@@ -12,7 +12,7 @@ export default function WeekGrid({ weeks, isEditor }: { weeks: Week[]; isEditor:
         <section className="weekTileSection" key={start}>
           <div className="weekTileSectionHead">
             <h2>{name}</h2>
-            <span>Weeks {start + 1}–{start + count}</span>
+            <span>{count === 1 ? `Week ${start + 1}` : `Weeks ${start + 1}–${start + count}`}</span>
           </div>
 
           <div className="weekTileGrid">

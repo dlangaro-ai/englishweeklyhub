@@ -178,7 +178,9 @@ export function getWeek(number: number) {
 // How the school year splits into blocks of weeks (start is a 0-based index
 // into the weeks list). Shared by the All Weeks page and the home timeline.
 export const TERMS = [
-  { start: 0, count: 19, name: "Semester 1" },
+  { start: 0, count: 9, name: "Semester 1" },
+  { start: 9, count: 1, name: "Fall Break" },
+  { start: 10, count: 9, name: "Semester 1" },
   { start: 19, count: 2, name: "Winter Break" },
   { start: 21, count: 20, name: "Semester 2" }
 ];
