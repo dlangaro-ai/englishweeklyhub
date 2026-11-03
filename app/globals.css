@@ -2869,12 +2869,10 @@ a.searchResultLink:hover {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 34px;
-  max-width: 1180px;
   height: 100%;
-  margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 clamp(20px, 3vw, 48px);
 }
 
 .siteNavBrand {
@@ -3107,7 +3105,6 @@ a.searchResultLink:hover {
   display: flex;
   align-items: center;
   gap: 2px;
-  margin-left: -14px;
 }
 
 .siteNavSearch {
