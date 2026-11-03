@@ -3581,6 +3581,8 @@ a:hover > .activityCountButton,
   gap: 8px;
 }
 
+.homeTitle span { color: #3ca653; }
+
 .homeTitle {
   margin: 0;
   color: var(--navy);
@@ -3846,7 +3848,7 @@ a.timelineNode:focus-visible {
   .homeMenuItem { transition: none; }
 }
 
-/* ── Completed Weeks page: same calm look as the landing page ─────────────
+/* ── Completed Weeks and All Weeks: same calm look as the landing page ───
    A centred title and the green pill, then one clean grid. Weeks that are
    done are all the same soft white card; this week is the only one in
    purple, so the eye goes there first. */
@@ -3873,14 +3875,14 @@ a.timelineNode:focus-visible {
   font-size: 17px;
 }
 
-.completedGrid {
+.weekTileGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: 16px;
   margin-top: 28px;
 }
 
-.completedCard {
+.weekTile {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -3893,23 +3895,23 @@ a.timelineNode:focus-visible {
   transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
 }
 
-.completedCard:hover {
+.weekTile:hover {
   border-color: var(--accent);
   box-shadow: 0 10px 22px rgba(28, 36, 67, 0.09);
   transform: translateY(-2px);
 }
 
-.completedCard:focus-visible {
+.weekTile:focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
 }
 
-.completedCard.isNow {
+.weekTile.isNow {
   border: 2px solid var(--accent);
   box-shadow: 0 0 0 5px var(--accent-soft);
 }
 
-.completedCardTop {
+.weekTileTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3917,7 +3919,7 @@ a.timelineNode:focus-visible {
   margin-bottom: 10px;
 }
 
-.completedChip {
+.weekTileChip {
   padding: 4px 12px;
   border-radius: 999px;
   background: var(--accent-soft);
@@ -3927,12 +3929,12 @@ a.timelineNode:focus-visible {
   letter-spacing: 0.06em;
 }
 
-.completedCard.isNow .completedChip {
+.weekTile.isNow .weekTileChip {
   background: var(--accent);
   color: #fff;
 }
 
-.completedNow {
+.weekTileNow {
   color: var(--accent);
   font-size: 13px;
   font-weight: 800;
@@ -3940,14 +3942,14 @@ a.timelineNode:focus-visible {
   text-transform: uppercase;
 }
 
-.completedTitle {
+.weekTileTitle {
   margin: 0;
   color: var(--ink);
   font-size: 22px;
   line-height: 1.15;
 }
 
-.completedUnit {
+.weekTileUnit {
   margin: 0;
   color: var(--muted);
   font-size: 16px;
@@ -3955,10 +3957,62 @@ a.timelineNode:focus-visible {
 }
 
 @media (max-width: 560px) {
-  .completedGrid { grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
-  .completedCard { min-height: 0; }
+  .weekTileGrid { grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
+  .weekTile { min-height: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .completedCard { transition: none; }
+  .weekTile { transition: none; }
 }
+
+.weekTileSoon {
+  color: #8c95a7;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* weeks not published yet: greyed out, still easy to read */
+.weekTile.isSoon {
+  border-color: var(--line);
+  background: #fafbfd;
+  box-shadow: none;
+}
+
+.weekTile.isSoon .weekTileChip {
+  background: #eef0f5;
+  color: #8c95a7;
+}
+
+.weekTile.isSoon .weekTileTitle { color: #7d8799; }
+.weekTile.isSoon .weekTileUnit { color: #9aa3b5; }
+
+div.weekTile.isSoon:hover {
+  border-color: var(--line);
+  box-shadow: none;
+  transform: none;
+}
+
+.weekTileSection { margin-top: 36px; }
+
+.weekTileSectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.weekTileSectionHead h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 24px;
+}
+
+.weekTileSectionHead span {
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.weekTileSection .weekTileGrid { margin-top: 14px; }

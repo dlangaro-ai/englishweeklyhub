@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { getAllWeeks } from "@/lib/getWeeks";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
+import PageIntro from "@/components/PageIntro";
 import WeekGrid from "@/components/WeekGrid";
 
 export const dynamic = "force-dynamic";
@@ -18,15 +19,12 @@ export default async function WeeksPage() {
     <main className="shell">
       <Link href="/" className="backLink">← Home</Link>
 
-      <header className="weekHero simpleWeekHero heroYellow">
-        <div>
-          <p className="eyebrow">GRADE 5 ENGLISH · {weeks.length} WEEKS</p>
-          <h1>All Weeks</h1>
-          <p className="unitLabel">
-            Pick your week to find its topic, books, homework and fun activities · {readyCount} open so far
-          </p>
-        </div>
-      </header>
+      <PageIntro
+        title="All Weeks"
+        openCount={readyCount}
+        totalCount={weeks.length}
+        text="Pick your week to find its topic, books, homework and fun activities"
+      />
 
       <WeekGrid weeks={weeks} isEditor={isEditor} />
       <Link href="/" className="homepageButton">

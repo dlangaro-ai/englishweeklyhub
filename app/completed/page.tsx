@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getAllWeeks } from "@/lib/getWeeks";
 import { getLatestPublishedWeek } from "@/lib/courseData";
 import Icon from "@/components/Icon";
+import PageIntro from "@/components/PageIntro";
+import WeekCard from "@/components/WeekCard";
 
 export const dynamic = "force-dynamic";
 
@@ -16,11 +18,12 @@ export default async function CompletedWeeksPage() {
     <main className="shell">
       <Link href="/" className="backLink">← Home</Link>
 
-      <header className="pageIntro">
-        <h1 className="pageTitle">Completed Weeks</h1>
-        <span className="weeksOpenPill">{completedWeeks.length} of {weeks.length} weeks open</span>
-        <p className="pageIntroText">Every week that&apos;s published so far, in one place</p>
-      </header>
+      <PageIntro
+        title="Completed Weeks"
+        openCount={completedWeeks.length}
+        totalCount={weeks.length}
+        text="Every week that's published so far, in one place"
+      />
 
       {completedWeeks.length === 0 ? (
         <div className="emptyState compact">
@@ -29,26 +32,10 @@ export default async function CompletedWeeksPage() {
           <p>Weeks you publish will show up here.</p>
         </div>
       ) : (
-        <div className="completedGrid">
-          {completedWeeks.map((week) => {
-            const isNow = week.number === latestPublishedWeek;
-
-            return (
-              <Link
-                className={`completedCard${isNow ? " isNow" : ""}`}
-                href={`/week/${week.number}`}
-                key={week.number}
-                aria-current={isNow ? "true" : undefined}
-              >
-                <div className="completedCardTop">
-                  <span className="completedChip">WEEK {week.number}</span>
-                  {isNow && <span className="completedNow"><span aria-hidden="true">★ </span>Now</span>}
-                </div>
-                <h2 className="completedTitle">{week.title}</h2>
-                <p className="completedUnit">{week.unit}</p>
-              </Link>
-            );
-          })}
+        <div className="weekTileGrid">
+          {completedWeeks.map((week) => (
+            <WeekCard key={week.number} week={week} isNow={week.number === latestPublishedWeek} clickable />
+          ))}
         </div>
       )}
       <Link href="/" className="homepageButton">
