@@ -4,8 +4,9 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { TERMS, Week, getLatestPublishedWeek } from "@/lib/courseData";
 
-// The whole school year as one row of numbered dots: finished weeks are soft,
-// this week is the one solid dot, weeks still to come are empty. The row
+// The whole school year as one row of numbered dots, sitting under the
+// "weeks open" pill: a purple line runs through the finished weeks up to
+// this week (the one solid dot); weeks still to come are empty. The row
 // scrolls sideways and opens already centred on this week.
 export default function WeekTimeline({ weeks, isEditor }: { weeks: Week[]; isEditor: boolean }) {
   const currentNumber = getLatestPublishedWeek(weeks);
@@ -22,11 +23,7 @@ export default function WeekTimeline({ weeks, isEditor }: { weeks: Week[]; isEdi
   }, []);
 
   return (
-    <section className="timeline" aria-labelledby="timeline-title">
-      <div className="timelineHead">
-        <h2 id="timeline-title" className="homeSectionTitle">Our school year</h2>
-      </div>
-
+    <section className="timeline" aria-label="School year timeline">
       <div className="timelineScroller" ref={scrollerRef} tabIndex={0} role="region" aria-label="Timeline of all the weeks">
         <div className="timelineTrack">
           {TERMS.map((term) => (
@@ -40,7 +37,7 @@ export default function WeekTimeline({ weeks, isEditor }: { weeks: Week[]; isEdi
                   const label = `Week ${week.number}: ${week.title}${week.published ? "" : " (coming soon)"}`;
 
                   return (
-                    <li key={week.number} ref={isCurrent ? currentRef : undefined}>
+                    <li key={week.number} className={state} ref={isCurrent ? currentRef : undefined}>
                       {clickable ? (
                         <Link
                           href={`/week/${week.number}`}
