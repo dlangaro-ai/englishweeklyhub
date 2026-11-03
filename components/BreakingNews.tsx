@@ -19,7 +19,7 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
   if (!week) return null;
 
   const summary = shorten(stripHtml(week.summary), 150);
-  const thisWeekHref = `/week/${week.number}/this-week`;
+  const weekHref = `/week/${week.number}`;
   const shortcuts: { icon: IconName; label: string; href: string; tint: string }[] = [
     stripHtml(week.books) && { icon: "books" as const, label: "Books", href: `/week/${week.number}#books`, tint: "navBlue" },
     stripHtml(week.homework) && { icon: "house" as const, label: "Homework", href: `/week/${week.number}#homework`, tint: "navOrange" },
@@ -50,9 +50,9 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
           <p className="bigNewsLabel">BIG NEWS · WEEK {week.number}</p>
           <h2 className="bigNewsTitle">
             {/* This link is stretched over the whole card (see .bigNewsCover), so
-                clicking anywhere on the card opens "What's happening this week".
+                clicking anywhere on the card opens the whole week's page.
                 The buttons below sit on top of it and keep their own pages. */}
-            <Link href={thisWeekHref} className="bigNewsCover"><span>{week.title}</span></Link>
+            <Link href={weekHref} className="bigNewsCover"><span>{week.title}</span></Link>
           </h2>
           {summary && <p className="bigNewsText">{summary}</p>}
 
@@ -81,7 +81,7 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
             ))}
           </div>
 
-          <Link href={thisWeekHref} className="bigNewsGo">
+          <Link href={weekHref} className="bigNewsGo">
             Check it out! →
           </Link>
         </div>
