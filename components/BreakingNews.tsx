@@ -82,7 +82,7 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
           </div>
 
           <Link href={thisWeekHref} className="bigNewsGo">
-            Let&apos;s go! →
+            Check it out! →
           </Link>
         </div>
       </div>
