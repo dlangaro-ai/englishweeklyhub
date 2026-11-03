@@ -25,7 +25,7 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
     <main className="shell">
       <div className="homeStatus">
         <div className="homeStatusMain">
-          <h1 className="homeTitle">My English Hub</h1>
+          <h1 className="homeTitle">TEDANK5 - My English Hub</h1>
           <span className="weeksOpenPill">{readyCount} of {weeks.length} weeks open</span>
         </div>
         <div className="homeStatusToggle">
