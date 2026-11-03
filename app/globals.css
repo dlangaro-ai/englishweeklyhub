@@ -4269,3 +4269,23 @@ div.weekTile.isSoon:hover {
   border-color: var(--res);
   box-shadow: 0 8px 18px rgba(28, 36, 67, 0.1);
 }
+
+/* About us: the two cards keep their own candy colours (purple welcome,
+   orange materials), with the materials list inside in blue, green, pink
+   and purple */
+.materialsCard { --tint: var(--orange); }
+
+.aboutCard,
+.materialsCard {
+  border: 1px solid color-mix(in srgb, var(--tint) 35%, white);
+  background: color-mix(in srgb, var(--tint) 13%, white);
+  box-shadow: none;
+}
+
+.aboutCard .infoLabel {
+  background: color-mix(in srgb, var(--tint) 32%, white);
+  color: color-mix(in srgb, var(--tint) 45%, var(--navy));
+}
+
+.aboutCard .infoIcon { background: color-mix(in srgb, var(--tint) 22%, white); }
+.aboutCard h2 { color: color-mix(in srgb, var(--tint) 55%, var(--ink)); }
