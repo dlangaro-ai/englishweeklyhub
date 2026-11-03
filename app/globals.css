@@ -28,7 +28,7 @@
   --pink-soft: #ffe4ee;
   --teal: #14b8a6;
   --navy: #1f2a44;
-  --nav-h: 48px;
+  --nav-h: 60px;
   --lavender: #e4dbfb;
   --font-heading: "Baloo 2", Arial, sans-serif;
 }
@@ -2889,14 +2889,14 @@ a.searchResultLink:hover {
 .siteNavLinks {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 30px;
 }
 
 .siteNavLink {
   position: relative;
   padding: 4px 0;
   font-family: var(--font-heading);
-  font-size: 15px;
+  font-size: 16.5px;
   font-weight: 700;
   white-space: nowrap;
   color: color-mix(in srgb, var(--ink) 72%, transparent);
@@ -3535,7 +3535,7 @@ a:hover > .activityCountButton,
   font-weight: 900;
   letter-spacing: 0.2em;
 }
-.siteNavBrand { font-weight: 900; letter-spacing: -0.04em; font-size: 24px; }
+.siteNavBrand { font-weight: 900; letter-spacing: -0.04em; font-size: 29px; }
 
 /* ── Whole Big News card is one big link to "What's happening this week";
    the buttons inside sit above it and go to their own places. ── */
