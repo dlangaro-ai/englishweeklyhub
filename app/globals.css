@@ -4341,43 +4341,8 @@ div.weekTile.isSoon:hover {
 .weekTile.isSoon .weekTileUnit { color: #9aa3b5; }
 .weekTile.isSoon .weekTileChip { background: #e3e6ef; color: #8c95a7; }
 
-/* ── Week page: candy colours back, one per section ────────────────────────
-   This week purple, Books blue, Homework orange, Extra Activities pink and
-   Resources green; each card gets a soft tint of its colour, with a matching
-   label, icon circle and heading. The week's heading gets a coloured label too. */
-
-.summaryCard { --tint: var(--accent); }
-.infoCardBooks { --tint: var(--blue); }
-.infoCardHomework { --tint: var(--orange); }
-.infoCard.skillsFolder { --tint: var(--pink); }
-.infoCardLibrary { --tint: var(--success); }
-
-:is(.summaryCard, .infoCardBooks, .infoCardHomework, .infoCard.skillsFolder, .infoCardLibrary) {
-  border: 1px solid color-mix(in srgb, var(--tint) 35%, white);
-  background: color-mix(in srgb, var(--tint) 13%, white);
-  box-shadow: none;
-}
-
-:is(.summaryCard, .infoCardBooks, .infoCardHomework, .infoCard.skillsFolder, .infoCardLibrary) .infoLabel {
-  background: color-mix(in srgb, var(--tint) 32%, white);
-  color: color-mix(in srgb, var(--tint) 45%, var(--navy));
-}
-
-:is(.summaryCard, .infoCardBooks, .infoCardHomework, .infoCard.skillsFolder, .infoCardLibrary) .infoIcon {
-  background: color-mix(in srgb, var(--tint) 22%, white);
-}
-
-:is(.summaryCard, .infoCardBooks, .infoCardHomework, .infoCard.skillsFolder, .infoCardLibrary) h2 {
-  color: color-mix(in srgb, var(--tint) 55%, var(--ink));
-}
-
-.weekPageHero .eyebrow {
-  display: inline-block;
-  padding: 5px 16px;
-  border-radius: 999px;
-  background: var(--accent);
-  color: #fff;
-}
+/* Week page: the date / unit line under the title sits on a soft coloured
+   background, like a label. */
 
 .weekPageHero .unitLabel {
   display: inline-block;
