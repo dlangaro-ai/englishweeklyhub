@@ -21,7 +21,7 @@ export default function WeekView({
     <main className="shell narrow">
       <Link href="/weeks" className="backLink">← All weeks</Link>
 
-      <header className="weekHero simpleWeekHero">
+      <header className="weekHero simpleWeekHero weekPageHero">
         <div>
           <p className="eyebrow">WEEK {week.number}</p>
           <InlineTextField weekNumber={week.number} field="title" value={week.title} isEditor={isEditor} tag="h1" />
