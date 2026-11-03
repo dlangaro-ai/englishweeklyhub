@@ -164,7 +164,7 @@ const placeholders: Week[] = Array.from({ length: 38 }, (_, index) => {
     bonusText: defaultBonusText,
     libraryText: "",
     libraryLinks: [],
-    published: number <= 25 /* TEMP-PREVIEW */,
+    published: false,
     extraActivities: []
   };
 });
