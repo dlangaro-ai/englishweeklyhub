@@ -12,7 +12,7 @@ function shorten(text: string, max: number) {
 
 // "Big news" card on the homepage, built from the newest published week:
 // the week's title, one short line about it, colourful shortcuts to its
-// books, homework and extra activities.
+// books, homework and extra activities, and one big button underneath.
 export default function BreakingNews({ weeks }: { weeks: Week[] }) {
   const currentNumber = getLatestPublishedWeek(weeks);
   const week = weeks.find((candidate) => candidate.number === currentNumber);
@@ -45,12 +45,7 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
 
   return (
     <section className="bigNews" aria-label="Big news this week">
-      <span className="bigNewsSticker" aria-hidden="true">NEW!</span>
       <div className="bigNewsMain">
-        <div className="bigNewsIcon">
-          <Icon name="megaphone" size={46} />
-        </div>
-
         <div className="bigNewsBody">
           <p className="bigNewsLabel">BIG NEWS · WEEK {week.number}</p>
           <h2 className="bigNewsTitle">
@@ -62,9 +57,6 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
           {summary && <p className="bigNewsText">{summary}</p>}
 
           <div className="bigNewsLinks">
-            <Link href={thisWeekHref} className="bigNewsGo">
-              Let&apos;s go! →
-            </Link>
             {buttons.map((button) =>
               button.external ? (
                 <a
@@ -88,6 +80,10 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
               </Link>
             ))}
           </div>
+
+          <Link href={thisWeekHref} className="bigNewsGo">
+            Let&apos;s go! →
+          </Link>
         </div>
       </div>
     </section>

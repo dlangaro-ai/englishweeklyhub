@@ -3561,3 +3561,275 @@ a:hover > .activityCountButton,
   .bigNews { transition: none; }
   .bigNews:has(.bigNewsCover:hover) { transform: none; }
 }
+
+/* ── Home page, as in the new design ──────────────────────────────────────
+   A green "weeks open" pill, the Big News card with ONE big button, the
+   school-year timeline, then six soft coloured tiles. Each tile keeps the
+   colour of its own page; the timeline uses the same purple as the button. */
+
+.homeStatus {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.weeksOpenPill {
+  padding: 8px 24px;
+  border-radius: 999px;
+  background: #d9f3e2;
+  color: #17703a;
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.homeStatusToggle {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 700px) {
+  .homeStatusToggle {
+    position: static;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    transform: none;
+  }
+}
+
+.homeSectionTitle {
+  margin: 0;
+  color: var(--ink);
+  font-size: 18px;
+}
+
+/* Big news: label, headline, story, shortcuts, then one full-width button */
+.homeExplore .bigNewsMain {
+  display: block;
+  padding: 22px 26px 24px;
+}
+
+.homeExplore .bigNewsTitle { font-size: clamp(26px, 3vw, 34px); }
+.homeExplore .bigNewsText { margin-top: 6px; font-size: 17px; }
+.homeExplore .bigNewsLinks { margin-top: 14px; }
+
+.homeExplore .bigNewsGo {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 16px;
+  padding-inline: 20px;
+  background: #7c44dc;
+  box-shadow: none;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.homeExplore .bigNewsGo:hover { background: #6d37c9; transform: none; }
+
+@media (max-width: 640px) {
+  .homeExplore .bigNewsMain { padding: 18px 16px 18px; }
+}
+
+.timeline {
+  margin-top: 18px;
+  padding: 18px 0 4px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: #fff;
+}
+
+.timelineHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 28px;
+}
+
+.timelineScroller {
+  overflow-x: auto;
+  padding: 12px 28px 34px;
+  scrollbar-width: thin;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+}
+
+.timelineScroller:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+  border-radius: 20px;
+}
+
+.timelineTrack {
+  display: flex;
+  gap: 30px;
+  width: max-content;
+}
+
+.timelineGroupName {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.timelineWeeks {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* the thin line the dots sit on */
+.timelineWeeks::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 17px;
+  left: 17px;
+  height: 2px;
+  background: var(--line);
+  transform: translateY(-50%);
+}
+
+.timelineWeeks li { position: relative; z-index: 1; }
+
+.timelineNode {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 800;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.timelineNode.isPast {
+  background: var(--accent-soft);
+  color: #4b43c4;
+}
+
+.timelineNode.isSoon {
+  border-color: var(--line);
+  background: #fff;
+  color: #9aa3b5;
+}
+
+.timelineNode.isCurrent {
+  width: 42px;
+  height: 42px;
+  background: var(--accent);
+  box-shadow: 0 0 0 5px var(--accent-soft);
+  color: #fff;
+  font-size: 17px;
+}
+
+.timelineNode.isCurrent::after {
+  content: "This week";
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+a.timelineNode.isPast:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+a.timelineNode.isSoon:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+a.timelineNode:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.homeExploreTitle {
+  margin-top: 28px;
+  font-size: 26px;
+}
+
+.homeMenu {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.homeMenuItem {
+  --tile: var(--accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 132px;
+  padding: 18px 12px;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--tile) 14%, white);
+  color: color-mix(in srgb, var(--tile) 62%, var(--ink));
+  font-family: var(--font-heading);
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.1;
+  text-align: center;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+.homeMenuItem:hover {
+  background: color-mix(in srgb, var(--tile) 22%, white);
+  transform: translateY(-2px);
+}
+
+.homeMenuItem:focus-visible {
+  outline: 3px solid var(--tile);
+  outline-offset: 2px;
+}
+
+.homeMenuItem.navGreen { --tile: var(--success); }
+.homeMenuItem.navYellow { --tile: var(--sunny); }
+.homeMenuItem.navPink { --tile: var(--pink); }
+.homeMenuItem.navOrange { --tile: var(--orange); }
+.homeMenuItem.navBlue { --tile: var(--blue); }
+.homeMenuItem.navTeal { --tile: var(--teal); }
+.homeMenuItem.navPurple { --tile: var(--accent); }
+
+@media (max-width: 560px) {
+  .homeMenu { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .homeMenuItem { min-height: 112px; font-size: 18px; }
+  .timelineHead { padding: 0 20px; }
+  .timelineScroller { padding-right: 20px; padding-left: 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homeMenuItem { transition: none; }
+}
