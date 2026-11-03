@@ -4238,3 +4238,22 @@ div.weekTile.isSoon:hover {
 }
 
 .activityTypeButton { box-shadow: none; }
+
+/* study tips: each card keeps its own candy colour (blue, green, pink, purple) */
+.tipCard:nth-child(4n + 1) { --res: var(--blue); }
+.tipCard:nth-child(4n + 2) { --res: var(--success); }
+.tipCard:nth-child(4n + 3) { --res: var(--pink); }
+.tipCard:nth-child(4n + 4) { --res: var(--accent); }
+
+.tipCard {
+  border: 1px solid color-mix(in srgb, var(--res) 35%, white);
+  background: color-mix(in srgb, var(--res) 13%, white);
+  box-shadow: none;
+}
+
+.tipNumber {
+  background: color-mix(in srgb, var(--res) 32%, white);
+  color: color-mix(in srgb, var(--res) 45%, var(--navy));
+}
+
+.tipBody h2 { color: color-mix(in srgb, var(--res) 55%, var(--ink)); }
