@@ -3564,15 +3564,14 @@ a:hover > .activityCountButton,
    school-year timeline, then six soft coloured tiles. Each tile keeps the
    colour of its own page; the timeline uses the same purple as the button. */
 
-.homeStatus { margin-top: 4px; }
-
-.homeStatusTop {
+.homeStatus {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  margin-top: 4px;
 }
 
 .weeksOpenPill {
@@ -3642,11 +3641,19 @@ a:hover > .activityCountButton,
 }
 
 .timeline {
-  margin-top: 12px;
-  padding: 10px 0 0;
+  margin-top: 18px;
+  padding: 18px 0 4px;
   border: 1px solid var(--line);
   border-radius: 24px;
   background: #fff;
+}
+
+.timelineHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 28px;
 }
 
 .timelineScroller {
@@ -3689,24 +3696,19 @@ a:hover > .activityCountButton,
   list-style: none;
 }
 
-.timelineWeeks li { position: relative; z-index: 1; }
-
-/* the line between one dot and the one before it: grey, then purple once
-   that week has been reached, so the finished stretch reads as filled in */
-.timelineWeeks li + li::before {
+/* the thin line the dots sit on */
+.timelineWeeks::before {
   content: "";
   position: absolute;
   top: 50%;
-  right: 50%;
-  z-index: -1;
-  width: calc(50% + 23px);
-  height: 3px;
+  right: 17px;
+  left: 17px;
+  height: 2px;
   background: var(--line);
   transform: translateY(-50%);
 }
 
-.timelineWeeks li.isPast::before,
-.timelineWeeks li.isCurrent::before { background: var(--accent); }
+.timelineWeeks li { position: relative; z-index: 1; }
 
 .timelineNode {
   position: relative;
@@ -3722,8 +3724,8 @@ a:hover > .activityCountButton,
 }
 
 .timelineNode.isPast {
-  background: color-mix(in srgb, var(--accent) 22%, white);
-  color: #3d35b3;
+  background: var(--accent-soft);
+  color: #4b43c4;
 }
 
 .timelineNode.isSoon {
@@ -3821,6 +3823,7 @@ a.timelineNode:focus-visible {
 @media (max-width: 560px) {
   .homeMenu { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .homeMenuItem { min-height: 112px; font-size: 18px; }
+  .timelineHead { padding: 0 20px; }
   .timelineScroller { padding-right: 20px; padding-left: 20px; }
 }
 

@@ -23,19 +23,17 @@ export default function CourseDashboard({ weeks, isEditor }: { weeks: Week[]; is
 
   return (
     <main className="shell">
-      <section className="homeStatus" aria-label="Progress through the school year">
-        <div className="homeStatusTop">
-          <span className="weeksOpenPill">{readyCount} of {weeks.length} weeks open</span>
-          <div className="homeStatusToggle">
-            <EditModeToggle isEditor={isEditor} />
-          </div>
+      <div className="homeStatus">
+        <span className="weeksOpenPill">{readyCount} of {weeks.length} weeks open</span>
+        <div className="homeStatusToggle">
+          <EditModeToggle isEditor={isEditor} />
         </div>
-
-        <WeekTimeline weeks={weeks} isEditor={isEditor} />
-      </section>
+      </div>
 
       <div className="homeExplore">
         <BreakingNews weeks={weeks} />
+
+        <WeekTimeline weeks={weeks} isEditor={isEditor} />
 
         <h2 className="homeSectionTitle homeExploreTitle">Explore TEDANK5</h2>
         <nav className="homeMenu" aria-label="Main menu">
