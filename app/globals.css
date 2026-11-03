@@ -4361,3 +4361,25 @@ div.weekTile.isSoon:hover {
   font-size: 16px;
   font-weight: 700;
 }
+
+/* Finished weeks are pale grey (the latest stays green); weeks not published
+   yet are lighter still, with a dashed edge, so the two never look alike. */
+.weekTile {
+  border-color: #dde1ea;
+  background: linear-gradient(160deg, #eef0f6, #e6e9f1);
+}
+
+.weekTile .weekTileChip {
+  background: #dde1ea;
+  color: #4b5470;
+}
+
+.weekTile.isSoon {
+  border: 1px dashed #d5dae6;
+  background: #f8f9fc;
+}
+
+.weekTile.isSoon .weekTileChip {
+  background: #eceef4;
+  color: #9aa3b5;
+}
