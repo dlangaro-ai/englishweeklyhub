@@ -4016,3 +4016,162 @@ div.weekTile.isSoon:hover {
 }
 
 .weekTileSection .weekTileGrid { margin-top: 14px; }
+
+/* ── One calm look for every page ──────────────────────────────────────────
+   Every page now looks like the landing page: a centred navy title, white
+   cards with a thin border, and purple as the only accent colour (green stays
+   for "open"). The old per-page colours — pink Vocabulary, orange Activities,
+   blue Resources, teal Study Tips and so on — are switched off here, so no
+   page is more colourful than another. */
+
+/* 1. every old colour variable becomes the one accent */
+.simpleWeekHero.heroGreen,
+.simpleWeekHero.heroYellow,
+.simpleWeekHero.heroPink,
+.simpleWeekHero.heroOrange,
+.simpleWeekHero.heroBlue,
+.simpleWeekHero.heroPurple,
+.simpleWeekHero.heroTeal,
+.infoCardBooks,
+.infoCardHomework,
+.infoCard.skillsFolder,
+.infoCardLibrary,
+.materialsCard,
+.activityCard:nth-child(n),
+.weekCard:nth-child(n) { --tint: var(--accent); }
+
+.materialsItem:nth-child(n),
+.tipCard:nth-child(n),
+.vocabRow.resBlue, .vocabRow.resSun, .vocabRow.resPink, .vocabRow.resPurple,
+.resourceCard.resBlue, .resourceCard.resSun, .resourceCard.resPink, .resourceCard.resPurple,
+.weekResource.resBlue, .weekResource.resSun, .weekResource.resPink, .weekResource.resPurple { --res: var(--accent); }
+
+/* 2. page headings: no coloured card, just a centred title like the landing page */
+.weekHero.simpleWeekHero {
+  display: block;
+  padding: 4px 0 10px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  text-align: center;
+}
+
+.simpleWeekHero .eyebrow {
+  display: block;
+  margin: 0 0 6px;
+  padding: 0;
+  background: none;
+  color: var(--accent);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+}
+
+.simpleWeekHero h1 {
+  color: var(--navy);
+  font-size: clamp(30px, 4.4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.simpleWeekHero .unitLabel {
+  display: block;
+  margin: 10px 0 0;
+  padding: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.skillHero {
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 0 10px;
+  text-align: center;
+}
+
+.skillHero .skillIcon { display: none; }
+.skillHero h1 { color: var(--navy); font-size: clamp(30px, 4.4vw, 44px); line-height: 1.05; }
+
+/* 3. cards: white, thin border, soft shadow, no coloured edges or tints */
+.infoCard,
+.aboutCard,
+.materialsCard,
+.tipsIntro,
+.activityFootnote,
+.activityCard,
+.tipCard,
+.materialsItem,
+.vocabRow,
+.resourceCard,
+.weekResource {
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(28, 36, 67, 0.05);
+}
+
+.activityFootnote { border-style: solid; }
+
+.infoCard h2,
+.tipBody h2 { color: var(--ink); }
+
+.infoLabel {
+  background: var(--accent-soft);
+  color: #4b43c4;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.infoIcon { background: var(--accent-soft); }
+
+.tipNumber {
+  background: var(--accent-soft);
+  box-shadow: none;
+  color: #4b43c4;
+}
+
+.tipStep {
+  border: 1px solid var(--line);
+  background: #fafbfd;
+}
+
+/* the line along the bottom of a week card, e.g. "2 activities →" */
+.weekTileFooter {
+  margin-top: auto;
+  padding-top: 10px;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+/* the last few loud spots: the Remember box, the tilted quote notes and the
+   activity count button all use the same soft purple / white as everything else */
+.tipsRemember {
+  border: 1px solid var(--line);
+  background: var(--accent-soft);
+  box-shadow: none;
+  color: var(--ink);
+}
+
+.tipsRememberLabel {
+  background: #fff;
+  color: #4b43c4;
+}
+
+.tipQuote:nth-child(n) {
+  --note: var(--accent);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(28, 36, 67, 0.05);
+  transform: none;
+}
+
+.tipQuote blockquote { color: var(--navy); }
+
+.activityCountButton { background: var(--accent); }
+.activityCountNumber { color: var(--accent); }

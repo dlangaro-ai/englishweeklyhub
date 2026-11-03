@@ -5,6 +5,7 @@ import { getLatestPublishedWeek } from "@/lib/courseData";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import Icon from "@/components/Icon";
 import TeacherEmails from "@/components/TeacherEmails";
+import WeekCard from "@/components/WeekCard";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +21,7 @@ export default async function ExtraActivitiesPage() {
     .sort((a, b) => Number(b.number === latestPublishedWeek) - Number(a.number === latestPublishedWeek));
 
   return (
-    <main className="shell narrow">
+    <main className="shell">
       <Link href="/" className="backLink">← Home</Link>
 
       <header className="weekHero simpleWeekHero heroOrange">
@@ -40,29 +41,23 @@ export default async function ExtraActivitiesPage() {
           <p>Extra activities for each week will show up here.</p>
         </div>
       ) : (
-        <div className="weekGrid">
-          {weeksWithActivities.map((week) => {
-            const publishedState = week.published
-              ? week.number === latestPublishedWeek
-                ? "weekCardCurrent"
-                : "weekCardPast"
-              : "tintSun";
-
-            return (
-              <Link className={`weekCard ${publishedState}`} href={`/week/${week.number}/skills`} key={week.number}>
-                <div className="weekTopStacked">
-                  <span className="weekNumber">WEEK {week.number}</span>
-                </div>
-                <h3>{week.title}</h3>
-                <p>{week.unit}</p>
-                <span className="activityCountButton">
-                  <span className="activityCountNumber">{week.extraActivities.length}</span>
-                  <span>{week.extraActivities.length === 1 ? "activity" : "activities"}</span>
-                  <span className="activityCountArrow" aria-hidden="true">→</span>
-                </span>
-              </Link>
-            );
-          })}
+        <div className="weekTileGrid">
+          {weeksWithActivities.map((week) => (
+            <WeekCard
+              key={week.number}
+              week={week}
+              isNow={week.number === latestPublishedWeek}
+              clickable
+              as="h3"
+              href={`/week/${week.number}/skills`}
+              footer={
+                <>
+                  {week.extraActivities.length} {week.extraActivities.length === 1 ? "activity" : "activities"}{" "}
+                  <span aria-hidden="true">→</span>
+                </>
+              }
+            />
+          ))}
         </div>
       )}
       <TeacherEmails id="teachers" />

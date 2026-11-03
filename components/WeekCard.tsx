@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { Week } from "@/lib/courseData";
 
@@ -9,12 +10,18 @@ export default function WeekCard({
   week,
   isNow,
   clickable,
-  as: Heading = "h2"
+  as: Heading = "h2",
+  href = `/week/${week.number}`,
+  footer
 }: {
   week: Week;
   isNow: boolean;
   clickable: boolean;
   as?: "h2" | "h3";
+  // Where the card opens (the week's page unless told otherwise) and an
+  // optional line along the bottom, e.g. "2 activities →".
+  href?: string;
+  footer?: ReactNode;
 }) {
   const soon = !week.published;
   const className = `weekTile${isNow ? " isNow" : ""}${soon ? " isSoon" : ""}`;
@@ -28,11 +35,12 @@ export default function WeekCard({
       </div>
       <Heading className="weekTileTitle">{week.title}</Heading>
       <p className="weekTileUnit">{week.unit}</p>
+      {footer && <div className="weekTileFooter">{footer}</div>}
     </>
   );
 
   return clickable ? (
-    <Link className={className} href={`/week/${week.number}`} aria-current={isNow ? "true" : undefined}>
+    <Link className={className} href={href} aria-current={isNow ? "true" : undefined}>
       {content}
     </Link>
   ) : (
