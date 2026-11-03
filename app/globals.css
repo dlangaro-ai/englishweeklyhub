@@ -3574,6 +3574,21 @@ a:hover > .activityCountButton,
   margin-top: 4px;
 }
 
+.homeStatusMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.homeTitle {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(30px, 4.4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
 .weeksOpenPill {
   padding: 8px 24px;
   border-radius: 999px;
