@@ -4040,11 +4040,6 @@ div.weekTile.isSoon:hover {
 .activityCard:nth-child(n),
 .weekCard:nth-child(n) { --tint: var(--accent); }
 
-.materialsItem:nth-child(n),
-.tipCard:nth-child(n),
-.vocabRow.resBlue, .vocabRow.resSun, .vocabRow.resPink, .vocabRow.resPurple,
-.resourceCard.resBlue, .resourceCard.resSun, .resourceCard.resPink, .resourceCard.resPurple,
-.weekResource.resBlue, .weekResource.resSun, .weekResource.resPink, .weekResource.resPurple { --res: var(--accent); }
 
 /* 2. page headings: no coloured card, just a centred title like the landing page */
 .weekHero.simpleWeekHero {
@@ -4257,3 +4252,20 @@ div.weekTile.isSoon:hover {
 }
 
 .tipBody h2 { color: color-mix(in srgb, var(--res) 55%, var(--ink)); }
+
+/* vocabulary and resource items: each keeps the colour it was given (blue,
+   yellow, pink, purple, repeating), as soft candy cards like the activities */
+.vocabRow,
+.resourceCard,
+.weekResource,
+.materialsItem {
+  border: 1px solid color-mix(in srgb, var(--res) 35%, white);
+  background: color-mix(in srgb, var(--res) 13%, white);
+  box-shadow: none;
+}
+
+.resourceCard:hover,
+.weekResource:hover {
+  border-color: var(--res);
+  box-shadow: 0 8px 18px rgba(28, 36, 67, 0.1);
+}
