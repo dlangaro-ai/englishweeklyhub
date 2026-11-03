@@ -5,21 +5,21 @@ import Icon from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = { title: "Completed Weeks" };
+
 export default async function CompletedWeeksPage() {
   const weeks = await getAllWeeks();
   const completedWeeks = weeks.filter((week) => week.published).sort((a, b) => b.number - a.number);
   const latestPublishedWeek = getLatestPublishedWeek(weeks);
 
   return (
-    <main className="shell narrow">
+    <main className="shell">
       <Link href="/" className="backLink">← Home</Link>
 
-      <header className="weekHero simpleWeekHero heroGreen">
-        <div>
-          <p className="eyebrow">COMPLETED WEEKS</p>
-          <h1>Ready to Open</h1>
-          <p className="unitLabel">Every week that&apos;s published so far, in one place</p>
-        </div>
+      <header className="pageIntro">
+        <h1 className="pageTitle">Completed Weeks</h1>
+        <span className="weeksOpenPill">{completedWeeks.length} of {weeks.length} weeks open</span>
+        <p className="pageIntroText">Every week that&apos;s published so far, in one place</p>
       </header>
 
       {completedWeeks.length === 0 ? (
@@ -29,19 +29,23 @@ export default async function CompletedWeeksPage() {
           <p>Weeks you publish will show up here.</p>
         </div>
       ) : (
-        <div className="weekGrid">
+        <div className="completedGrid">
           {completedWeeks.map((week) => {
-            const state =
-              week.number === latestPublishedWeek ? "weekCardCurrent" : "tintBlue weekCardPast";
+            const isNow = week.number === latestPublishedWeek;
 
             return (
-              <Link className={`weekCard ${state}`} href={`/week/${week.number}`} key={week.number}>
-                <div className="weekTop">
-                  <span className="weekNumber">WEEK {week.number}</span>
-                  <span className="weekStatus weekStatusReady">Open <span aria-hidden="true">✓</span></span>
+              <Link
+                className={`completedCard${isNow ? " isNow" : ""}`}
+                href={`/week/${week.number}`}
+                key={week.number}
+                aria-current={isNow ? "true" : undefined}
+              >
+                <div className="completedCardTop">
+                  <span className="completedChip">WEEK {week.number}</span>
+                  {isNow && <span className="completedNow"><span aria-hidden="true">★ </span>Now</span>}
                 </div>
-                <h3>{week.title}</h3>
-                <p>{week.unit}</p>
+                <h2 className="completedTitle">{week.title}</h2>
+                <p className="completedUnit">{week.unit}</p>
               </Link>
             );
           })}

@@ -3845,3 +3845,120 @@ a.timelineNode:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .homeMenuItem { transition: none; }
 }
+
+/* ── Completed Weeks page: same calm look as the landing page ─────────────
+   A centred title and the green pill, then one clean grid. Weeks that are
+   done are all the same soft white card; this week is the only one in
+   purple, so the eye goes there first. */
+
+.pageIntro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.pageTitle {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(30px, 4.4vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.pageIntroText {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.completedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.completedCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 170px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(28, 36, 67, 0.05);
+  transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.completedCard:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 22px rgba(28, 36, 67, 0.09);
+  transform: translateY(-2px);
+}
+
+.completedCard:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.completedCard.isNow {
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 5px var(--accent-soft);
+}
+
+.completedCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.completedChip {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: #4b43c4;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.completedCard.isNow .completedChip {
+  background: var(--accent);
+  color: #fff;
+}
+
+.completedNow {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.completedTitle {
+  margin: 0;
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.completedUnit {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+@media (max-width: 560px) {
+  .completedGrid { grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
+  .completedCard { min-height: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .completedCard { transition: none; }
+}
