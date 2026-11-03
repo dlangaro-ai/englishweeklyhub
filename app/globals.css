@@ -4341,14 +4341,22 @@ div.weekTile.isSoon:hover {
 .weekTile.isSoon .weekTileUnit { color: #9aa3b5; }
 .weekTile.isSoon .weekTileChip { background: #e3e6ef; color: #8c95a7; }
 
-/* Week page: the date / unit line under the title sits on a soft coloured
-   background, like a label. */
+/* Week page heading: the week number, title and date sit on a candy-coloured
+   banner (pink, lilac and sky blue), with the date / unit line as a white label. */
+
+.weekHero.weekPageHero {
+  padding: 30px 24px 32px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #ffd6e7 0%, #e4d9ff 52%, #cde7ff 100%);
+}
+
+.weekPageHero .eyebrow { color: #5b4de0; }
 
 .weekPageHero .unitLabel {
   display: inline-block;
   padding: 7px 18px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent) 16%, white);
+  background: rgba(255, 255, 255, 0.85);
   color: #3d35b3;
   font-size: 16px;
   font-weight: 700;
