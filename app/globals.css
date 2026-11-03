@@ -4175,3 +4175,66 @@ div.weekTile.isSoon:hover {
 
 .activityCountButton { background: var(--accent); }
 .activityCountNumber { color: var(--accent); }
+
+/* ── A little colour back, with a meaning ──────────────────────────────────
+   Weeks: finished weeks all share one soft, slightly faded colour; the latest
+   week is pale green (like the "weeks open" pill); weeks not published yet
+   stay grey. Activities: each one gets its own candy colour, so they are easy
+   to tell apart. */
+
+.weekTile {
+  border-color: color-mix(in srgb, var(--accent) 16%, white);
+  background: color-mix(in srgb, var(--accent) 6%, white);
+  box-shadow: none;
+}
+
+.weekTile .weekTileTitle { color: color-mix(in srgb, var(--ink) 72%, white); }
+.weekTile .weekTileUnit { color: #8a93a8; }
+
+.weekTile.isNow {
+  border: 2px solid #5cc489;
+  background: #e6f7ed;
+  box-shadow: 0 0 0 5px rgba(92, 196, 137, 0.2);
+}
+
+.weekTile.isNow .weekTileChip {
+  background: #2f9e62;
+  color: #fff;
+}
+
+.weekTile.isNow .weekTileNow { color: #1f7a49; }
+.weekTile.isNow .weekTileTitle { color: var(--ink); }
+.weekTile.isNow .weekTileUnit { color: #4d6b5a; }
+.weekTile.isNow:hover { border-color: #2f9e62; }
+
+/* the timeline follows the same colours: green for this week, faded for done */
+.timelineNode.isCurrent {
+  background: #2f9e62;
+  box-shadow: 0 0 0 5px rgba(92, 196, 137, 0.25);
+}
+
+.timelineNode.isCurrent::after { color: #1f7a49; }
+
+.timelineWeeks li.isPast::before,
+.timelineWeeks li.isCurrent::before { background: color-mix(in srgb, var(--accent) 40%, white); }
+
+/* candy colours for the activities, cycling so neighbours always differ */
+.activityCard:nth-child(6n + 1) { --tint: var(--pink); }
+.activityCard:nth-child(6n + 2) { --tint: var(--blue); }
+.activityCard:nth-child(6n + 3) { --tint: var(--teal); }
+.activityCard:nth-child(6n + 4) { --tint: var(--sunny); }
+.activityCard:nth-child(6n + 5) { --tint: var(--accent); }
+.activityCard:nth-child(6n + 6) { --tint: var(--orange); }
+
+.activityCard {
+  border: 1px solid color-mix(in srgb, var(--tint) 35%, white);
+  background: color-mix(in srgb, var(--tint) 13%, white);
+  box-shadow: none;
+}
+
+.activityType {
+  background: color-mix(in srgb, var(--tint) 32%, white);
+  color: color-mix(in srgb, var(--tint) 45%, var(--navy));
+}
+
+.activityTypeButton { box-shadow: none; }
