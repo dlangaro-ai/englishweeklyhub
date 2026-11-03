@@ -4289,3 +4289,54 @@ div.weekTile.isSoon:hover {
 
 .aboutCard .infoIcon { background: color-mix(in srgb, var(--tint) 22%, white); }
 .aboutCard h2 { color: color-mix(in srgb, var(--tint) 55%, var(--ink)); }
+
+/* ── Week cards: coloured, not plain white, with the title as a label ──────
+   Done weeks get a soft purple gradient, the latest week a pale green one,
+   weeks not published yet a light grey. The week's title sits on the card
+   like a white label tag. */
+
+.weekTile {
+  border-color: color-mix(in srgb, var(--accent) 28%, white);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--accent) 18%, white),
+    color-mix(in srgb, var(--accent) 8%, white)
+  );
+}
+
+.weekTileTitle {
+  align-self: flex-start;
+  margin: 2px 0 0;
+  padding: 8px 14px;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(28, 36, 67, 0.12);
+  font-size: 19px;
+  line-height: 1.2;
+}
+
+.weekTile .weekTileTitle { color: color-mix(in srgb, var(--ink) 85%, white); }
+.weekTile .weekTileUnit { margin-top: 4px; color: #6b7390; }
+.weekTile .weekTileChip { background: color-mix(in srgb, var(--accent) 30%, white); color: #3d35b3; }
+
+.weekTile.isNow {
+  background: linear-gradient(160deg, #cdf1dd, #e8f8ef);
+}
+
+.weekTile.isNow .weekTileTitle { color: var(--ink); }
+.weekTile.isNow .weekTileUnit { color: #3f6450; }
+.weekTile.isNow .weekTileChip { background: #2f9e62; color: #fff; }
+
+.weekTile.isSoon {
+  border-color: #e3e6ef;
+  background: #f1f3f8;
+}
+
+.weekTile.isSoon .weekTileTitle {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: none;
+  color: #7d8799;
+}
+
+.weekTile.isSoon .weekTileUnit { color: #9aa3b5; }
+.weekTile.isSoon .weekTileChip { background: #e3e6ef; color: #8c95a7; }
