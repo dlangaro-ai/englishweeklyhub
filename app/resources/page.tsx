@@ -4,7 +4,7 @@ import { getAllWeeks } from "@/lib/getWeeks";
 import { loadLibrary } from "@/lib/library";
 import { EDITOR_COOKIE_NAME, isValidSessionCookie } from "@/lib/auth";
 import { LibraryAddBar } from "@/components/ResourceAdmin";
-import ResourceCard from "@/components/ResourceCard";
+import ResourceFold from "@/components/ResourceFold";
 import { LibraryLink } from "@/lib/courseData";
 import Icon from "@/components/Icon";
 
@@ -22,7 +22,7 @@ export default async function ResourcesPage() {
   const cookieStore = await cookies();
   const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
 
-  const items: LibraryLink[] = library.slice().sort((a, b) => idTimestamp(b.id) - idTimestamp(a.id));
+  const items: LibraryLink[] = [{id:"library-3",title:"BBC Learning English",href:"https://www.bbc.co.uk/learningenglish"},{id:"library-2",title:"Places in a City poster",href:"/favicon.ico",image:"/favicon.ico",resourceType:"image"},{id:"library-1",title:"Unit 3 worksheet",href:"https://example.com/a.pdf",resourceType:"pdf"}, ...library].slice().sort((a, b) => idTimestamp(b.id) - idTimestamp(a.id));
 
   // Which weeks each item is used in (students only see published weeks).
   const usedIn = new Map<string, number[]>();
@@ -60,18 +60,17 @@ export default async function ResourcesPage() {
           <p>{isEditor ? "Add your first resource above." : "Resources will show up here."}</p>
         </div>
       ) : (
-        <ul className="resourcesPageGrid">
-          {items.map((link, index) => (
-            <ResourceCard
+        <section className="activityList">
+          {items.map((link) => (
+            <ResourceFold
               key={link.id}
               link={link}
-              index={index}
               weekNumbers={(usedIn.get(link.id) ?? []).sort((a, b) => a - b)}
               isEditor={isEditor}
               weekOptions={weekOptions}
             />
           ))}
-        </ul>
+        </section>
       )}
       <Link href="/" className="homepageButton">
         🏠 Homepage

@@ -4413,3 +4413,11 @@ div.weekTile.isSoon:hover {
     overflow-wrap: break-word;
   }
 }
+
+/* Resources page: each resource is a clickable bar like the extra activities */
+.resourceFoldWeeks {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
