@@ -25,7 +25,7 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
     stripHtml(week.homework) && { icon: "house" as const, label: "Homework", href: `/week/${week.number}#homework`, tint: "navOrange" },
     week.extraActivities.length > 0 && {
       icon: "gift" as const,
-      label: `${week.extraActivities.length} fun ${week.extraActivities.length === 1 ? "activity" : "activities"}`,
+      label: `${week.extraActivities.length} Extra Credit ${week.extraActivities.length === 1 ? "activity" : "activities"}`,
       href: `/week/${week.number}/skills`,
       tint: "navPink"
     }

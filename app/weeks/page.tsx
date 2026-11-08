@@ -23,7 +23,7 @@ export default async function WeeksPage() {
         title="All Weeks"
         openCount={readyCount}
         totalCount={weeks.length}
-        text="Pick your week to find its topic, books, homework and fun activities"
+        text="Pick your week to find its topic, books, homework and Extra Credit activities"
       />
 
       <WeekGrid weeks={weeks} isEditor={isEditor} />
