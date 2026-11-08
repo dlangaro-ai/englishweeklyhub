@@ -4454,3 +4454,12 @@ div.weekTile.isSoon:hover { border-color: color-mix(in srgb, var(--tile, var(--a
 }
 
 .resourceFoldList { margin-top: 24px; }
+
+/* Homepage: the "WEEK 3 · dates" label is easy for parents to read, but
+   still clearly smaller than the week's title underneath. */
+.homeExplore .bigNewsLabel {
+  margin-bottom: 8px;
+  padding: 5px 16px;
+  font-size: clamp(15px, 1.6vw, 17px);
+  letter-spacing: 0.06em;
+}
