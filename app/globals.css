@@ -3963,6 +3963,16 @@ a.timelineNode:focus-visible {
   line-height: 1.45;
 }
 
+/* One week per row, stacked like the cards on the About page
+   (used on the Extra Activities page). */
+.weekTileGrid.weekTileList {
+  grid-template-columns: 1fr;
+  width: min(860px, 100%);
+  margin-inline: auto;
+}
+
+.weekTileList .weekTile { min-height: 0; }
+
 @media (max-width: 560px) {
   .weekTileGrid { grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
   .weekTile { min-height: 0; }

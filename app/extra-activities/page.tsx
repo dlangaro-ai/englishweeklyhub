@@ -15,10 +15,10 @@ export default async function ExtraActivitiesPage() {
   const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
   const latestPublishedWeek = getLatestPublishedWeek(weeks);
 
-  // The current week comes first; the rest keep their usual order.
+  // Newest week at the top, then each older week below it.
   const weeksWithActivities = weeks
     .filter((week) => week.extraActivities.length > 0 && (week.published || isEditor))
-    .sort((a, b) => Number(b.number === latestPublishedWeek) - Number(a.number === latestPublishedWeek));
+    .sort((a, b) => b.number - a.number);
 
   return (
     <main className="shell">
@@ -41,7 +41,7 @@ export default async function ExtraActivitiesPage() {
           <p>Extra activities for each week will show up here.</p>
         </div>
       ) : (
-        <div className="weekTileGrid">
+        <div className="weekTileGrid weekTileList">
           {weeksWithActivities.map((week) => (
             <WeekCard
               key={week.number}
