@@ -2416,6 +2416,13 @@ a.searchResultLink:hover {
   letter-spacing: 0.1em;
 }
 
+.bigNewsKicker {
+  margin: 2px 0 2px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--muted, #5b6472);
+}
+
 .bigNewsTitle {
   margin: 0;
   font-size: 32px;

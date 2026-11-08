@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { Week, getLatestPublishedWeek } from "@/lib/courseData";
-import Icon, { IconName } from "./Icon";
-import { SITE_PAGES } from "@/lib/sitePages";
 
 const stripHtml = (value: string) => value.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
 
@@ -11,8 +9,8 @@ function shorten(text: string, max: number) {
 }
 
 // "Big news" card on the homepage, built from the newest published week:
-// the week's title, one short line about it, colourful shortcuts to its
-// books, homework and extra activities, and one big button underneath.
+// the week number and dates, the week's title and one short line about it.
+// Clicking anywhere on the card opens that week's page.
 export default function BreakingNews({ weeks }: { weeks: Week[] }) {
   const currentNumber = getLatestPublishedWeek(weeks);
   const week = weeks.find((candidate) => candidate.number === currentNumber);
@@ -20,28 +18,6 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
 
   const summary = shorten(stripHtml(week.summary), 150);
   const weekHref = `/week/${week.number}`;
-  const shortcuts: { icon: IconName; label: string; href: string; tint: string }[] = [
-    stripHtml(week.books) && { icon: "books" as const, label: "Books", href: `/week/${week.number}#books`, tint: "navBlue" },
-    stripHtml(week.homework) && { icon: "house" as const, label: "Homework", href: `/week/${week.number}#homework`, tint: "navOrange" },
-    week.extraActivities.length > 0 && {
-      icon: "gift" as const,
-      label: `${week.extraActivities.length} Extra Credit ${week.extraActivities.length === 1 ? "activity" : "activities"}`,
-      href: `/week/${week.number}/skills`,
-      tint: "navPink"
-    }
-  ].filter(Boolean) as { icon: IconName; label: string; href: string; tint: string }[];
-
-  // Buttons added to this week's "What's happening this week" message show here
-  // too: coloured like the page they lead to, or navy for another website.
-  const buttons = (week.summaryButtons ?? []).map((button) => {
-    const page = SITE_PAGES.find((item) => item.href === button.href);
-    return {
-      ...button,
-      icon: (page?.icon ?? "link") as IconName,
-      tint: page?.tint ?? "navExternal",
-      external: !button.href.startsWith("/")
-    };
-  });
 
   return (
     <section className="bigNews" aria-label={`Week ${week.number}`}>
@@ -53,42 +29,15 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
             WEEK {week.number}
             {week.unit.trim() && <> · {week.unit.trim()}</>}
           </p>
+          {/* Says plainly that the title is the week's topic, so students don't
+              read a title written as a question as something to answer. */}
+          <p className="bigNewsKicker">📖 This week&apos;s topic:</p>
           <h2 className="bigNewsTitle">
             {/* This link is stretched over the whole card (see .bigNewsCover), so
-                clicking anywhere on the card opens the whole week's page.
-                The buttons below sit on top of it and keep their own pages. */}
+                clicking anywhere on the card opens the whole week's page. */}
             <Link href={weekHref} className="bigNewsCover"><span>{week.title}</span></Link>
           </h2>
           {summary && <p className="bigNewsText">{summary}</p>}
-
-          <div className="bigNewsLinks">
-            {buttons.map((button) =>
-              button.external ? (
-                <a
-                  key={button.id}
-                  href={button.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`bigNewsChip ${button.tint}`}
-                >
-                  <Icon name={button.icon} size={22} /> {button.label} <span aria-hidden="true">↗</span>
-                </a>
-              ) : (
-                <Link key={button.id} href={button.href} className={`bigNewsChip ${button.tint}`}>
-                  <Icon name={button.icon} size={22} /> {button.label}
-                </Link>
-              )
-            )}
-            {shortcuts.map((shortcut) => (
-              <Link key={shortcut.label} href={shortcut.href} className={`bigNewsChip ${shortcut.tint}`}>
-                <Icon name={shortcut.icon} size={22} /> {shortcut.label}
-              </Link>
-            ))}
-          </div>
-
-          <Link href={weekHref} className="bigNewsGo">
-            Check it out! →
-          </Link>
         </div>
       </div>
     </section>
