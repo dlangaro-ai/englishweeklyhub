@@ -28,11 +28,20 @@ export default async function ExtraActivitiesPage() {
         <div>
           <p className="eyebrow">FOR EAGER LEARNERS</p>
           <h1>Extra Credit Activities</h1>
-          <p className="unitLabel">
-            Pick a week to see its Extra Credit activities. When you finish, <a href="#teachers">email your work to your English 2 teachers</a>.
-          </p>
         </div>
       </header>
+
+      {/* The two steps, big and bold in their own box so students can't miss them. */}
+      <section className="howToSteps" aria-label="How it works">
+        <p className="howToTitle">How it works</p>
+        <ol>
+          <li><span className="howToNum" aria-hidden="true">1</span> Pick a week below to see its Extra Credit activities.</li>
+          <li>
+            <span className="howToNum" aria-hidden="true">2</span>
+            <span>When you finish, <a href="#teachers">email your work to your English 2 teachers</a>.</span>
+          </li>
+        </ol>
+      </section>
 
       {weeksWithActivities.length === 0 ? (
         <div className="emptyState compact">
