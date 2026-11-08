@@ -4362,27 +4362,58 @@ div.weekTile.isSoon:hover {
   font-weight: 700;
 }
 
-/* Finished weeks are pale grey (the latest stays green); weeks not published
-   yet are lighter still, with a dashed edge, so the two never look alike. */
+/* Week tiles are pale candy colours (pink, blue, mint, yellow, lilac, peach,
+   repeating). Weeks not published yet are an even paler wash of their colour
+   with a dashed edge; the current week is a brighter green so it stands out. */
+.weekTile:nth-child(6n + 1) { --tile: var(--pink); }
+.weekTile:nth-child(6n + 2) { --tile: var(--blue); }
+.weekTile:nth-child(6n + 3) { --tile: var(--teal); }
+.weekTile:nth-child(6n + 4) { --tile: var(--sunny); }
+.weekTile:nth-child(6n + 5) { --tile: var(--accent); }
+.weekTile:nth-child(6n + 6) { --tile: var(--orange); }
+
 .weekTile {
-  border-color: #dde1ea;
-  background: linear-gradient(160deg, #eef0f6, #e6e9f1);
+  border-color: color-mix(in srgb, var(--tile, var(--accent)) 32%, white);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--tile, var(--accent)) 20%, white),
+    color-mix(in srgb, var(--tile, var(--accent)) 9%, white)
+  );
 }
+
+.weekTile:hover { border-color: color-mix(in srgb, var(--tile, var(--accent)) 70%, white); }
 
 .weekTile .weekTileChip {
-  background: #dde1ea;
-  color: #4b5470;
+  background: color-mix(in srgb, var(--tile, var(--accent)) 30%, white);
+  color: color-mix(in srgb, var(--tile, var(--accent)) 45%, var(--navy));
 }
 
+.weekTile .weekTileUnit { color: color-mix(in srgb, var(--tile, var(--accent)) 30%, #5b637a); }
+
 .weekTile.isSoon {
-  border: 1px dashed #d5dae6;
-  background: #f8f9fc;
+  border: 1px dashed color-mix(in srgb, var(--tile, var(--accent)) 30%, white);
+  background: color-mix(in srgb, var(--tile, var(--accent)) 6%, white);
 }
 
 .weekTile.isSoon .weekTileChip {
-  background: #eceef4;
-  color: #9aa3b5;
+  background: color-mix(in srgb, var(--tile, var(--accent)) 14%, white);
+  color: color-mix(in srgb, var(--tile, var(--accent)) 30%, #8c95a7);
 }
+
+.weekTile.isSoon .weekTileUnit { color: #9aa3b5; }
+
+div.weekTile.isSoon:hover { border-color: color-mix(in srgb, var(--tile, var(--accent)) 30%, white); }
+
+.weekTile.isNow {
+  border: 2px solid #22a861;
+  background: linear-gradient(160deg, #9fe6bf, #d4f5e2);
+  box-shadow: 0 0 0 5px rgba(34, 168, 97, 0.22);
+}
+
+.weekTile.isNow .weekTileChip { background: #1a8a4f; color: #fff; }
+.weekTile.isNow .weekTileNow { color: #146b3d; }
+.weekTile.isNow .weekTileUnit { color: #2f5a43; }
+.weekTile.isNow:hover { border-color: #1a8a4f; }
 
 /* Phones: the round icon sits above the text instead of in its own left-hand
    column, so the card's text and pictures get the full width of the screen. */
@@ -4421,3 +4452,5 @@ div.weekTile.isSoon:hover {
   font-size: 14px;
   font-weight: 700;
 }
+
+.resourceFoldList { margin-top: 24px; }

@@ -22,7 +22,7 @@ export default async function ResourcesPage() {
   const cookieStore = await cookies();
   const isEditor = isValidSessionCookie(cookieStore.get(EDITOR_COOKIE_NAME)?.value);
 
-  const items: LibraryLink[] = [{id:"library-3",title:"BBC Learning English",href:"https://www.bbc.co.uk/learningenglish"},{id:"library-2",title:"Places in a City poster",href:"/favicon.ico",image:"/favicon.ico",resourceType:"image"},{id:"library-1",title:"Unit 3 worksheet",href:"https://example.com/a.pdf",resourceType:"pdf"}, ...library].slice().sort((a, b) => idTimestamp(b.id) - idTimestamp(a.id));
+  const items: LibraryLink[] = library.slice().sort((a, b) => idTimestamp(b.id) - idTimestamp(a.id));
 
   // Which weeks each item is used in (students only see published weeks).
   const usedIn = new Map<string, number[]>();
@@ -60,7 +60,7 @@ export default async function ResourcesPage() {
           <p>{isEditor ? "Add your first resource above." : "Resources will show up here."}</p>
         </div>
       ) : (
-        <section className="activityList">
+        <section className="activityList resourceFoldList">
           {items.map((link) => (
             <ResourceFold
               key={link.id}
