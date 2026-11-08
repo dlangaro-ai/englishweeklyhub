@@ -27,9 +27,9 @@ export default async function ExtraActivitiesPage() {
       <header className="weekHero simpleWeekHero heroOrange">
         <div>
           <p className="eyebrow">FOR EAGER LEARNERS</p>
-          <h1>Extra Activities</h1>
+          <h1>Extra Credit Activities</h1>
           <p className="unitLabel">
-            Pick a week to see its extra activities. When you finish, <a href="#teachers">email your work to your English 2 teachers</a>.
+            Pick a week to see its Extra Credit activities. When you finish, <a href="#teachers">email your work to your English 2 teachers</a>.
           </p>
         </div>
       </header>
@@ -37,8 +37,8 @@ export default async function ExtraActivitiesPage() {
       {weeksWithActivities.length === 0 ? (
         <div className="emptyState compact">
           <div className="emptyIcon"><Icon name="gift" size={64} /></div>
-          <h2>No extra activities yet</h2>
-          <p>Extra activities for each week will show up here.</p>
+          <h2>No Extra Credit activities yet</h2>
+          <p>Extra Credit activities for each week will show up here.</p>
         </div>
       ) : (
         <div className="weekTileGrid weekTileList">

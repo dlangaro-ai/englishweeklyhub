@@ -13,7 +13,7 @@ const HOME_TABS: { href: string; label: string; icon: LineIconName; tint: string
   { href: "/weeks", label: "All Weeks", icon: "calendar", tint: "navYellow" },
   { href: "/completed", label: "Completed", icon: "check", tint: "navGreen" },
   { href: "/vocabulary", label: "Vocabulary", icon: "abc", tint: "navPink" },
-  { href: "/extra-activities", label: "Activities", icon: "gift", tint: "navOrange" },
+  { href: "/extra-activities", label: "Extra Credit", icon: "gift", tint: "navOrange" },
   { href: "/resources", label: "Resources", icon: "book", tint: "navBlue" },
   { href: "/study-tips", label: "Study Tips", icon: "bulb", tint: "navTeal" }
 ];

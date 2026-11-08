@@ -37,7 +37,7 @@ export default function BonusCard({
       <span className="infoIcon"><Icon name="gift" size={48} /></span>
       <div className="infoCardBody">
         <div className="infoCardHead">
-          <p className="infoLabel">EXTRA ACTIVITIES</p>
+          <p className="infoLabel">EXTRA CREDIT</p>
           {isEditor && !editable.editing && (
             <button className="editButton" type="button" onClick={editable.startEdit}>
               ✏️ Edit
@@ -47,20 +47,20 @@ export default function BonusCard({
 
         {editable.editing ? (
           <>
-            <h2>Extra Activities</h2>
+            <h2>Extra Credit Activities</h2>
             <EditFormBody editable={editable} isList={false} />
           </>
         ) : (
           <>
             <Link href={`/week/${weekNumber}/skills`} className="skillsFolderLink">
-              <h2>Extra Activities</h2>
+              <h2>Extra Credit Activities</h2>
               <p className="infoText">{text}</p>
               {image && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   className="bookImage"
                   src={image}
-                  alt="Picture for this week's extra activities"
+                  alt="Picture for this week's Extra Credit activities"
                   style={imageWidthStyle(imageWidth)}
                   onError={(event) => {
                     event.currentTarget.style.display = "none";

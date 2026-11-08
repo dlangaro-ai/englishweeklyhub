@@ -82,7 +82,7 @@ export type Week = {
   extraActivities: ExtraActivity[];
 };
 
-const defaultBonusText = "Fun optional practice, links, videos and PDFs for this week.";
+const defaultBonusText = "Optional Extra Credit practice, links, videos and PDFs for this week.";
 
 const starterWeeks: Week[] = [
   {
