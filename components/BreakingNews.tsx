@@ -44,10 +44,15 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
   });
 
   return (
-    <section className="bigNews" aria-label="Big news this week">
+    <section className="bigNews" aria-label={`Week ${week.number}`}>
       <div className="bigNewsMain">
         <div className="bigNewsBody">
-          <p className="bigNewsLabel">BIG NEWS · WEEK {week.number}</p>
+          {/* Week number and its dates (the week's unit / date line), which tells
+              parents at a glance which week this is. */}
+          <p className="bigNewsLabel">
+            WEEK {week.number}
+            {week.unit.trim() && <> · {week.unit.trim()}</>}
+          </p>
           <h2 className="bigNewsTitle">
             {/* This link is stretched over the whole card (see .bigNewsCover), so
                 clicking anywhere on the card opens the whole week's page.
