@@ -4027,7 +4027,7 @@ a.timelineNode:focus-visible {
 }
 
 /* One week per row, stacked like the cards on the About page
-   (used on the Extra Activities page). */
+   (used on the Extra Credit and Completed Weeks pages). */
 .weekTileGrid.weekTileList {
   grid-template-columns: 1fr;
   width: min(860px, 100%);

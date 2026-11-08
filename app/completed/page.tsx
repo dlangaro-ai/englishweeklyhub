@@ -32,7 +32,7 @@ export default async function CompletedWeeksPage() {
           <p>Weeks you publish will show up here.</p>
         </div>
       ) : (
-        <div className="weekTileGrid">
+        <div className="weekTileGrid weekTileList">
           {completedWeeks.map((week) => (
             <WeekCard key={week.number} week={week} isNow={week.number === latestPublishedWeek} clickable />
           ))}
