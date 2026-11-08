@@ -57,7 +57,7 @@ export default function SummaryCard({
   // A button that was typed but not yet added is added as part of Save.
   function save() {
     if (!hasTypedDraft(draft)) return editable.save();
-    const pending = buildButton(draft);
+    const pending = buildButton(draft, weekNumber);
     if (!pending) {
       alert("Finish the new link button — choose where it goes — or clear its name, before saving.");
       return;
