@@ -2514,13 +2514,14 @@ a.searchResultLink:hover {
 }
 
 .summaryButton {
+  --btn: var(--accent);
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 10px 20px;
   border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 60%, var(--ink));
+  background: var(--btn);
+  box-shadow: 0 4px 0 color-mix(in srgb, var(--btn) 60%, var(--ink));
   color: #fff;
   font-family: var(--font-heading);
   font-size: 17px;
@@ -2531,13 +2532,23 @@ a.searchResultLink:hover {
 
 .summaryButton:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 0 color-mix(in srgb, var(--accent) 60%, var(--ink));
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--btn) 60%, var(--ink));
 }
 
 .summaryButton:active {
   transform: translateY(3px);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--accent) 60%, var(--ink));
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--btn) 60%, var(--ink));
 }
+
+/* Each button gets its own colour, in this order (up to 8 buttons). */
+.summaryButton:nth-child(8n+1) { --btn: var(--accent); }
+.summaryButton:nth-child(8n+2) { --btn: var(--orange); }
+.summaryButton:nth-child(8n+3) { --btn: var(--blue); }
+.summaryButton:nth-child(8n+4) { --btn: var(--pink); }
+.summaryButton:nth-child(8n+5) { --btn: var(--success); }
+.summaryButton:nth-child(8n+6) { --btn: var(--teal); }
+.summaryButton:nth-child(8n+7) { --btn: var(--navy); }
+.summaryButton:nth-child(8n+8) { --btn: #e63946; }
 
 .summaryButtonsEditor {
   display: grid;
