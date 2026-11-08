@@ -12,3 +12,16 @@ export const SITE_PAGES: { href: string; label: string; icon: IconName; tint: st
   { href: "/study-tips", label: "Study Tips", icon: "bulb", tint: "navTeal" },
   { href: "/about", label: "About Us", icon: "chat", tint: "navPurple" }
 ];
+
+// Parts of one week a button can jump to (from that week's "What's happening
+// this week" message): its Books, Homework and Library boxes, and its Extra
+// Credit activities page.
+export function weekSectionPages(weekNumber: number): { href: string; label: string; icon: IconName; tint: string }[] {
+  const base = `/week/${weekNumber}`;
+  return [
+    { href: `${base}#books`, label: "Books & Pages", icon: "books", tint: "navBlue" },
+    { href: `${base}#homework`, label: "Homework", icon: "house", tint: "navOrange" },
+    { href: `${base}/skills`, label: "Extra Credit Activities", icon: "gift", tint: "navPink" },
+    { href: `${base}#library`, label: "Library", icon: "book", tint: "navBlue" }
+  ];
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { SummaryButton } from "@/lib/courseData";
-import { SITE_PAGES } from "@/lib/sitePages";
+import { SITE_PAGES, weekSectionPages } from "@/lib/sitePages";
 
 const MAX_BUTTONS = 8;
 const OTHER_WEBSITE = "__website";
@@ -19,9 +19,9 @@ export function hasTypedDraft(draft: ButtonDraft): boolean {
 
 // Turns the form into a button; null if it's not complete yet. Left empty, a
 // button to a site page is named after that page.
-export function buildButton(draft: ButtonDraft): SummaryButton | null {
+export function buildButton(draft: ButtonDraft, weekNumber: number): SummaryButton | null {
   if (!draft.target) return null; // no destination chosen yet
-  const page = SITE_PAGES.find((item) => item.href === draft.target);
+  const page = [...weekSectionPages(weekNumber), ...SITE_PAGES].find((item) => item.href === draft.target);
   const href = draft.target === OTHER_WEBSITE ? draft.url.trim() : draft.target;
   const name = draft.label.trim() || page?.label || "";
   if (!name || !href) return null;
@@ -31,11 +31,13 @@ export function buildButton(draft: ButtonDraft): SummaryButton | null {
 // Edit-mode controls for the link buttons under the "This week" message.
 // Changes are held in the parent and saved together with the message text.
 export default function SummaryButtonsEditor({
+  weekNumber,
   buttons,
   onChange,
   draft,
   onDraftChange
 }: {
+  weekNumber: number;
   buttons: SummaryButton[];
   onChange: (buttons: SummaryButton[]) => void;
   draft: ButtonDraft;
@@ -43,11 +45,13 @@ export default function SummaryButtonsEditor({
 }) {
   const { label, target, url } = draft;
   const atCap = buttons.length >= MAX_BUTTONS;
-  const targetPage = SITE_PAGES.find((page) => page.href === target);
+  const weekPages = weekSectionPages(weekNumber);
+  const allPages = [...weekPages, ...SITE_PAGES];
+  const targetPage = allPages.find((page) => page.href === target);
   const pending = hasTypedDraft(draft);
 
   function addButton() {
-    const button = buildButton(draft);
+    const button = buildButton(draft, weekNumber);
     if (!button) {
       alert("Please give the button a name and choose where it goes (the list under the name).");
       return;
@@ -57,7 +61,7 @@ export default function SummaryButtonsEditor({
   }
 
   function destinationName(href: string) {
-    return SITE_PAGES.find((page) => page.href === href)?.label ?? href;
+    return allPages.find((page) => page.href === href)?.label ?? href;
   }
 
   return (
@@ -103,11 +107,20 @@ export default function SummaryButtonsEditor({
             <option value="" disabled>
               Choose where it goes…
             </option>
-            {SITE_PAGES.map((page) => (
-              <option key={page.href} value={page.href}>
-                {page.label}
-              </option>
-            ))}
+            <optgroup label={`This week (Week ${weekNumber})`}>
+              {weekPages.map((page) => (
+                <option key={page.href} value={page.href}>
+                  {page.label}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="Other pages of the site">
+              {SITE_PAGES.map((page) => (
+                <option key={page.href} value={page.href}>
+                  {page.label}
+                </option>
+              ))}
+            </optgroup>
             <option value={OTHER_WEBSITE}>Another website…</option>
           </select>
           {target === OTHER_WEBSITE && (

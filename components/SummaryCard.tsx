@@ -86,7 +86,7 @@ export default function SummaryCard({
         {editable.editing ? (
           <div className="editForm">
             <RichTextEditor value={editable.text} onChange={editable.setText} maxWords={300} />
-            <SummaryButtonsEditor buttons={buttons} onChange={setButtons} draft={draft} onDraftChange={setDraft} />
+            <SummaryButtonsEditor weekNumber={weekNumber} buttons={buttons} onChange={setButtons} draft={draft} onDraftChange={setDraft} />
             <div className="editImageRow">
               {editable.imagePreview && (
                 // eslint-disable-next-line @next/next/no-img-element
