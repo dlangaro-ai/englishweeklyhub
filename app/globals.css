@@ -1697,7 +1697,7 @@ a.searchResultLink:hover {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 18px;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
 .vocabRowBadge {
@@ -1803,7 +1803,7 @@ a.searchResultLink:hover {
   font-size: 16px;
   line-height: 1.3;
   text-align: center;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   transition: background 160ms ease;
 }
 
@@ -2224,7 +2224,7 @@ a.searchResultLink:hover {
   font-weight: 800;
   font-size: 15px;
   line-height: 1.25;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   transition: background 160ms ease;
 }
 
@@ -4382,4 +4382,34 @@ div.weekTile.isSoon:hover {
 .weekTile.isSoon .weekTileChip {
   background: #eceef4;
   color: #9aa3b5;
+}
+
+/* Phones: the round icon sits above the text instead of in its own left-hand
+   column, so the card's text and pictures get the full width of the screen. */
+@media (max-width: 640px) {
+  .infoCard {
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+    padding: 20px 18px;
+  }
+
+  .infoIcon {
+    width: 52px;
+    height: 52px;
+    font-size: 28px;
+  }
+
+  .infoIcon svg {
+    width: 34px;
+    height: 34px;
+  }
+
+  .infoCard h2 {
+    font-size: 26px;
+  }
+
+  .infoCard .richTextDisplay {
+    overflow-wrap: break-word;
+  }
 }
