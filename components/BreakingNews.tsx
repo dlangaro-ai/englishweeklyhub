@@ -38,6 +38,10 @@ export default function BreakingNews({ weeks }: { weeks: Week[] }) {
             <Link href={weekHref} className="bigNewsCover"><span>{week.title}</span></Link>
           </h2>
           {summary && <p className="bigNewsText">{summary}</p>}
+
+          <Link href={weekHref} className="bigNewsGo">
+            Check it out! →
+          </Link>
         </div>
       </div>
     </section>
