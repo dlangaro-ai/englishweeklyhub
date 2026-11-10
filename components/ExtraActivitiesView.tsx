@@ -279,7 +279,7 @@ export default function ExtraActivitiesView({ week, isEditor }: { week: Week; is
         </div>
       )}
 
-      <section className="activityList">
+      <section className="activityList extraActivityList">
         {week.extraActivities.length === 0 ? (
           <div className="emptyState compact">
             <div className="emptyIcon"><Icon name="sparkle" size={64} /></div>

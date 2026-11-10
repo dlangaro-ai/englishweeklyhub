@@ -4608,3 +4608,41 @@ div.weekTile.isSoon:hover { border-color: color-mix(in srgb, var(--tile, var(--a
 @media (max-width: 560px) {
   .extraWeekList .weekTile.isNow { padding: 24px 22px; }
 }
+
+/* Extra Credit activities: slightly bigger bars so they're easier to spot and tap. */
+.extraActivityList { gap: 18px; }
+.extraActivityList .activityFoldSummary { gap: 18px; padding: 24px 26px; }
+.extraActivityList .activityFoldSummary .activityIndex { width: 54px; }
+.extraActivityList .activityIndex svg { width: 36px; height: 36px; }
+.extraActivityList .activityTypeButton { padding: 10px 22px; font-size: 18px; }
+.extraActivityList .activityFoldTitle { font-size: 24px; }
+.extraActivityList .aboutFoldChevron { width: 46px; height: 46px; font-size: 25px; }
+.extraActivityList .activityFoldBody { padding: 0 26px 26px 98px; }
+
+@media (max-width: 640px) {
+  .extraActivityList .activityFoldSummary { padding: 18px 16px; gap: 12px; }
+  .extraActivityList .activityFoldTitle { font-size: 20px; }
+  .extraActivityList .activityFoldBody { padding: 0 16px 18px; }
+}
+
+/* Teachers' faces under the Extra Credit activities: an "Email" pill under each
+   name makes it obvious that clicking a face writes to that teacher. */
+.activityFootnoteText { font-size: 16px; }
+.activityFootnoteText strong { color: var(--ink); }
+
+.teacherEmailPill {
+  margin-top: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+.activityFootnote .aboutAvatar:hover .teacherEmailPill {
+  background: #4b43c4;
+  transform: translateY(-1px);
+}
