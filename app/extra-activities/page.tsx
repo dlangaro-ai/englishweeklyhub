@@ -50,7 +50,7 @@ export default async function ExtraActivitiesPage() {
           <p>Extra Credit activities for each week will show up here.</p>
         </div>
       ) : (
-        <div className="weekTileGrid weekTileList">
+        <div className="weekTileGrid weekTileList extraWeekList">
           {weeksWithActivities.map((week) => (
             <WeekCard
               key={week.number}

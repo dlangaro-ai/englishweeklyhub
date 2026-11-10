@@ -4554,3 +4554,57 @@ div.weekTile.isSoon:hover { border-color: color-mix(in srgb, var(--tile, var(--a
   font-size: clamp(15px, 1.6vw, 17px);
   letter-spacing: 0.06em;
 }
+
+/* Extra Credit page: the newest week is a bigger card in the site's purple
+   (not the green used for "this week" elsewhere), so it's the first thing
+   students see. */
+.extraWeekList .weekTile.isNow {
+  gap: 12px;
+  padding: 32px 34px 30px;
+  border: 2px solid var(--accent);
+  border-radius: 28px;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--accent) 30%, white),
+    color-mix(in srgb, var(--accent) 12%, white)
+  );
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.extraWeekList .weekTile.isNow:hover { border-color: #4b43c4; }
+
+.extraWeekList .weekTile.isNow .weekTileTop { margin-bottom: 14px; }
+
+.extraWeekList .weekTile.isNow .weekTileChip {
+  padding: 6px 16px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 16px;
+}
+
+.extraWeekList .weekTile.isNow .weekTileNow {
+  color: #4b43c4;
+  font-size: 16px;
+}
+
+.extraWeekList .weekTile.isNow .weekTileTitle {
+  padding: 12px 20px;
+  border-radius: 18px;
+  font-size: clamp(24px, 3.4vw, 32px);
+}
+
+.extraWeekList .weekTile.isNow .weekTileUnit {
+  margin-top: 6px;
+  color: #4a4f73;
+  font-size: 19px;
+}
+
+.extraWeekList .weekTile.isNow .weekTileFooter {
+  padding-top: 14px;
+  color: #4b43c4;
+  font-size: 19px;
+}
+
+@media (max-width: 560px) {
+  .extraWeekList .weekTile.isNow { padding: 24px 22px; }
+}
