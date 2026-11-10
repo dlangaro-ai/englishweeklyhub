@@ -7,7 +7,7 @@ export default function TeacherEmails({ id }: { id?: string }) {
     <div id={id} className="activityFootnote">
       <p className="activityFootnoteText">
         📧 Some activities ask you to send your work by email.{" "}
-        <strong>Click your teacher&apos;s face to email them:</strong>
+        <strong>Click your teacher&apos;s avatar to email them:</strong>
       </p>
       <div className="aboutAvatars">
         {team.map((member) => (
